@@ -16,3 +16,36 @@ profile
 *.moved-aside
 DerivedData
 .idea/
+
+#android
+
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+proj.android/bin/
+proj.android/gen/
+proj.android/obj/
+proj.android/libs/armeabi/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Eclipse project files
+proj.android/.classpath
+proj.android/.project
+proj.android/.cproject
+proj.android/.settings
+
+*.o
+*.o.d
+*.so
+
+*~
