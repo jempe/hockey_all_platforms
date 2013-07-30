@@ -48,4 +48,8 @@ proj.android/.settings
 *.o.d
 *.so
 
+#linux
+proj.linux/obj/
+proj.linux/bin/
+
 *~

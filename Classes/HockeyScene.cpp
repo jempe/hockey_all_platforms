@@ -258,14 +258,12 @@ void HockeyScene::ccTouchesEnded(CCSet* touches, CCEvent* event)
 
 void HockeyScene::update(float dt)
 {
-
-	CCPoint puck_position = _puck->getPosition();
 	VectorSprite * player;
 
 	/**
 	* detects collisions with mallets
 	*/
-	for(short int j = 0; j < _players->count(); j++)
+	for(short unsigned int j = 0; j < _players->count(); j++)
 	{
 		player = (VectorSprite *) _players->objectAtIndex(j);
 
