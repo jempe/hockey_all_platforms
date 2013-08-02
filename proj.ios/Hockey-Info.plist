@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
-	<string>HelloCpp</string>
+	<string>Jempe Hockey</string>
 	<key>CFBundleExecutable</key>
 	<string>Hockey</string>
 	<key>CFBundleIconFile</key>
@@ -18,6 +18,11 @@
 		<string>Icon-114.png</string>
 		<string>Icon-72.png</string>
 		<string>Icon-144.png</string>
+		<string>hockey_icon.png</string>
+		<string>iphone4_hockey_icon.png</string>
+		<string>iphone_hockey_icon.png</string>
+		<string>ipad_retina_hockey_icon.png</string>
+		<string>ipad_hockey_icon.png</string>
 	</array>
 	<key>CFBundleIcons</key>
 	<dict>
@@ -31,6 +36,11 @@
 				<string>Icon-114.png</string>
 				<string>Icon-72.png</string>
 				<string>Icon-144.png</string>
+				<string>hockey_icon.png</string>
+				<string>iphone4_hockey_icon.png</string>
+				<string>iphone_hockey_icon.png</string>
+				<string>ipad_retina_hockey_icon.png</string>
+				<string>ipad_hockey_icon.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
 			<true/>
@@ -41,11 +51,11 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>HelloCpp</string>
+	<string>Jempe Hockey</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string></string>
+	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>

@@ -11,7 +11,7 @@ class HockeyScene : public cocos2d::CCLayerColor
 
 	VectorSprite * _puck;
 
-	short int _playersNumber;
+	short unsigned int _playersNumber;
 
 	CCArray * _players;
 
@@ -24,14 +24,17 @@ class HockeyScene : public cocos2d::CCLayerColor
 	CCLabelTTF * _top_player_score;
 	CCLabelTTF * _bottom_player_score;
 
+	CCPoint _computer_mallet_rest;
+
 	bool _gamePaused;
+	bool _goToPuck;
 
 	float _friction;
 
-	short int _topPlayerScore;
-	short int _bottomPlayerScore;
+	short unsigned int _topPlayerScore;
+	short unsigned int _bottomPlayerScore;
 
-	short int _computer_player_level;
+	short unsigned int _computer_player_level;
 	float _computer_mallet_speed;
 
 public:

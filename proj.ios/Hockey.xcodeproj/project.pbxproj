@@ -11,6 +11,17 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		846431D417AAFD2700D38FC8 /* iphone4_hockey_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 846431D317AAFD2700D38FC8 /* iphone4_hockey_icon.png */; };
+		846431D617AAFD3400D38FC8 /* iphone_hockey_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 846431D517AAFD3400D38FC8 /* iphone_hockey_icon.png */; };
+		846431D817AAFD5100D38FC8 /* ipad_retina_hockey_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 846431D717AAFD5100D38FC8 /* ipad_retina_hockey_icon.png */; };
+		846431DA17AAFD6C00D38FC8 /* ipad_hockey_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 846431D917AAFD6C00D38FC8 /* ipad_hockey_icon.png */; };
+		846431E817AB00DF00D38FC8 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 846431E717AB00DF00D38FC8 /* Default.png */; };
+		846431EA17AB00F100D38FC8 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 846431E917AB00F100D38FC8 /* Default@2x.png */; };
+		846431EC17AB010200D38FC8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 846431EB17AB010200D38FC8 /* Default-568h@2x.png */; };
+		846431EE17AB013E00D38FC8 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 846431ED17AB013E00D38FC8 /* Default-Portrait~ipad.png */; };
+		846431F017AB015000D38FC8 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 846431EF17AB015000D38FC8 /* Default-Portrait@2x~ipad.png */; };
+		846431F217AB023500D38FC8 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 846431F117AB023500D38FC8 /* Default-Landscape@2x~ipad.png */; };
+		846431F417AB024300D38FC8 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 846431F317AB024300D38FC8 /* Default-Landscape~ipad.png */; };
 		84AB1EE3179857840076489C /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84AB1EDD179857840076489C /* AppDelegate.cpp */; };
 		84AB1EE4179857840076489C /* HockeyScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84AB1EDF179857840076489C /* HockeyScene.cpp */; };
 		84AB1EE5179857840076489C /* VectorSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84AB1EE1179857840076489C /* VectorSprite.cpp */; };
@@ -93,6 +104,17 @@
 		781C33B11547F06B00633F88 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		781C33B31547F06B00633F88 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		781C33B51547F06B00633F88 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		846431D317AAFD2700D38FC8 /* iphone4_hockey_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iphone4_hockey_icon.png; sourceTree = "<group>"; };
+		846431D517AAFD3400D38FC8 /* iphone_hockey_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iphone_hockey_icon.png; sourceTree = "<group>"; };
+		846431D717AAFD5100D38FC8 /* ipad_retina_hockey_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipad_retina_hockey_icon.png; sourceTree = "<group>"; };
+		846431D917AAFD6C00D38FC8 /* ipad_hockey_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipad_hockey_icon.png; sourceTree = "<group>"; };
+		846431E717AB00DF00D38FC8 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		846431E917AB00F100D38FC8 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		846431EB17AB010200D38FC8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		846431ED17AB013E00D38FC8 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
+		846431EF17AB015000D38FC8 /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
+		846431F117AB023500D38FC8 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
+		846431F317AB024300D38FC8 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		84AB1EDD179857840076489C /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		84AB1EDE179857840076489C /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		84AB1EDF179857840076489C /* HockeyScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HockeyScene.cpp; sourceTree = "<group>"; };
@@ -192,6 +214,14 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				846431F317AB024300D38FC8 /* Default-Landscape~ipad.png */,
+				846431F117AB023500D38FC8 /* Default-Landscape@2x~ipad.png */,
+				846431EF17AB015000D38FC8 /* Default-Portrait@2x~ipad.png */,
+				846431ED17AB013E00D38FC8 /* Default-Portrait~ipad.png */,
+				846431EB17AB010200D38FC8 /* Default-568h@2x.png */,
+				846431E917AB00F100D38FC8 /* Default@2x.png */,
+				846431E717AB00DF00D38FC8 /* Default.png */,
+				846431DB17AB007E00D38FC8 /* icons */,
 				84AB1EE6179857A90076489C /* Resources */,
 				84AB1EDC179857840076489C /* Classes */,
 				15A3D7AE1682F5EC002FB0C5 /* cocos2dx.xcodeproj */,
@@ -217,6 +247,17 @@
 				781C33B51547F06B00633F88 /* AVFoundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		846431DB17AB007E00D38FC8 /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				846431D917AAFD6C00D38FC8 /* ipad_hockey_icon.png */,
+				846431D717AAFD5100D38FC8 /* ipad_retina_hockey_icon.png */,
+				846431D517AAFD3400D38FC8 /* iphone_hockey_icon.png */,
+				846431D317AAFD2700D38FC8 /* iphone4_hockey_icon.png */,
+			);
+			name = icons;
 			sourceTree = "<group>";
 		};
 		84AB1EDC179857840076489C /* Classes */ = {
@@ -450,6 +491,17 @@
 				84AB1F41179857AA0076489C /* puck.png in Resources */,
 				84AB1F42179857AA0076489C /* table_bottom.png in Resources */,
 				84AB1F43179857AA0076489C /* table_side.png in Resources */,
+				846431D417AAFD2700D38FC8 /* iphone4_hockey_icon.png in Resources */,
+				846431D617AAFD3400D38FC8 /* iphone_hockey_icon.png in Resources */,
+				846431D817AAFD5100D38FC8 /* ipad_retina_hockey_icon.png in Resources */,
+				846431DA17AAFD6C00D38FC8 /* ipad_hockey_icon.png in Resources */,
+				846431E817AB00DF00D38FC8 /* Default.png in Resources */,
+				846431EA17AB00F100D38FC8 /* Default@2x.png in Resources */,
+				846431EC17AB010200D38FC8 /* Default-568h@2x.png in Resources */,
+				846431EE17AB013E00D38FC8 /* Default-Portrait~ipad.png in Resources */,
+				846431F017AB015000D38FC8 /* Default-Portrait@2x~ipad.png in Resources */,
+				846431F217AB023500D38FC8 /* Default-Landscape@2x~ipad.png in Resources */,
+				846431F417AB024300D38FC8 /* Default-Landscape~ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

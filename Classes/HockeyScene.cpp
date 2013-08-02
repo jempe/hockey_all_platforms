@@ -25,6 +25,7 @@ CCScene* HockeyScene::scene()
 bool HockeyScene::init()
 {
 	_gamePaused = false;
+	_goToPuck = true;
 	_playersNumber = 1;
 	_friction = 0.98;
 	_bottomPlayerScore = 0;
@@ -39,6 +40,8 @@ bool HockeyScene::init()
     }
 
     _screenSize = CCDirector::sharedDirector()->getWinSize();
+
+    _computer_mallet_rest = ccp(_screenSize.width / 2, _screenSize.height * 0.75);
 
     // create court items
     _center_circle = CCSprite::create("circle.png");
@@ -134,7 +137,7 @@ bool HockeyScene::init()
     _bottomPlayer->setPosition(ccp(_screenSize.width * 0.5, _screenSize.height * 0.25));
     this->addChild(_bottomPlayer);
 
-    _computer_mallet_speed = _topPlayer->get_radius() / 18;
+    _computer_mallet_speed = _topPlayer->get_radius() / 12;
 
     _players = CCArray::create(_bottomPlayer, _topPlayer, NULL);
     _players->retain();
@@ -143,6 +146,7 @@ bool HockeyScene::init()
     // create puck
     _puck = VectorSprite::vectorSpriteWithFile("puck.png");
     _puck->setPosition(ccp(_screenSize.width / 2, _screenSize.height / 2));
+    //_puck->setPosition(ccp(_screenSize.width / 2, _screenSize.height + (_puck->get_radius() * 0.75)));
     this->addChild(_puck);
 
     // listen for touches
@@ -387,6 +391,7 @@ void HockeyScene::update(float dt)
 	{
 		CCPoint next_computer_mallet_position = computerMalletPosition();
 
+		_topPlayer->setVector(ccp(next_computer_mallet_position.x - _topPlayer->getPositionX(), next_computer_mallet_position.y - _topPlayer->getPositionY()));
 		_topPlayer->setPosition(next_computer_mallet_position);
 	}
 
@@ -413,11 +418,7 @@ CCPoint HockeyScene::computerMalletPosition()
 
 	if(_puck->getPositionY() > _screenSize.height / 2)
 	{
-		if(pow(mallet_position.x - _puck->getPositionX(),2) + pow(mallet_position.y - _puck->getPositionY(), 2) < pow(_topPlayer->get_radius() + _puck->get_radius(), 2))
-		{
-
-		}
-		else
+		if(_goToPuck)
 		{
 			if(abs(mallet_position.x - _puck->getPositionX()) > _computer_mallet_speed)
 			{
@@ -430,6 +431,7 @@ CCPoint HockeyScene::computerMalletPosition()
 					mallet_position.x += _computer_mallet_speed;
 				}
 			}
+
 			if(abs(mallet_position.y - _puck->getPositionY()) > _computer_mallet_speed)
 			{
 				if(mallet_position.y > _puck->getPositionY())
@@ -442,16 +444,51 @@ CCPoint HockeyScene::computerMalletPosition()
 				}
 			}
 		}
+		else
+		{
+			float return_speed = 15;
+
+			mallet_position.x += (_computer_mallet_rest.x - mallet_position.x) / return_speed;
+			mallet_position.y += (_computer_mallet_rest.y - mallet_position.y) / return_speed;
+		}
+
+		if(pow(mallet_position.x - _puck->getPositionX(),2) + pow(mallet_position.y - _puck->getPositionY(), 2) < pow((_topPlayer->get_radius() + _puck->get_radius() * 0.9), 2))
+		{
+			_goToPuck = false;
+
+			if(_puck->getPositionX() > (_screenSize.width / 2))
+			{
+				_computer_mallet_rest.x = _puck->getPositionX() - (_topPlayer->get_radius() * 2);
+			}
+			else
+			{
+				_computer_mallet_rest.x = _puck->getPositionX() + (_topPlayer->get_radius() * 2);
+			}
+
+			_computer_mallet_rest.y = _topPlayer->getPositionY() + (_topPlayer->get_radius() * 2);
+
+			_computer_mallet_rest = keepMalletInsideCourt(1, _computer_mallet_rest);
+		}
+
+		if(pow(mallet_position.x - _computer_mallet_rest.x,2) + pow(mallet_position.y - _computer_mallet_rest.y, 2) < pow(_topPlayer->get_radius() / 4, 2))
+		{
+			_goToPuck = true;
+		}
 	}
 	else
 	{
+		_goToPuck = true;
 		float return_speed = 15;
 
 		mallet_position.x += ((_screenSize.width / 2) - mallet_position.x) / return_speed;
 		mallet_position.y += ((_screenSize.height * 0.75) - mallet_position.y) / return_speed;
 	}
 
+    //CCLog("mallet position y: %f", mallet_position.y);
+
 	mallet_position = keepMalletInsideCourt(1, mallet_position);
+
+    //CCLog("mallet position after keep inside court y: %f", mallet_position.y);
 
 	return mallet_position;
 }
@@ -470,12 +507,12 @@ void HockeyScene::playerScore(short int player)
 	if(player > 1)
 	{
 		_topPlayerScore++;
-		center = ccp(_screenSize.width / 2, _screenSize.height / 2 + _puck->get_radius());
+		center = ccp(_screenSize.width / 2, _screenSize.height / 2 - _puck->get_radius());
 	}
 	else
 	{
 		_bottomPlayerScore++;
-		center = ccp(_screenSize.width / 2, _screenSize.height / 2 - _puck->get_radius());
+		center = ccp(_screenSize.width / 2, _screenSize.height / 2 + _puck->get_radius());
 	}
 
 	/**
@@ -558,7 +595,7 @@ CCPoint HockeyScene::keepMalletInsideCourt(int player_id, CCPoint malletPosition
 
 		if(malletPosition.y < (_topPlayer->get_radius() + _table_bottom_right->getContentSize().height))
 		{
-			if(malletPosition.y < _topPlayer->get_radius() && malletPosition.x > (_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) + _puck->get_radius() && malletPosition.x < (_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) - _puck->get_radius())
+            if(malletPosition.x > (_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) + _puck->get_radius() && malletPosition.x < (_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) - _puck->get_radius())
 			{
 				malletPosition.y = _topPlayer->get_radius();
 			}
@@ -571,6 +608,7 @@ CCPoint HockeyScene::keepMalletInsideCourt(int player_id, CCPoint malletPosition
 
 	if(player_id == 1)
 	{
+        CCLog("mallet position y: %f", malletPosition.y);
 		if(malletPosition.y < (_screenSize.height / 2) + _topPlayer->get_radius())
 		{
 			malletPosition.y = (_screenSize.height / 2) + _topPlayer->get_radius();
@@ -578,7 +616,7 @@ CCPoint HockeyScene::keepMalletInsideCourt(int player_id, CCPoint malletPosition
 
 		if(malletPosition.y > _screenSize.height - _table_bottom_right->getContentSize().height - _topPlayer->get_radius())
 		{
-			if(malletPosition.y > _screenSize.height - _topPlayer->get_radius() && malletPosition.x > (_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) + _puck->get_radius() && malletPosition.x < (_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) - _puck->get_radius())
+            if(malletPosition.x > (_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) + _puck->get_radius() && malletPosition.x < (_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) - _puck->get_radius())
 			{
 				malletPosition.y = _screenSize.height - _topPlayer->get_radius();
 			}
