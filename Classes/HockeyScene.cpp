@@ -145,8 +145,9 @@ bool HockeyScene::init()
 
     // create puck
     _puck = VectorSprite::vectorSpriteWithFile("puck.png");
-    _puck->setPosition(ccp(_screenSize.width / 2, _screenSize.height / 2));
+    //_puck->setPosition(ccp(_screenSize.width / 2, _screenSize.height / 2));
     //_puck->setPosition(ccp(_screenSize.width / 2, _screenSize.height + (_puck->get_radius() * 0.75)));
+    _puck->setPosition(ccp(_table_left->getContentSize().width + _puck->get_radius(), _screenSize.height - _table_bottom_right->getContentSize().height - _topPlayer->get_radius()));
     this->addChild(_puck);
 
     // listen for touches
@@ -467,7 +468,16 @@ CCPoint HockeyScene::computerMalletPosition()
 
 			_computer_mallet_rest.y = _topPlayer->getPositionY() + (_topPlayer->get_radius() * 2);
 
-			_computer_mallet_rest = keepMalletInsideCourt(1, _computer_mallet_rest);
+            /********************************************//**
+             *  if the puck is in the corner random position will help to send the puck to the other side
+             ***********************************************/
+
+            if(_computer_mallet_rest.y > (_screenSize.height - _table_bottom_right->getContentSize().height - _topPlayer->get_radius()))
+            {
+                _computer_mallet_rest.y = (_screenSize.height - _table_bottom_right->getContentSize().height - _topPlayer->get_radius()) - (((double) rand() / (RAND_MAX)) * _topPlayer->get_radius() * 1.8);
+            }
+
+            //_computer_mallet_rest = keepMalletInsideCourt(1, _computer_mallet_rest);
 		}
 
 		if(pow(mallet_position.x - _computer_mallet_rest.x,2) + pow(mallet_position.y - _computer_mallet_rest.y, 2) < pow(_topPlayer->get_radius() / 4, 2))
@@ -502,6 +512,7 @@ CCPoint HockeyScene::computerMalletPosition()
 
 void HockeyScene::playerScore(short int player)
 {
+    _goToPuck = true;
 	CCPoint center;
 
 	if(player > 1)
