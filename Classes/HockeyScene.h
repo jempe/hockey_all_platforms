@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "VectorSprite.h"
+#include "CCLocalizedString.h"
 
 class HockeyScene : public cocos2d::CCLayerColor
 {
@@ -21,8 +22,8 @@ class HockeyScene : public cocos2d::CCLayerColor
 	CCSprite * _table_left;
 	CCSprite * _center_circle;
 
-	CCLabelTTF * _top_player_score;
-	CCLabelTTF * _bottom_player_score;
+	CCLabelBMFont * _top_player_score;
+	CCLabelBMFont * _bottom_player_score;
 
 	CCPoint _computer_mallet_rest;
 
@@ -36,6 +37,11 @@ class HockeyScene : public cocos2d::CCLayerColor
 
 	short unsigned int _computer_player_level;
 	float _computer_mallet_speed;
+
+    // elements of goal message
+    CCLayer * _goal_message;
+    CCSprite * _goal_message_background;
+    CCArray * _goal_message_letters;
 
 public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
@@ -53,6 +59,8 @@ public:
     ~HockeyScene(void);
 
     void update(float dt);
+
+    void showGoalLabel(short int player);
 
     void playerScore(short int player);
 

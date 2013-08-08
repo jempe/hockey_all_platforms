@@ -26,7 +26,7 @@ bool HockeyScene::init()
 {
 	_gamePaused = false;
 	_goToPuck = true;
-	_playersNumber = 1;
+	_playersNumber = 2;
 	_friction = 0.98;
 	_bottomPlayerScore = 0;
 	_topPlayerScore = 0;
@@ -118,12 +118,12 @@ bool HockeyScene::init()
     // 30 for small screens, 60 for medium screens
 
     // create score labels
-    _top_player_score = CCLabelTTF::create("0", "Clubland", 30);
+    _top_player_score = CCLabelBMFont::create("0", "clubland.fnt", 40);
     _top_player_score->setPosition(ccp(_screenSize.width - 30, (_screenSize.height / 2) + 20));
     _top_player_score->setColor(ccc3(255, 0, 0));
     this->addChild(_top_player_score);
 
-    _bottom_player_score = CCLabelTTF::create("0", "Clubland", 30);
+    _bottom_player_score = CCLabelBMFont::create("0", "clubland.fnt", 40);
     _bottom_player_score->setPosition(ccp(_screenSize.width - 30, (_screenSize.height / 2) - 20));
     _bottom_player_score->setColor(ccc3(255, 0, 0));
     this->addChild(_bottom_player_score);
@@ -145,10 +145,49 @@ bool HockeyScene::init()
 
     // create puck
     _puck = VectorSprite::vectorSpriteWithFile("puck.png");
-    //_puck->setPosition(ccp(_screenSize.width / 2, _screenSize.height / 2));
+    _puck->setPosition(ccp(_screenSize.width / 2, _screenSize.height / 2));
     //_puck->setPosition(ccp(_screenSize.width / 2, _screenSize.height + (_puck->get_radius() * 0.75)));
-    _puck->setPosition(ccp(_table_left->getContentSize().width + _puck->get_radius(), _screenSize.height - _table_bottom_right->getContentSize().height - _topPlayer->get_radius()));
+    //_puck->setPosition(ccp(_table_left->getContentSize().width + _puck->get_radius(), _screenSize.height - _table_bottom_right->getContentSize().height - _topPlayer->get_radius()));
     this->addChild(_puck);
+
+    // create the goal message layer
+    _goal_message = new CCLayer();
+    _goal_message->setPosition(ccp(_screenSize.width / 2, _screenSize.height / 2));
+    this->addChild(_goal_message);
+
+    // select the background according to the system language
+    _goal_message_background = CCSprite::create(CCLocalizedString("GOALBACKGROUND"));
+    _goal_message->addChild(_goal_message_background);
+
+    CCSprite * goal_space = CCSprite::create("goal_border_letters_separation.png");
+    _goal_message->addChild(goal_space);
+
+    float letter_position_x = -(_goal_message_background->getContentSize().width / 2) + goal_space->getContentSize().width;
+    float letter_position_y = (_goal_message_background->getContentSize().height / 2) - goal_space->getContentSize().height;
+
+    const char * goalName = CCLocalizedString("GOALNAME");
+
+    _goal_message_letters = CCArray::create();
+
+    for(long unsigned int i = 0; i < strlen(goalName); i++)
+    {
+        char letter_file_name[] = {'g', 'o', 'a', 'l', '_', goalName[i], '.', 'p', 'n', 'g', '\0'};
+
+        CCLog("%s", letter_file_name);
+
+        CCSprite * letter = CCSprite::create(letter_file_name);
+
+        letter_position_x += letter->getContentSize().width / 2;
+
+        letter->setPosition(ccp(letter_position_x, letter_position_y - (letter->getContentSize().height / 2)));
+
+        letter_position_x += letter->getContentSize().width / 2;
+
+        _goal_message->addChild(letter);
+        _goal_message_letters->addObject(letter);
+    }
+
+    _goal_message->setVisible(false);
 
     // listen for touches
     this->setTouchEnabled(true);
@@ -503,6 +542,11 @@ CCPoint HockeyScene::computerMalletPosition()
 	return mallet_position;
 }
 
+void HockeyScene::showGoalLabel(short int player)
+{
+    _goal_message->setVisible(true);
+}
+
 /********************************************//**
  *  Update player score
  *  @param player int of the player
@@ -525,6 +569,8 @@ void HockeyScene::playerScore(short int player)
 		_bottomPlayerScore++;
 		center = ccp(_screenSize.width / 2, _screenSize.height / 2 + _puck->get_radius());
 	}
+
+    showGoalLabel(player);
 
 	/**
 	 *  display score
@@ -555,8 +601,6 @@ void HockeyScene::playerScore(short int player)
 	_bottomPlayer->setPosition(bottom_player_pos);
 	_bottomPlayer->setNextPos(bottom_player_pos);
 	_bottomPlayer->setTouch(NULL);
-
-
 }
 
 /********************************************//**

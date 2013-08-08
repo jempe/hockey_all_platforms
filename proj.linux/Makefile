@@ -5,7 +5,8 @@ INCLUDES = -I.. -I../Classes
 SOURCES = main.cpp \
               ../Classes/AppDelegate.cpp \
               ../Classes/VectorSprite.cpp \
-              ../Classes/HockeyScene.cpp
+              ../Classes/HockeyScene.cpp \
+	      ../Classes/CCLocalizedString.cpp
 
 COCOS_ROOT = ../../../..
 include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk

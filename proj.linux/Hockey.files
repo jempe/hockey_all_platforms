@@ -36,3 +36,7 @@ main.cpp
 ../Classes/VectorSprite.h
 ../Classes/HockeyScene.h
 ../Classes/AppDelegate.h
+../Classes/CCLocalizedString.h
+../Classes/CCLocalizedString.cpp
+../Resources/language_en
+../Resources/language_es
