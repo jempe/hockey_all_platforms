@@ -60,6 +60,8 @@ public:
 
     void update(float dt);
 
+    void resumeAfterGoal();
+
     void showGoalLabel(short int player);
 
     void playerScore(short int player);

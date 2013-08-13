@@ -8,6 +8,7 @@
 #include "VectorSprite.h"
 
 VectorSprite::VectorSprite() {
+    _touch = NULL;
 	_vector = ccp(0, 0);
 
 }

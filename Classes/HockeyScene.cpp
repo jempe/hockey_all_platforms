@@ -26,7 +26,7 @@ bool HockeyScene::init()
 {
 	_gamePaused = false;
 	_goToPuck = true;
-	_playersNumber = 2;
+    _playersNumber = 1;
 	_friction = 0.98;
 	_bottomPlayerScore = 0;
 	_topPlayerScore = 0;
@@ -118,23 +118,28 @@ bool HockeyScene::init()
     // 30 for small screens, 60 for medium screens
 
     // create score labels
-    _top_player_score = CCLabelBMFont::create("0", "clubland.fnt", 40);
-    _top_player_score->setPosition(ccp(_screenSize.width - 30, (_screenSize.height / 2) + 20));
-    _top_player_score->setColor(ccc3(255, 0, 0));
+    _top_player_score = CCLabelBMFont::create("0", "londrina_solid.fnt", 10);
+    _top_player_score->setPosition(ccp(_screenSize.width - (_table_left->getContentSize().width * 2), (_screenSize.height / 2) + _table_bottom_right->getContentSize().height + 24));
+    _top_player_score->setColor(ccc3(0, 0, 0));
     this->addChild(_top_player_score);
 
-    _bottom_player_score = CCLabelBMFont::create("0", "clubland.fnt", 40);
-    _bottom_player_score->setPosition(ccp(_screenSize.width - 30, (_screenSize.height / 2) - 20));
-    _bottom_player_score->setColor(ccc3(255, 0, 0));
+    _bottom_player_score = CCLabelBMFont::create("0", "londrina_solid.fnt", 10);
+    _bottom_player_score->setPosition(ccp(_screenSize.width - (_table_left->getContentSize().width * 2), (_screenSize.height / 2) - _table_bottom_right->getContentSize().height));
+    _bottom_player_score->setColor(ccc3(0, 0, 0));
     this->addChild(_bottom_player_score);
 
     // create players mallets
     _topPlayer = VectorSprite::vectorSpriteWithFile("mallet.png");
     _topPlayer->setPosition(ccp(_screenSize.width * 0.5, _screenSize.height * 0.75));
-    this->addChild(_topPlayer);
+    if(_playersNumber > 1)
+    {
+        _topPlayer->setOpacity(128);
+    }
+        this->addChild(_topPlayer);
 
     _bottomPlayer = VectorSprite::vectorSpriteWithFile("mallet.png");
     _bottomPlayer->setPosition(ccp(_screenSize.width * 0.5, _screenSize.height * 0.25));
+    _bottomPlayer->setOpacity(128);
     this->addChild(_bottomPlayer);
 
     _computer_mallet_speed = _topPlayer->get_radius() / 12;
@@ -153,7 +158,6 @@ bool HockeyScene::init()
     // create the goal message layer
     _goal_message = new CCLayer();
     _goal_message->setPosition(ccp(_screenSize.width / 2, _screenSize.height / 2));
-    this->addChild(_goal_message);
 
     // select the background according to the system language
     _goal_message_background = CCSprite::create(CCLocalizedString("GOALBACKGROUND"));
@@ -186,6 +190,8 @@ bool HockeyScene::init()
         _goal_message->addChild(letter);
         _goal_message_letters->addObject(letter);
     }
+
+    this->addChild(_goal_message);
 
     _goal_message->setVisible(false);
 
@@ -309,7 +315,19 @@ void HockeyScene::update(float dt)
 	*/
 	for(short unsigned int j = 0; j < _players->count(); j++)
 	{
-		player = (VectorSprite *) _players->objectAtIndex(j);
+        player = (VectorSprite *) _players->objectAtIndex(j);
+
+        if(j < _playersNumber)
+        {
+            if(player->getTouch() == NULL)
+            {
+                player->setOpacity(128);
+            }
+            else
+            {
+                player->setOpacity(255);
+            }
+        }
 
 		CCPoint player_position = player->getNextPos();
 
@@ -427,7 +445,7 @@ void HockeyScene::update(float dt)
 	{
 		_topPlayer->setPosition(_topPlayer->getNextPos());
 	}
-	else
+    else if( ! _gamePaused)
 	{
 		CCPoint next_computer_mallet_position = computerMalletPosition();
 
@@ -541,10 +559,41 @@ CCPoint HockeyScene::computerMalletPosition()
 
 	return mallet_position;
 }
+void HockeyScene::resumeAfterGoal()
+{
+    _gamePaused = false;
+    _goal_message->setVisible(false);
+}
 
 void HockeyScene::showGoalLabel(short int player)
 {
+    _gamePaused = true;
     _goal_message->setVisible(true);
+
+    if(player > 1)
+    {
+        _goal_message->setPositionY(_screenSize.height * 0.65);
+        _goal_message->setRotation(180);
+    }
+    else
+    {
+        _goal_message->setPositionY(_screenSize.height * 0.35);
+        _goal_message->setRotation(0);
+    }
+
+    CCFiniteTimeAction* goal_label_done = CCCallFuncN::create( this,
+                                            callfuncN_selector(HockeyScene::resumeAfterGoal));
+
+    CCSequence * goal_message_sequence =
+            CCSequence::create(
+                CCFadeIn::create(1.0f),
+                CCFadeOut::create(1.0f),
+                goal_label_done,
+                NULL
+                );
+
+
+    _goal_message->runAction(goal_message_sequence);
 }
 
 /********************************************//**
