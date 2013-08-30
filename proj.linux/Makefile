@@ -5,7 +5,9 @@ INCLUDES = -I.. -I../Classes
 SOURCES = main.cpp \
               ../Classes/AppDelegate.cpp \
               ../Classes/VectorSprite.cpp \
+              ../Classes/MenuSprite.cpp \
               ../Classes/HockeyScene.cpp \
+              ../Classes/MenuScene.cpp \
 	      ../Classes/CCLocalizedString.cpp
 
 COCOS_ROOT = ../../../..

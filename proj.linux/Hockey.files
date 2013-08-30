@@ -40,3 +40,8 @@ main.cpp
 ../Classes/CCLocalizedString.cpp
 ../Resources/language_en
 ../Resources/language_es
+../Classes/MenuScene.h
+../Classes/MenuScene.cpp
+Makefile
+../Classes/MenuSprite.h
+../Classes/MenuSprite.cpp
