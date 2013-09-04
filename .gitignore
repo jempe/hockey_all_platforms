@@ -34,6 +34,7 @@ proj.android/bin/
 proj.android/gen/
 proj.android/obj/
 proj.android/libs/armeabi/
+proj.android/assets/
 
 # Local configuration file (sdk path, etc)
 local.properties

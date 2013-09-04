@@ -7,13 +7,15 @@
 
 #include "VectorSprite.h"
 
-VectorSprite::VectorSprite() {
+VectorSprite::VectorSprite()
+{
     _touch = NULL;
 	_vector = ccp(0, 0);
 
 }
 
-VectorSprite::~VectorSprite() {
+VectorSprite::~VectorSprite()
+{
 	// TODO Auto-generated destructor stub
 }
 

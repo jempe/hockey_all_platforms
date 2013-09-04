@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1514DA3F163004980095A81C /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 1514DA3C163004980095A81C /* ipad */; };
-		1514DA40163004980095A81C /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 1514DA3D163004980095A81C /* ipadhd */; };
 		1514DA41163004980095A81C /* iphone in Resources */ = {isa = PBXBuildFile; fileRef = 1514DA3E163004980095A81C /* iphone */; };
 		15C156BB1683155600D239F2 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C156B81683151A00D239F2 /* libcocos2dx.a */; };
 		41BC70AD15BF7CCE006A0A6C /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70AC15BF7CCE006A0A6C /* Icon.icns */; };
@@ -17,7 +15,6 @@
 		41CD6C6E15BF7673005E6F29 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41CD6C6815BF7673005E6F29 /* InfoPlist.strings */; };
 		41CD6C6F15BF7673005E6F29 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41CD6C6A15BF7673005E6F29 /* MainMenu.xib */; };
 		41CD6C7515BF76FB005E6F29 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41CD6C7115BF76FB005E6F29 /* AppDelegate.cpp */; };
-		41CD6C7615BF76FB005E6F29 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41CD6C7315BF76FB005E6F29 /* HelloWorldScene.cpp */; };
 		41CD6C8F15BF7793005E6F29 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41CD6C8715BF7793005E6F29 /* AppKit.framework */; };
 		41CD6C9015BF7793005E6F29 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41CD6C8815BF7793005E6F29 /* AudioToolbox.framework */; };
 		41CD6C9115BF7793005E6F29 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41CD6C8915BF7793005E6F29 /* Cocoa.framework */; };
@@ -28,6 +25,21 @@
 		41CD6C9615BF7793005E6F29 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41CD6C8E15BF7793005E6F29 /* QuartzCore.framework */; };
 		41CD6C9915BF77CE005E6F29 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 41CD6C9715BF77CE005E6F29 /* libxml2.dylib */; };
 		41CD6C9A15BF77CE005E6F29 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 41CD6C9815BF77CE005E6F29 /* libz.dylib */; };
+		C6DF388E17BDB3B2000603F9 /* CCLocalizedString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C6DF388817BDB3B2000603F9 /* CCLocalizedString.cpp */; };
+		C6DF388F17BDB3B2000603F9 /* HockeyScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C6DF388A17BDB3B2000603F9 /* HockeyScene.cpp */; };
+		C6DF389017BDB3B2000603F9 /* VectorSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C6DF388C17BDB3B2000603F9 /* VectorSprite.cpp */; };
+		C6DF38A917BDB716000603F9 /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DF389E17BDB716000603F9 /* CDAudioManager.m */; };
+		C6DF38AA17BDB716000603F9 /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DF38A117BDB716000603F9 /* CDOpenALSupport.m */; };
+		C6DF38AB17BDB716000603F9 /* CDXMacOSXSupport.mm in Sources */ = {isa = PBXBuildFile; fileRef = C6DF38A317BDB716000603F9 /* CDXMacOSXSupport.mm */; };
+		C6DF38AC17BDB716000603F9 /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DF38A517BDB716000603F9 /* CocosDenshion.m */; };
+		C6DF38AD17BDB716000603F9 /* SimpleAudioEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = C6DF38A617BDB716000603F9 /* SimpleAudioEngine.mm */; };
+		C6DF38AE17BDB716000603F9 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = C6DF38A817BDB716000603F9 /* SimpleAudioEngine_objc.m */; };
+		C6DF38B817BDB852000603F9 /* iphone5 in Resources */ = {isa = PBXBuildFile; fileRef = C6DF38B217BDB852000603F9 /* iphone5 */; };
+		C6DF38B917BDB852000603F9 /* language_en in Resources */ = {isa = PBXBuildFile; fileRef = C6DF38B317BDB852000603F9 /* language_en */; };
+		C6DF38BA17BDB852000603F9 /* language_es in Resources */ = {isa = PBXBuildFile; fileRef = C6DF38B417BDB852000603F9 /* language_es */; };
+		C6DF38BB17BDB852000603F9 /* nexus in Resources */ = {isa = PBXBuildFile; fileRef = C6DF38B517BDB852000603F9 /* nexus */; };
+		C6DF38BC17BDB852000603F9 /* nexus7 in Resources */ = {isa = PBXBuildFile; fileRef = C6DF38B617BDB852000603F9 /* nexus7 */; };
+		C6DF38BD17BDB852000603F9 /* nexus10 in Resources */ = {isa = PBXBuildFile; fileRef = C6DF38B717BDB852000603F9 /* nexus10 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,10 +60,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1514DA3C163004980095A81C /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ipad; path = ../Resources/ipad; sourceTree = "<group>"; };
-		1514DA3D163004980095A81C /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ipadhd; path = ../Resources/ipadhd; sourceTree = "<group>"; };
 		1514DA3E163004980095A81C /* iphone */ = {isa = PBXFileReference; lastKnownFileType = folder; name = iphone; path = ../Resources/iphone; sourceTree = "<group>"; };
-		15A6969B1630E63B00D7A229 /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppMacros.h; path = ../Classes/AppMacros.h; sourceTree = "<group>"; };
 		15C156B01683151A00D239F2 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../../cocos2dx/proj.mac/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		41BC70AC15BF7CCE006A0A6C /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		41CD6C5115BF748C005E6F29 /* HelloCpp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloCpp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,8 +73,6 @@
 		41CD6C6D15BF7673005E6F29 /* HelloCpp_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloCpp_Prefix.pch; sourceTree = "<group>"; };
 		41CD6C7115BF76FB005E6F29 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = "<group>"; };
 		41CD6C7215BF76FB005E6F29 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Classes/AppDelegate.h; sourceTree = "<group>"; };
-		41CD6C7315BF76FB005E6F29 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HelloWorldScene.cpp; path = ../Classes/HelloWorldScene.cpp; sourceTree = "<group>"; };
-		41CD6C7415BF76FB005E6F29 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelloWorldScene.h; path = ../Classes/HelloWorldScene.h; sourceTree = "<group>"; };
 		41CD6C8715BF7793005E6F29 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		41CD6C8815BF7793005E6F29 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		41CD6C8915BF7793005E6F29 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -76,6 +83,32 @@
 		41CD6C8E15BF7793005E6F29 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		41CD6C9715BF77CE005E6F29 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		41CD6C9815BF77CE005E6F29 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		C6DF388817BDB3B2000603F9 /* CCLocalizedString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCLocalizedString.cpp; path = ../Classes/CCLocalizedString.cpp; sourceTree = "<group>"; };
+		C6DF388917BDB3B2000603F9 /* CCLocalizedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCLocalizedString.h; path = ../Classes/CCLocalizedString.h; sourceTree = "<group>"; };
+		C6DF388A17BDB3B2000603F9 /* HockeyScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HockeyScene.cpp; path = ../Classes/HockeyScene.cpp; sourceTree = "<group>"; };
+		C6DF388B17BDB3B2000603F9 /* HockeyScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HockeyScene.h; path = ../Classes/HockeyScene.h; sourceTree = "<group>"; };
+		C6DF388C17BDB3B2000603F9 /* VectorSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VectorSprite.cpp; path = ../Classes/VectorSprite.cpp; sourceTree = "<group>"; };
+		C6DF388D17BDB3B2000603F9 /* VectorSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VectorSprite.h; path = ../Classes/VectorSprite.h; sourceTree = "<group>"; };
+		C6DF389D17BDB716000603F9 /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
+		C6DF389E17BDB716000603F9 /* CDAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioManager.m; sourceTree = "<group>"; };
+		C6DF389F17BDB716000603F9 /* CDConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConfig.h; sourceTree = "<group>"; };
+		C6DF38A017BDB716000603F9 /* CDOpenALSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDOpenALSupport.h; sourceTree = "<group>"; };
+		C6DF38A117BDB716000603F9 /* CDOpenALSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDOpenALSupport.m; sourceTree = "<group>"; };
+		C6DF38A217BDB716000603F9 /* CDXMacOSXSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDXMacOSXSupport.h; sourceTree = "<group>"; };
+		C6DF38A317BDB716000603F9 /* CDXMacOSXSupport.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CDXMacOSXSupport.mm; sourceTree = "<group>"; };
+		C6DF38A417BDB716000603F9 /* CocosDenshion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosDenshion.h; sourceTree = "<group>"; };
+		C6DF38A517BDB716000603F9 /* CocosDenshion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosDenshion.m; sourceTree = "<group>"; };
+		C6DF38A617BDB716000603F9 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
+		C6DF38A717BDB716000603F9 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
+		C6DF38A817BDB716000603F9 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
+		C6DF38B017BDB726000603F9 /* Export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
+		C6DF38B117BDB726000603F9 /* SimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine.h; sourceTree = "<group>"; };
+		C6DF38B217BDB852000603F9 /* iphone5 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = iphone5; path = ../Resources/iphone5; sourceTree = "<group>"; };
+		C6DF38B317BDB852000603F9 /* language_en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = language_en; path = ../Resources/language_en; sourceTree = "<group>"; };
+		C6DF38B417BDB852000603F9 /* language_es */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = language_es; path = ../Resources/language_es; sourceTree = "<group>"; };
+		C6DF38B517BDB852000603F9 /* nexus */ = {isa = PBXFileReference; lastKnownFileType = folder; name = nexus; path = ../Resources/nexus; sourceTree = "<group>"; };
+		C6DF38B617BDB852000603F9 /* nexus7 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = nexus7; path = ../Resources/nexus7; sourceTree = "<group>"; };
+		C6DF38B717BDB852000603F9 /* nexus10 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = nexus10; path = ../Resources/nexus10; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,8 +146,9 @@
 			children = (
 				15C156B01683151A00D239F2 /* cocos2dx.xcodeproj */,
 				41CD6C5D15BF750B005E6F29 /* Classes */,
-				41CD6C5E15BF7514005E6F29 /* Frameworks */,
 				41CD6C5F15BF7522005E6F29 /* mac */,
+				C6DF389B17BDB6D0000603F9 /* CocosDenshion */,
+				41CD6C5E15BF7514005E6F29 /* Frameworks */,
 				41EFC1BB15BF7AC30083EA95 /* Products */,
 				41CD6C6115BF7556005E6F29 /* Resources */,
 			);
@@ -123,11 +157,14 @@
 		41CD6C5D15BF750B005E6F29 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				15A6969B1630E63B00D7A229 /* AppMacros.h */,
+				C6DF388817BDB3B2000603F9 /* CCLocalizedString.cpp */,
+				C6DF388917BDB3B2000603F9 /* CCLocalizedString.h */,
+				C6DF388A17BDB3B2000603F9 /* HockeyScene.cpp */,
+				C6DF388B17BDB3B2000603F9 /* HockeyScene.h */,
+				C6DF388C17BDB3B2000603F9 /* VectorSprite.cpp */,
+				C6DF388D17BDB3B2000603F9 /* VectorSprite.h */,
 				41CD6C7115BF76FB005E6F29 /* AppDelegate.cpp */,
 				41CD6C7215BF76FB005E6F29 /* AppDelegate.h */,
-				41CD6C7315BF76FB005E6F29 /* HelloWorldScene.cpp */,
-				41CD6C7415BF76FB005E6F29 /* HelloWorldScene.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -166,8 +203,12 @@
 		41CD6C6115BF7556005E6F29 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				1514DA3C163004980095A81C /* ipad */,
-				1514DA3D163004980095A81C /* ipadhd */,
+				C6DF38B217BDB852000603F9 /* iphone5 */,
+				C6DF38B317BDB852000603F9 /* language_en */,
+				C6DF38B417BDB852000603F9 /* language_es */,
+				C6DF38B517BDB852000603F9 /* nexus */,
+				C6DF38B617BDB852000603F9 /* nexus7 */,
+				C6DF38B717BDB852000603F9 /* nexus10 */,
 				1514DA3E163004980095A81C /* iphone */,
 			);
 			name = Resources;
@@ -188,6 +229,45 @@
 				41CD6C5115BF748C005E6F29 /* HelloCpp.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		C6DF389B17BDB6D0000603F9 /* CocosDenshion */ = {
+			isa = PBXGroup;
+			children = (
+				C6DF38AF17BDB726000603F9 /* include */,
+				C6DF389C17BDB716000603F9 /* mac */,
+			);
+			name = CocosDenshion;
+			sourceTree = "<group>";
+		};
+		C6DF389C17BDB716000603F9 /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				C6DF389D17BDB716000603F9 /* CDAudioManager.h */,
+				C6DF389E17BDB716000603F9 /* CDAudioManager.m */,
+				C6DF389F17BDB716000603F9 /* CDConfig.h */,
+				C6DF38A017BDB716000603F9 /* CDOpenALSupport.h */,
+				C6DF38A117BDB716000603F9 /* CDOpenALSupport.m */,
+				C6DF38A217BDB716000603F9 /* CDXMacOSXSupport.h */,
+				C6DF38A317BDB716000603F9 /* CDXMacOSXSupport.mm */,
+				C6DF38A417BDB716000603F9 /* CocosDenshion.h */,
+				C6DF38A517BDB716000603F9 /* CocosDenshion.m */,
+				C6DF38A617BDB716000603F9 /* SimpleAudioEngine.mm */,
+				C6DF38A717BDB716000603F9 /* SimpleAudioEngine_objc.h */,
+				C6DF38A817BDB716000603F9 /* SimpleAudioEngine_objc.m */,
+			);
+			name = mac;
+			path = ../../../../CocosDenshion/mac;
+			sourceTree = "<group>";
+		};
+		C6DF38AF17BDB726000603F9 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				C6DF38B017BDB726000603F9 /* Export.h */,
+				C6DF38B117BDB726000603F9 /* SimpleAudioEngine.h */,
+			);
+			name = include;
+			path = ../../../../CocosDenshion/include;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,9 +341,13 @@
 				41CD6C6E15BF7673005E6F29 /* InfoPlist.strings in Resources */,
 				41CD6C6F15BF7673005E6F29 /* MainMenu.xib in Resources */,
 				41BC70AD15BF7CCE006A0A6C /* Icon.icns in Resources */,
-				1514DA3F163004980095A81C /* ipad in Resources */,
-				1514DA40163004980095A81C /* ipadhd in Resources */,
 				1514DA41163004980095A81C /* iphone in Resources */,
+				C6DF38B817BDB852000603F9 /* iphone5 in Resources */,
+				C6DF38B917BDB852000603F9 /* language_en in Resources */,
+				C6DF38BA17BDB852000603F9 /* language_es in Resources */,
+				C6DF38BB17BDB852000603F9 /* nexus in Resources */,
+				C6DF38BC17BDB852000603F9 /* nexus7 in Resources */,
+				C6DF38BD17BDB852000603F9 /* nexus10 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,7 +361,15 @@
 				41CD6C6515BF7574005E6F29 /* AppController.mm in Sources */,
 				41CD6C6615BF7574005E6F29 /* main.m in Sources */,
 				41CD6C7515BF76FB005E6F29 /* AppDelegate.cpp in Sources */,
-				41CD6C7615BF76FB005E6F29 /* HelloWorldScene.cpp in Sources */,
+				C6DF388E17BDB3B2000603F9 /* CCLocalizedString.cpp in Sources */,
+				C6DF388F17BDB3B2000603F9 /* HockeyScene.cpp in Sources */,
+				C6DF389017BDB3B2000603F9 /* VectorSprite.cpp in Sources */,
+				C6DF38A917BDB716000603F9 /* CDAudioManager.m in Sources */,
+				C6DF38AA17BDB716000603F9 /* CDOpenALSupport.m in Sources */,
+				C6DF38AB17BDB716000603F9 /* CDXMacOSXSupport.mm in Sources */,
+				C6DF38AC17BDB716000603F9 /* CocosDenshion.m in Sources */,
+				C6DF38AD17BDB716000603F9 /* SimpleAudioEngine.mm in Sources */,
+				C6DF38AE17BDB716000603F9 /* SimpleAudioEngine_objc.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

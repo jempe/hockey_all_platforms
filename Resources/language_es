@@ -1,2 +1,4 @@
 GOALBACKGROUND = "gol_background.png";
 GOALNAME = "Gol";
+ONEPLAYER = "1 Jugador";
+TWOPLAYERS = "2 Jugadores";
