@@ -2,3 +2,7 @@ GOALBACKGROUND = "gol_background.png";
 GOALNAME = "Gol";
 ONEPLAYER = "1 Jugador";
 TWOPLAYERS = "2 Jugadores";
+WINNERBACKGROUND = "ganador_background.png";
+WINNERNAME = "Ganador";
+PLAYAGAIN = "De Nuevo",
+GOBACK = "Ir a Menú";

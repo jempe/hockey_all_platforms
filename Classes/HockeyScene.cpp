@@ -1,4 +1,5 @@
 #include "HockeyScene.h"
+#include "MenuScene.h"
 #include "SimpleAudioEngine.h"
 
 using namespace cocos2d;
@@ -27,7 +28,7 @@ bool HockeyScene::init()
 	_gamePaused = false;
 	_goToPuck = true;
     _playersNumber = CCUserDefault::sharedUserDefault()->getIntegerForKey("number_of_players");
-	_friction = 0.98;
+    _friction = 0.987;
 	_bottomPlayerScore = 0;
 	_topPlayerScore = 0;
 	_computer_player_level = 1;
@@ -131,7 +132,7 @@ bool HockeyScene::init()
     _bottomPlayer->setOpacity(128);
     this->addChild(_bottomPlayer);
 
-    _computer_mallet_speed = _topPlayer->get_radius() / 12;
+    _computer_mallet_speed = _topPlayer->get_radius() / 8;
 
     _players = CCArray::create(_bottomPlayer, _topPlayer, NULL);
     _players->retain();
@@ -139,12 +140,13 @@ bool HockeyScene::init()
     // create score labels
     _top_player_score = CCLabelBMFont::create("0", "londrina_solid.fnt", 10);
     _top_player_score->setPosition(ccp(_screenSize.width - _bottomPlayer->get_radius(), (_screenSize.height / 2) + _bottomPlayer->get_radius()));
+    _top_player_score->setColor(ccc3(255, 0, 0));
     this->addChild(_top_player_score);
 
     _bottom_player_score = CCLabelBMFont::create("0", "londrina_solid.fnt", 10);
     _bottom_player_score->setPosition(ccp(_screenSize.width - _bottomPlayer->get_radius(), (_screenSize.height / 2) - (_bottomPlayer->get_radius() * 0.7)));
+    _bottom_player_score->setColor(ccc3(255, 0, 0));
     this->addChild(_bottom_player_score);
-
 
     // create puck
     _puck = VectorSprite::vectorSpriteWithFile("puck.png");
@@ -195,6 +197,14 @@ bool HockeyScene::init()
 
     _goal_message->setVisible(false);
 
+    //overlay
+    _overlay = new CCLayerColor();
+    _overlay->initWithColor(ccc4(0, 0, 0, 128));
+    _overlay->setContentSize(CCSizeMake(_screenSize.width, _screenSize.height));
+    this->addChild(_overlay);
+    _overlay->setVisible(false);
+
+
     // listen for touches
     this->setTouchEnabled(true);
     this->schedule(schedule_selector(HockeyScene::update));
@@ -229,6 +239,7 @@ void HockeyScene::ccTouchesBegan(CCSet* touches, CCEvent* event)
 					}
                     else if(_bottomPlayer->getTouch() == NULL && tap.y < _screenSize.height / 2)
                     {
+                        tap = keepMalletInsideCourt(0, tap);
                         _bottomPlayer->setPosition(tap);
                         _bottomPlayer->setNextPos(tap);
 
@@ -236,6 +247,7 @@ void HockeyScene::ccTouchesBegan(CCSet* touches, CCEvent* event)
                     }
                     else if(_playersNumber > 1 && _topPlayer->getTouch() == NULL && tap.y > _screenSize.height / 2)
                     {
+                        tap = keepMalletInsideCourt(1, tap);
                         _topPlayer->setPosition(tap);
                         _topPlayer->setNextPos(tap);
 
@@ -578,6 +590,53 @@ void HockeyScene::resumeAfterGoal()
     _goal_message->setVisible(false);
 }
 
+void HockeyScene::showWinnerMenu()
+{
+    _overlay->setVisible(true);
+
+    MenuSprite * again = MenuSprite::createWithText(CCLocalizedString("PLAYAGAIN"), false);
+    again->setPositionX(_screenSize.width * 0.5 + (again->getContentSize().width / 2));
+
+    MenuSprite * again_active = MenuSprite::createWithText(CCLocalizedString("PLAYAGAIN"), true);
+
+    MenuSprite * go_back = MenuSprite::createWithText(CCLocalizedString("GOBACK"), false);
+    go_back->setPositionX(_screenSize.width * 0.5 + (go_back->getContentSize().width / 2));
+
+    MenuSprite * go_back_active = MenuSprite::createWithText(CCLocalizedString("GOBACK"), true);
+
+    CCMenuItemSprite * menu_again = CCMenuItemSprite::create(
+                again,
+                again_active,
+                this,
+                menu_selector(HockeyScene::playAgain)
+                );
+
+    CCMenuItemSprite * menu_goback = CCMenuItemSprite::create(
+                go_back,
+                go_back_active,
+                this,
+                menu_selector(HockeyScene::goBack)
+                );
+
+    CCMenu * winMenu = CCMenu::create(menu_again, menu_goback, NULL);
+    winMenu->alignItemsVerticallyWithPadding(again->getContentSize().height * 0.4);
+    winMenu->setPosition(ccp(_screenSize.width * 0.5, _screenSize.height * 0.5));
+
+    this->addChild(winMenu);
+
+    float move_button_time = 0.2;
+
+    again->runAction(CCMoveTo::create(move_button_time, ccp(0, again->getPositionY())));
+    go_back->runAction(
+                CCSequence::create(
+                    CCScaleTo::create(move_button_time, 1.0),
+                    CCMoveTo::create(move_button_time, ccp(0, go_back->getPositionY())),
+                    NULL
+                    )
+                );
+
+}
+
 void HockeyScene::showGoalLabel(short int player)
 {
     _gamePaused = true;
@@ -648,6 +707,121 @@ void HockeyScene::showGoalLabel(short int player)
     _goal_message_background->runAction(goal_message_sequence);
 }
 
+void HockeyScene::showWinnerLabel(short int player)
+{
+    // create the winner message layer
+    CCLayer * winner_message = new CCLayer();
+    winner_message->setPosition(ccp(_screenSize.width / 2, _screenSize.height / 2));
+
+    // select the background according to the system language
+    CCSprite * winner_message_background = CCSprite::create(CCLocalizedString("WINNERBACKGROUND"));
+    winner_message->addChild(winner_message_background);
+
+    CCSprite * winner_space = CCSprite::create("goal_border_letters_separation.png");
+    winner_message->addChild(winner_space);
+
+    float letter_position_x = -(winner_message_background->getContentSize().width / 2) + winner_space->getContentSize().width;
+    float letter_position_y = (winner_message_background->getContentSize().height / 2) - winner_space->getContentSize().height;
+
+    const char * winnerName = CCLocalizedString("WINNERNAME");
+
+    CCArray * winner_message_letters = CCArray::create();
+
+    for(long unsigned int i = 0; i < strlen(winnerName); i++)
+    {
+        char letter_file_name[] = {'g', 'o', 'a', 'l', '_', winnerName[i], '.', 'p', 'n', 'g', '\0'};
+
+        CCLog("%s", letter_file_name);
+
+        CCSprite * letter = CCSprite::create(letter_file_name);
+
+        letter_position_x += letter->getContentSize().width / 2;
+
+        letter->setPosition(ccp(letter_position_x, letter_position_y - (letter->getContentSize().height / 2)));
+
+        letter_position_x += letter->getContentSize().width / 2;
+
+        winner_message->addChild(letter);
+        winner_message_letters->addObject(letter);
+    }
+
+    this->addChild(winner_message);
+
+    _gamePaused = true;
+
+    winner_message_background->setOpacity(0);
+
+    if(player > 1)
+    {
+        winner_message->setPositionY(_screenSize.height * 0.65);
+        winner_message->setRotation(180);
+    }
+    else
+    {
+        winner_message->setPositionY(_screenSize.height * 0.35);
+        winner_message->setRotation(0);
+    }
+
+    CCFiniteTimeAction* winner_label_done = CCCallFuncN::create( this,
+                                            callfuncN_selector(HockeyScene::showWinnerMenu));
+
+    float fade_time = 0.2f;
+    float scale_time = 0.1f;
+    float shake_time = 0.1f;
+    short int shakes = 3;
+
+    float letter_animation_time = (scale_time * 2) +  (winner_message_letters->count() *(shakes * shake_time));
+
+    CCSequence * winner_message_sequence =
+            CCSequence::create(
+                CCFadeIn::create(fade_time),
+                CCScaleTo::create(letter_animation_time + fade_time, 1.0f),
+                winner_label_done,
+                NULL
+                );
+
+    CCSequence * letter_sequence[winner_message_letters->count()];
+
+    for(unsigned int l =  0; l < winner_message_letters->count(); l++)
+    {
+        CCSprite * letter = (CCSprite *) winner_message_letters->objectAtIndex(l);
+        letter->setOpacity(0);
+
+        letter_sequence[l] =
+                CCSequence::create(
+                    CCScaleTo::create(fade_time + (l * scale_time), 1.0f),
+                    CCSpawn::create(
+                        CCFadeIn::create(scale_time),
+                        CCScaleTo::create(scale_time, 1.5f),
+                        CCRotateTo::create(scale_time, 15),
+                        NULL
+                        ),
+                    CCRotateTo::create(shake_time, -15),
+                    CCSpawn::create(
+                        CCScaleTo::create(scale_time, 1.0f),
+                        CCRotateTo::create(scale_time, 0),
+                        NULL
+                        ),
+                    CCScaleTo::create(letter_animation_time - (l * scale_time) - (scale_time * 2) - shake_time + fade_time, 1.0f),
+                    NULL
+                    );
+
+        letter->runAction(letter_sequence[l]);
+    }
+
+    winner_message_background->runAction(winner_message_sequence);
+}
+
+void HockeyScene::playAgain()
+{
+    CCDirector::sharedDirector()->replaceScene(HockeyScene::scene());
+}
+
+void HockeyScene::goBack()
+{
+    CCDirector::sharedDirector()->replaceScene(MenuScene::scene());
+}
+
 /********************************************//**
  *  Update player score
  *  @param player int of the player
@@ -671,7 +845,14 @@ void HockeyScene::playerScore(short int player)
 		center = ccp(_screenSize.width / 2, _screenSize.height / 2 + _puck->get_radius());
 	}
 
-    showGoalLabel(player);
+    if(_bottomPlayerScore == 7 || _topPlayerScore == 7)
+    {
+        showWinnerLabel(player);
+    }
+    else
+    {
+        showGoalLabel(player);
+    }
 
 	/**
 	 *  display score
@@ -811,7 +992,7 @@ void HockeyScene::puckCollisionVector(CCPoint objectCenter, float objectRadius, 
 			_puck->setPosition(new_puck_position);
 		}
 
-		CCPoint new_puck_vector = ccp(puck_vector_force * cos(puck_vector_angle), puck_vector_force * sin(puck_vector_angle));
+        CCPoint new_puck_vector = ccp(puck_vector_force * 0.7 * cos(puck_vector_angle), puck_vector_force * sin(puck_vector_angle));
 
 		// multiply vector per vectors radio
 		_puck->setVector(new_puck_vector);

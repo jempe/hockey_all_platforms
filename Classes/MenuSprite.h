@@ -9,7 +9,7 @@ public:
     MenuSprite(void);
     virtual ~MenuSprite(void);
 
-    static MenuSprite* createWithText(const char * button_text);
+    static MenuSprite* createWithText(const char * button_text, bool active);
 
 };
 

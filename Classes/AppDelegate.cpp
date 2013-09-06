@@ -58,6 +58,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     // create a scene. it's an autorelease object
     CCScene *pScene = MenuScene::scene();
+    //CCScene *pScene = HockeyScene::scene();
 
     // run
     pDirector->runWithScene(pScene);

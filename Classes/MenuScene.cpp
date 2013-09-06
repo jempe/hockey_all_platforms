@@ -40,22 +40,26 @@ bool MenuScene::init()
 
     game_title->runAction(CCFadeIn::create(2.0f));
 
-    _one_player = MenuSprite::createWithText(CCLocalizedString("ONEPLAYER"));
+    _one_player = MenuSprite::createWithText(CCLocalizedString("ONEPLAYER"), false);
     _one_player->setPositionX(screenSize.width * 0.5 + (_one_player->getContentSize().width / 2));
 
-    _two_players = MenuSprite::createWithText(CCLocalizedString("TWOPLAYERS"));
+    MenuSprite * one_player_active = MenuSprite::createWithText(CCLocalizedString("ONEPLAYER"), true);
+
+    _two_players = MenuSprite::createWithText(CCLocalizedString("TWOPLAYERS"), false);
     _two_players->setPositionX(screenSize.width * 0.5 + (_two_players->getContentSize().width / 2));
+
+    MenuSprite * two_players_active = MenuSprite::createWithText(CCLocalizedString("TWOPLAYERS"), true);
 
     CCMenuItemSprite * menu_one_player = CCMenuItemSprite::create(
                 _one_player,
-                _one_player,
+                one_player_active,
                 this,
                 menu_selector(MenuScene::StartOnePlayer)
                 );
 
     CCMenuItemSprite * menu_two_players = CCMenuItemSprite::create(
                 _two_players,
-                _two_players,
+                two_players_active,
                 this,
                 menu_selector(MenuScene::StartTwoPlayers)
                 );
@@ -66,11 +70,13 @@ bool MenuScene::init()
 
     this->addChild(_playMenu);
 
-    _one_player->runAction(CCMoveTo::create(0.1, ccp(0, _one_player->getPositionY())));
+    float move_button_time = 0.2;
+
+    _one_player->runAction(CCMoveTo::create(move_button_time, ccp(0, _one_player->getPositionY())));
     _two_players->runAction(
                 CCSequence::create(
-                    CCMoveTo::create(0.1, ccp(_two_players->getPositionX(), _two_players->getPositionY())),
-                    CCMoveTo::create(0.1, ccp(0, _two_players->getPositionY())),
+                    CCScaleTo::create(move_button_time, 1.0f),
+                    CCMoveTo::create(move_button_time, ccp(0, _two_players->getPositionY())),
                     NULL
                     )
                 );
