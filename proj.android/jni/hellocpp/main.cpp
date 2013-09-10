@@ -1,3 +1,7 @@
+#ifndef HOCKEY_PAUSED
+#define HOCKEY_PAUSED "hockey_paused"
+#endif
+
 #include "AppDelegate.h"
 #include "platform/android/jni/JniHelper.h"
 #include <jni.h>
@@ -22,6 +26,7 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved)
 
 void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thiz, jint w, jint h)
 {
+	CCLog("Native Init");
     if (!CCDirector::sharedDirector()->getOpenGLView())
     {
         CCEGLView *view = CCEGLView::sharedOpenGLView();
@@ -42,6 +47,13 @@ void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, jobject thi
         CCDirector::sharedDirector()->setGLDefaultValues(); 
     }
     */
+}
+
+void Java_org_jempe_hockey_Hockey_pauseGame(JNIEnv*  env)
+{
+	CCLog("pause game");
+
+	CCNotificationCenter::sharedNotificationCenter()->postNotification(HOCKEY_PAUSED, NULL);
 }
 
 }

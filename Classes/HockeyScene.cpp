@@ -25,6 +25,12 @@ CCScene* HockeyScene::scene()
 // on "init" you need to initialize your instance
 bool HockeyScene::init()
 {
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
+	 this->setKeypadEnabled(true);
+#endif
+
+	_showingMenu = false;
+	_userMustResume = false;
 	_gamePaused = false;
 	_goToPuck = true;
     _playersNumber = CCUserDefault::sharedUserDefault()->getIntegerForKey("number_of_players");
@@ -177,7 +183,7 @@ bool HockeyScene::init()
     {
         char letter_file_name[] = {'g', 'o', 'a', 'l', '_', goalName[i], '.', 'p', 'n', 'g', '\0'};
 
-        CCLog("%s", letter_file_name);
+        //CCLog("%s", letter_file_name);
 
         CCSprite * letter = CCSprite::create(letter_file_name);
 
@@ -204,10 +210,40 @@ bool HockeyScene::init()
     this->addChild(_overlay);
     _overlay->setVisible(false);
 
+    // create pause menu and hide it
+
+	_resume_button = MenuSprite::createWithText(CCLocalizedString("RESUME"), false);
+	_resume_button_active = MenuSprite::createWithText(CCLocalizedString("RESUME"), true);
+	_go_to_menu_button = MenuSprite::createWithText(CCLocalizedString("GOBACK"), false);
+	_go_to_menu_button_active = MenuSprite::createWithText(CCLocalizedString("GOBACK"), true);
+
+	_resume_menu_item = CCMenuItemSprite::create(
+			_resume_button,
+			_resume_button_active,
+			this,
+			menu_selector(HockeyScene::resumeGame)
+	);
+
+	_go_to_menu_item = CCMenuItemSprite::create(
+			_go_to_menu_button,
+			_go_to_menu_button_active,
+			this,
+			menu_selector(HockeyScene::goBack)
+	);
+
+	_pause_menu = CCMenu::create(_resume_menu_item, _go_to_menu_item, NULL);
+	_pause_menu->alignItemsVerticallyWithPadding(_resume_button->getContentSize().height);
+	_pause_menu->setPosition(ccp(_screenSize.width * 0.5, _screenSize.height * 0.5));
+
+	this->addChild(_pause_menu);
+	_pause_menu->setVisible(false);
+
 
     // listen for touches
     this->setTouchEnabled(true);
     this->schedule(schedule_selector(HockeyScene::update));
+
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HockeyScene::showPauseMenu), HOCKEY_PAUSED, NULL);
 
     return true;
 }
@@ -335,161 +371,164 @@ void HockeyScene::update(float dt)
 {
 	VectorSprite * player;
 
-	/**
-	* detects collisions with mallets
-	*/
-	for(short unsigned int j = 0; j < _players->count(); j++)
+	if( ! _gamePaused)
 	{
-        player = (VectorSprite *) _players->objectAtIndex(j);
-
-        if(j < _playersNumber)
-        {
-            if(player->getTouch() == NULL)
-            {
-                player->setOpacity(128);
-            }
-            else
-            {
-                player->setOpacity(255);
-            }
-        }
-
-		CCPoint player_position = player->getNextPos();
-
-		puckCollisionVector(player_position, player->get_radius(), player->getVector());
-	}
-
-	_puck->setVector(ccpMult(_puck->getVector(), _friction));
-
-	/**
-	* detect and handle collisions with the sides of the table
-	*/
-
-	CCPoint puck_next_position = ccpAdd(_puck->getPosition(), _puck->getVector());
-	CCPoint current_puck_vector = _puck->getVector();
-
-	if(puck_next_position.x < _table_left->getContentSize().width + _puck->get_radius())
-	{
-		puck_next_position.x = _table_left->getContentSize().width + _puck->get_radius();
-
-		if(current_puck_vector.x < 0)
+		/**
+		 * detects collisions with mallets
+		 */
+		for(short unsigned int j = 0; j < _players->count(); j++)
 		{
-			_puck->setVector(ccp(- current_puck_vector.x, current_puck_vector.y));
-		}
-	}
-	else if(puck_next_position.x > _screenSize.width - _table_left->getContentSize().width - _puck->get_radius())
-	{
-		puck_next_position.x = _screenSize.width - _table_left->getContentSize().width - _puck->get_radius();
+			player = (VectorSprite *) _players->objectAtIndex(j);
 
-		if(current_puck_vector.x > 0)
+			if(j < _playersNumber)
+			{
+				if(player->getTouch() == NULL)
+				{
+					player->setOpacity(128);
+				}
+				else
+				{
+					player->setOpacity(255);
+				}
+			}
+
+			CCPoint player_position = player->getNextPos();
+
+			puckCollisionVector(player_position, player->get_radius(), player->getVector());
+		}
+
+		_puck->setVector(ccpMult(_puck->getVector(), _friction));
+
+		/**
+		 * detect and handle collisions with the sides of the table
+		 */
+
+		CCPoint puck_next_position = ccpAdd(_puck->getPosition(), _puck->getVector());
+		CCPoint current_puck_vector = _puck->getVector();
+
+		if(puck_next_position.x < _table_left->getContentSize().width + _puck->get_radius())
 		{
-			_puck->setVector(ccp(- current_puck_vector.x, current_puck_vector.y));
+			puck_next_position.x = _table_left->getContentSize().width + _puck->get_radius();
+
+			if(current_puck_vector.x < 0)
+			{
+				_puck->setVector(ccp(- current_puck_vector.x, current_puck_vector.y));
+			}
 		}
-	}
+		else if(puck_next_position.x > _screenSize.width - _table_left->getContentSize().width - _puck->get_radius())
+		{
+			puck_next_position.x = _screenSize.width - _table_left->getContentSize().width - _puck->get_radius();
 
-	/**
-	* detect and handle collisions with the sides of the goal
-	*/
+			if(current_puck_vector.x > 0)
+			{
+				_puck->setVector(ccp(- current_puck_vector.x, current_puck_vector.y));
+			}
+		}
 
-	if((puck_next_position.x < (_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) + _puck->get_radius() || puck_next_position.x > (_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) - _puck->get_radius()) && (puck_next_position.y < 0 || puck_next_position.y > _screenSize.height))
-	{
-		_puck->setVector(ccp(-current_puck_vector.x, current_puck_vector.y));
-	}
+		/**
+		 * detect and handle collisions with the sides of the goal
+		 */
 
-	/**
-	* detect and handle collisions with bottom and top of the table
-	*/
+		if((puck_next_position.x < (_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) + _puck->get_radius() || puck_next_position.x > (_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) - _puck->get_radius()) && (puck_next_position.y < 0 || puck_next_position.y > _screenSize.height))
+		{
+			_puck->setVector(ccp(-current_puck_vector.x, current_puck_vector.y));
+		}
 
-	if(puck_next_position.x < (_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) + _puck->get_radius() - _table_bottom_right->getContentSize().height || puck_next_position.x > (_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) - _puck->get_radius() + _table_bottom_right->getContentSize().height)
-	{
+		/**
+		 * detect and handle collisions with bottom and top of the table
+		 */
+
+		if(puck_next_position.x < (_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) + _puck->get_radius() - _table_bottom_right->getContentSize().height || puck_next_position.x > (_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) - _puck->get_radius() + _table_bottom_right->getContentSize().height)
+		{
+			if(puck_next_position.y < _table_bottom_right->getContentSize().height + _puck->get_radius())
+			{
+				puck_next_position.y = _table_bottom_right->getContentSize().height + _puck->get_radius();
+
+				if(current_puck_vector.y < 0)
+				{
+					_puck->setVector(ccp(current_puck_vector.x, -current_puck_vector.y));
+				}
+			}
+			else if(puck_next_position.y > _screenSize.height -_table_bottom_right->getContentSize().height - _puck->get_radius())
+			{
+				puck_next_position.y = _screenSize.height -_table_bottom_right->getContentSize().height - _puck->get_radius();
+
+				if(current_puck_vector.y > 0)
+				{
+					_puck->setVector(ccp(current_puck_vector.x, -current_puck_vector.y));
+				}
+			}
+		}
+
+		/**
+		 * detect and handle collisions with goal corners
+		 */
+
+		// center points of the goal corners
+		CCPoint goal_bottom_left = ccp((_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) - _table_bottom_right->getContentSize().height, 0);
+		CCPoint goal_bottom_right = ccp((_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) + _table_bottom_right->getContentSize().height, 0);
+		CCPoint goal_top_left = ccp((_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) - _table_bottom_right->getContentSize().height, _screenSize.height);
+		CCPoint goal_top_right = ccp((_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) + _table_bottom_right->getContentSize().height, _screenSize.height);
+
 		if(puck_next_position.y < _table_bottom_right->getContentSize().height + _puck->get_radius())
 		{
-			puck_next_position.y = _table_bottom_right->getContentSize().height + _puck->get_radius();
-
-			if(current_puck_vector.y < 0)
+			if(puck_next_position.x < _screenSize.width / 2)
 			{
-				_puck->setVector(ccp(current_puck_vector.x, -current_puck_vector.y));
+				puckCollisionVector(goal_bottom_left, _table_bottom_right->getContentSize().height, CCPoint (0, 0));
+			}
+			else
+			{
+				puckCollisionVector(goal_bottom_right, _table_bottom_right->getContentSize().height, CCPoint (0, 0));
 			}
 		}
-		else if(puck_next_position.y > _screenSize.height -_table_bottom_right->getContentSize().height - _puck->get_radius())
+		else if(puck_next_position.y > _screenSize.height - _table_bottom_right->getContentSize().height - _puck->get_radius())
 		{
-			puck_next_position.y = _screenSize.height -_table_bottom_right->getContentSize().height - _puck->get_radius();
-
-			if(current_puck_vector.y > 0)
+			if(puck_next_position.x < _screenSize.width / 2)
 			{
-				_puck->setVector(ccp(current_puck_vector.x, -current_puck_vector.y));
+				puckCollisionVector(goal_top_left, _table_bottom_right->getContentSize().height, CCPoint (0, 0));
+			}
+			else
+			{
+				puckCollisionVector(goal_top_right, _table_bottom_right->getContentSize().height, CCPoint (0, 0));
 			}
 		}
-	}
 
-	/**
-	* detect and handle collisions with goal corners
-	*/
+		/**
+		 * move puck to next position
+		 */
+		_puck->setPosition(puck_next_position);
 
-	// center points of the goal corners
-	CCPoint goal_bottom_left = ccp((_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) - _table_bottom_right->getContentSize().height, 0);
-	CCPoint goal_bottom_right = ccp((_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) + _table_bottom_right->getContentSize().height, 0);
-	CCPoint goal_top_left = ccp((_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) - _table_bottom_right->getContentSize().height, _screenSize.height);
-	CCPoint goal_top_right = ccp((_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) + _table_bottom_right->getContentSize().height, _screenSize.height);
+		/**
+		 * move mallets to next position
+		 */
 
-	if(puck_next_position.y < _table_bottom_right->getContentSize().height + _puck->get_radius())
-	{
-		if(puck_next_position.x < _screenSize.width / 2)
+		_bottomPlayer->setPosition(_bottomPlayer->getNextPos());
+
+		if(_playersNumber > 1)
 		{
-			puckCollisionVector(goal_bottom_left, _table_bottom_right->getContentSize().height, CCPoint (0, 0));
+			_topPlayer->setPosition(_topPlayer->getNextPos());
 		}
-		else
+		else if( ! _gamePaused)
 		{
-			puckCollisionVector(goal_bottom_right, _table_bottom_right->getContentSize().height, CCPoint (0, 0));
+			CCPoint next_computer_mallet_position = computerMalletPosition();
+
+			_topPlayer->setVector(ccp(next_computer_mallet_position.x - _topPlayer->getPositionX(), next_computer_mallet_position.y - _topPlayer->getPositionY()));
+			_topPlayer->setPosition(next_computer_mallet_position);
 		}
-	}
-	else if(puck_next_position.y > _screenSize.height - _table_bottom_right->getContentSize().height - _puck->get_radius())
-	{
-		if(puck_next_position.x < _screenSize.width / 2)
+
+		/**
+		 * detect goals
+		 */
+
+		if(_puck->getPositionY() < -_puck->get_radius())
 		{
-			puckCollisionVector(goal_top_left, _table_bottom_right->getContentSize().height, CCPoint (0, 0));
+			playerScore(2);
 		}
-		else
+
+		if(_puck->getPositionY() > _screenSize.height + _puck->get_radius())
 		{
-			puckCollisionVector(goal_top_right, _table_bottom_right->getContentSize().height, CCPoint (0, 0));
+			playerScore(1);
 		}
-	}
-
-	/**
-	* move puck to next position
-	*/
-	_puck->setPosition(puck_next_position);
-
-	/**
-	* move mallets to next position
-	*/
-
-	_bottomPlayer->setPosition(_bottomPlayer->getNextPos());
-
-	if(_playersNumber > 1)
-	{
-		_topPlayer->setPosition(_topPlayer->getNextPos());
-	}
-    else if( ! _gamePaused)
-	{
-		CCPoint next_computer_mallet_position = computerMalletPosition();
-
-		_topPlayer->setVector(ccp(next_computer_mallet_position.x - _topPlayer->getPositionX(), next_computer_mallet_position.y - _topPlayer->getPositionY()));
-		_topPlayer->setPosition(next_computer_mallet_position);
-	}
-
-	/**
-	* detect goals
-	*/
-
-	if(_puck->getPositionY() < -_puck->get_radius())
-	{
-		playerScore(2);
-	}
-
-	if(_puck->getPositionY() > _screenSize.height + _puck->get_radius())
-	{
-		playerScore(1);
 	}
 }
 /********************************************//**
@@ -502,7 +541,7 @@ CCPoint HockeyScene::computerMalletPosition()
 	if(_puck->getPositionY() > _screenSize.height / 2)
 	{
 		if(_goToPuck)
-		{
+        {
 			if(abs(mallet_position.x - _puck->getPositionX()) > _computer_mallet_speed)
 			{
 				if(mallet_position.x > _puck->getPositionX())
@@ -576,65 +615,89 @@ CCPoint HockeyScene::computerMalletPosition()
 		mallet_position.y += ((_screenSize.height * 0.75) - mallet_position.y) / return_speed;
 	}
 
-    //CCLog("mallet position y: %f", mallet_position.y);
+    CCLog("mallet position y: %f", mallet_position.y);
 
 	mallet_position = keepMalletInsideCourt(1, mallet_position);
 
-    //CCLog("mallet position after keep inside court y: %f", mallet_position.y);
+    CCLog("mallet position after keep inside court y: %f", mallet_position.y);
 
 	return mallet_position;
 }
 void HockeyScene::resumeAfterGoal()
 {
-    _gamePaused = false;
+	if( ! _userMustResume)
+	{
+		_gamePaused = false;
+	}
     _goal_message->setVisible(false);
+}
+
+void HockeyScene::showPauseMenu()
+{
+	if( ! _showingMenu)
+	{
+		_gamePaused = true;
+		_userMustResume = true;
+		_showingMenu = true;
+		_overlay->setVisible(true);
+		_pause_menu->setVisible(true);
+	}
+}
+
+void HockeyScene::resumeGame()
+{
+	_overlay->setVisible(false);
+	_userMustResume = false;
+	_showingMenu = false;
+	_gamePaused = false;
+	_pause_menu->setVisible(false);
 }
 
 void HockeyScene::showWinnerMenu()
 {
-    _overlay->setVisible(true);
+	_showingMenu = true;
+	_overlay->setVisible(true);
 
-    MenuSprite * again = MenuSprite::createWithText(CCLocalizedString("PLAYAGAIN"), false);
-    again->setPositionX(_screenSize.width * 0.5 + (again->getContentSize().width / 2));
+	MenuSprite * again = MenuSprite::createWithText(CCLocalizedString("PLAYAGAIN"), false);
+	again->setPositionX(_screenSize.width * 0.5 + (again->getContentSize().width / 2));
 
-    MenuSprite * again_active = MenuSprite::createWithText(CCLocalizedString("PLAYAGAIN"), true);
+	MenuSprite * again_active = MenuSprite::createWithText(CCLocalizedString("PLAYAGAIN"), true);
 
-    MenuSprite * go_back = MenuSprite::createWithText(CCLocalizedString("GOBACK"), false);
-    go_back->setPositionX(_screenSize.width * 0.5 + (go_back->getContentSize().width / 2));
+	MenuSprite * go_back = MenuSprite::createWithText(CCLocalizedString("GOBACK"), false);
+	go_back->setPositionX(_screenSize.width * 0.5 + (go_back->getContentSize().width / 2));
 
-    MenuSprite * go_back_active = MenuSprite::createWithText(CCLocalizedString("GOBACK"), true);
+	MenuSprite * go_back_active = MenuSprite::createWithText(CCLocalizedString("GOBACK"), true);
 
-    CCMenuItemSprite * menu_again = CCMenuItemSprite::create(
-                again,
-                again_active,
-                this,
-                menu_selector(HockeyScene::playAgain)
-                );
+	CCMenuItemSprite * menu_again = CCMenuItemSprite::create(
+			again,
+			again_active,
+			this,
+			menu_selector(HockeyScene::playAgain)
+	);
 
-    CCMenuItemSprite * menu_goback = CCMenuItemSprite::create(
-                go_back,
-                go_back_active,
-                this,
-                menu_selector(HockeyScene::goBack)
-                );
+	CCMenuItemSprite * menu_goback = CCMenuItemSprite::create(
+			go_back,
+			go_back_active,
+			this,
+			menu_selector(HockeyScene::goBack)
+	);
 
-    CCMenu * winMenu = CCMenu::create(menu_again, menu_goback, NULL);
-    winMenu->alignItemsVerticallyWithPadding(again->getContentSize().height * 0.4);
-    winMenu->setPosition(ccp(_screenSize.width * 0.5, _screenSize.height * 0.5));
+	CCMenu * winMenu = CCMenu::create(menu_again, menu_goback, NULL);
+	winMenu->alignItemsVerticallyWithPadding(again->getContentSize().height * 0.4);
+	winMenu->setPosition(ccp(_screenSize.width * 0.5, _screenSize.height * 0.5));
 
-    this->addChild(winMenu);
+	this->addChild(winMenu);
 
-    float move_button_time = 0.2;
+	float move_button_time = 0.2;
 
-    again->runAction(CCMoveTo::create(move_button_time, ccp(0, again->getPositionY())));
-    go_back->runAction(
-                CCSequence::create(
-                    CCScaleTo::create(move_button_time, 1.0),
-                    CCMoveTo::create(move_button_time, ccp(0, go_back->getPositionY())),
-                    NULL
-                    )
-                );
-
+	again->runAction(CCMoveTo::create(move_button_time, ccp(0, again->getPositionY())));
+	go_back->runAction(
+			CCSequence::create(
+					CCScaleTo::create(move_button_time, 1.0),
+					CCMoveTo::create(move_button_time, ccp(0, go_back->getPositionY())),
+					NULL
+			)
+	);
 }
 
 void HockeyScene::showGoalLabel(short int player)
@@ -709,6 +772,8 @@ void HockeyScene::showGoalLabel(short int player)
 
 void HockeyScene::showWinnerLabel(short int player)
 {
+	_showingMenu = true;
+
     // create the winner message layer
     CCLayer * winner_message = new CCLayer();
     winner_message->setPosition(ccp(_screenSize.width / 2, _screenSize.height / 2));
@@ -866,7 +931,7 @@ void HockeyScene::playerScore(short int player)
 	sprintf(score,"%d", _bottomPlayerScore);
 	_bottom_player_score->setString(score);
 
-	CCLog("top: %d bottom: %d", _topPlayerScore, _bottomPlayerScore);
+    //CCLog("top: %d bottom: %d", _topPlayerScore, _bottomPlayerScore);
 
 	_puck->setVector(ccp(0, 0));
 
@@ -891,7 +956,9 @@ void HockeyScene::playerScore(short int player)
 
 HockeyScene::~HockeyScene()
 {
+	CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, HOCKEY_PAUSED);
 	CC_SAFE_RELEASE(_players);
+	CC_SAFE_RELEASE(_goal_message_letters);
 }
 
 void HockeyScene::menuCloseCallback(CCObject* pSender)
@@ -945,7 +1012,7 @@ CCPoint HockeyScene::keepMalletInsideCourt(int player_id, CCPoint malletPosition
 
 	if(player_id == 1)
 	{
-        CCLog("mallet position y: %f", malletPosition.y);
+        //CCLog("mallet position y: %f", malletPosition.y);
 		if(malletPosition.y < (_screenSize.height / 2) + _topPlayer->get_radius())
 		{
 			malletPosition.y = (_screenSize.height / 2) + _topPlayer->get_radius();
@@ -955,7 +1022,10 @@ CCPoint HockeyScene::keepMalletInsideCourt(int player_id, CCPoint malletPosition
 		{
             if(malletPosition.x > (_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) + _puck->get_radius() && malletPosition.x < (_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) - _puck->get_radius())
 			{
-				malletPosition.y = _screenSize.height - _topPlayer->get_radius();
+                if(malletPosition.y > _screenSize.height - _topPlayer->get_radius())
+                {
+                    malletPosition.y = _screenSize.height - _topPlayer->get_radius();
+                }
 			}
 			else
 			{
@@ -997,4 +1067,9 @@ void HockeyScene::puckCollisionVector(CCPoint objectCenter, float objectRadius, 
 		// multiply vector per vectors radio
 		_puck->setVector(new_puck_vector);
 	}
+}
+
+void HockeyScene::keyBackClicked()
+{
+	showPauseMenu();
 }

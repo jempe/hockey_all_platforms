@@ -1,3 +1,7 @@
+#ifndef HOCKEY_PAUSED
+#define HOCKEY_PAUSED "hockey_paused"
+#endif
+
 #ifndef MENUSCENE_H
 #define MENUSCENE_H
 

@@ -26,12 +26,18 @@ package org.jempe.hockey;
 import org.cocos2dx.lib.Cocos2dxActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 
 public class Hockey extends Cocos2dxActivity{
+	
+	private static final String TAG = "Hockey Activity";
 
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
+		Log.v(TAG, "activity created");
 	}
+    
+    private native void pauseGame();
 	
     static {
          System.loadLibrary("game");

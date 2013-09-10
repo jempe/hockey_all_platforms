@@ -6,3 +6,4 @@ WINNERBACKGROUND = "winner_background.png";
 WINNERNAME = "Winner";
 PLAYAGAIN = "Play Again",
 GOBACK = "Go to Menu";
+RESUME = "Resume";

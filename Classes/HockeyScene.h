@@ -29,7 +29,10 @@ class HockeyScene : public cocos2d::CCLayerColor
 	CCPoint _computer_mallet_rest;
 
 	bool _gamePaused;
+	bool _userMustResume;
 	bool _goToPuck;
+
+	bool _showingMenu;
 
 	float _friction;
 
@@ -45,6 +48,14 @@ class HockeyScene : public cocos2d::CCLayerColor
     CCArray * _goal_message_letters;
 
     CCLayerColor * _overlay;
+
+    MenuSprite * _resume_button;
+    MenuSprite * _resume_button_active;
+    MenuSprite * _go_to_menu_button;
+    MenuSprite * _go_to_menu_button_active;
+    CCMenu * _pause_menu;
+    CCMenuItemSprite * _resume_menu_item;
+    CCMenuItemSprite * _go_to_menu_item;
 
 public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
@@ -69,6 +80,10 @@ public:
 
     void goBack();
 
+    void showPauseMenu();
+
+    void resumeGame();
+
     void showWinnerMenu();
 
     void showGoalLabel(short int player);
@@ -88,6 +103,8 @@ public:
     virtual void ccTouchesMoved(CCSet* touches, CCEvent* event);
 
     virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
+
+    virtual void keyBackClicked();
 };
 
 #endif // __HELLOWORLD_SCENE_H__
