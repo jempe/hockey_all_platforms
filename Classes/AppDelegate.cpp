@@ -50,6 +50,39 @@ bool AppDelegate::applicationDidFinishLaunching()
         CCFileUtils::sharedFileUtils()->addSearchPath("nexus10");
     }
 
+
+    std::string puck_effect = "puck.wav";
+    char const * puck_effect_file = puck_effect.c_str();
+
+    std::string puck_effect_location = CCFileUtils::sharedFileUtils()->fullPathForFilename(puck_effect_file);
+    char const * puck_effect_location_file = puck_effect_location.c_str();
+
+    SimpleAudioEngine::sharedEngine()->preloadEffect(puck_effect_location_file);
+
+    std::string puck_effect_wall = "puck_wall.wav";
+    char const * puck_effect_wall_file = puck_effect_wall.c_str();
+
+    std::string puck_effect_wall_location = CCFileUtils::sharedFileUtils()->fullPathForFilename(puck_effect_wall_file);
+    char const * puck_effect_wall_location_file = puck_effect_location.c_str();
+
+    SimpleAudioEngine::sharedEngine()->preloadEffect(puck_effect_wall_location_file);
+
+    std::string goal_effect = "goal.mp3";
+    char const * goal_effect_file = goal_effect.c_str();
+
+    std::string goal_effect_location = CCFileUtils::sharedFileUtils()->fullPathForFilename(goal_effect_file);
+    char const * goal_effect_location_file = goal_effect_location.c_str();
+
+    SimpleAudioEngine::sharedEngine()->preloadEffect(goal_effect_location_file);
+
+    std::string button_effect = "button.wav";
+    char const * button_effect_file = button_effect.c_str();
+
+    std::string button_effect_location = CCFileUtils::sharedFileUtils()->fullPathForFilename(button_effect_file);
+    char const * button_effect_location_file = button_effect_location.c_str();
+
+    SimpleAudioEngine::sharedEngine()->preloadEffect(button_effect_location_file);
+
     // turn on display FPS
     //pDirector->setDisplayStats(true);
 

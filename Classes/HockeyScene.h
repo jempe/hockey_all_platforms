@@ -15,6 +15,9 @@ class HockeyScene : public cocos2d::CCLayerColor
 
 	short unsigned int _playersNumber;
 
+	unsigned int _puck_ticks;
+	unsigned int _puck_wall_ticks;
+
 	CCArray * _players;
 
 	CCSize _screenSize;
@@ -85,6 +88,8 @@ public:
     void resumeGame();
 
     void showWinnerMenu();
+
+    void playWallEffect();
 
     void showGoalLabel(short int player);
 

@@ -1,5 +1,6 @@
 #include "MenuScene.h"
 #include "HockeyScene.h"
+#include "LevelsScene.h"
 #include "SimpleAudioEngine.h"
 
 using namespace cocos2d;
@@ -65,8 +66,8 @@ bool MenuScene::init()
                 );
 
     _playMenu = CCMenu::create(menu_one_player, menu_two_players, NULL);
-    _playMenu->alignItemsVerticallyWithPadding(_two_players->getContentSize().height * 0.2);
-    _playMenu->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.5));
+    _playMenu->alignItemsVerticallyWithPadding(_two_players->getContentSize().height * 0.35);
+    _playMenu->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.35));
 
     this->addChild(_playMenu);
 
@@ -86,11 +87,13 @@ bool MenuScene::init()
 
 void MenuScene::StartOnePlayer()
 {
-    StartGame(1);
+    SimpleAudioEngine::sharedEngine()->playEffect("button.wav");
+    CCDirector::sharedDirector()->replaceScene(LevelsScene::scene());
 }
 
 void MenuScene::StartTwoPlayers()
 {
+    SimpleAudioEngine::sharedEngine()->playEffect("button.wav");
     StartGame(2);
 }
 

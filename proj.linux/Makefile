@@ -8,6 +8,7 @@ SOURCES = main.cpp \
               ../Classes/MenuSprite.cpp \
               ../Classes/HockeyScene.cpp \
               ../Classes/MenuScene.cpp \
+              ../Classes/LevelsScene.cpp \
 	      ../Classes/CCLocalizedString.cpp
 
 COCOS_ROOT = ../../../..

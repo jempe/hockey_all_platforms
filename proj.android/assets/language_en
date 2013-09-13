@@ -7,3 +7,6 @@ WINNERNAME = "Winner";
 PLAYAGAIN = "Play Again",
 GOBACK = "Go to Menu";
 RESUME = "Resume";
+EASY = "Easy";
+MEDIUM = "Medium";
+HARD = "Hard";

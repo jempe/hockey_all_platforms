@@ -45,3 +45,5 @@ main.cpp
 Makefile
 ../Classes/MenuSprite.h
 ../Classes/MenuSprite.cpp
+../Classes/LevelsScene.h
+../Classes/LevelsScene.cpp

@@ -29,6 +29,8 @@ bool HockeyScene::init()
 	 this->setKeypadEnabled(true);
 #endif
 
+	 _puck_ticks = 0;
+	 _puck_wall_ticks = 0;
 	_showingMenu = false;
 	_userMustResume = false;
 	_gamePaused = false;
@@ -37,7 +39,7 @@ bool HockeyScene::init()
     _friction = 0.987;
 	_bottomPlayerScore = 0;
 	_topPlayerScore = 0;
-	_computer_player_level = 1;
+    _computer_player_level = CCUserDefault::sharedUserDefault()->getIntegerForKey("computer_level");
 
     //////////////////////////////
     // 1. super init first
@@ -138,7 +140,7 @@ bool HockeyScene::init()
     _bottomPlayer->setOpacity(128);
     this->addChild(_bottomPlayer);
 
-    _computer_mallet_speed = _topPlayer->get_radius() / 8;
+    _computer_mallet_speed = _topPlayer->get_radius() / CCUserDefault::sharedUserDefault()->getIntegerForKey("computer_speed");
 
     _players = CCArray::create(_bottomPlayer, _topPlayer, NULL);
     _players->retain();
@@ -369,6 +371,8 @@ void HockeyScene::ccTouchesEnded(CCSet* touches, CCEvent* event)
 
 void HockeyScene::update(float dt)
 {
+	_puck_ticks++;
+	_puck_wall_ticks++;
 	VectorSprite * player;
 
 	if( ! _gamePaused)
@@ -408,6 +412,8 @@ void HockeyScene::update(float dt)
 
 		if(puck_next_position.x < _table_left->getContentSize().width + _puck->get_radius())
 		{
+			playWallEffect();
+
 			puck_next_position.x = _table_left->getContentSize().width + _puck->get_radius();
 
 			if(current_puck_vector.x < 0)
@@ -417,6 +423,7 @@ void HockeyScene::update(float dt)
 		}
 		else if(puck_next_position.x > _screenSize.width - _table_left->getContentSize().width - _puck->get_radius())
 		{
+			playWallEffect();
 			puck_next_position.x = _screenSize.width - _table_left->getContentSize().width - _puck->get_radius();
 
 			if(current_puck_vector.x > 0)
@@ -431,6 +438,7 @@ void HockeyScene::update(float dt)
 
 		if((puck_next_position.x < (_screenSize.width / 2) - (_center_circle->getContentSize().width / 2) + _puck->get_radius() || puck_next_position.x > (_screenSize.width / 2) + (_center_circle->getContentSize().width / 2) - _puck->get_radius()) && (puck_next_position.y < 0 || puck_next_position.y > _screenSize.height))
 		{
+			playWallEffect();
 			_puck->setVector(ccp(-current_puck_vector.x, current_puck_vector.y));
 		}
 
@@ -442,6 +450,7 @@ void HockeyScene::update(float dt)
 		{
 			if(puck_next_position.y < _table_bottom_right->getContentSize().height + _puck->get_radius())
 			{
+				playWallEffect();
 				puck_next_position.y = _table_bottom_right->getContentSize().height + _puck->get_radius();
 
 				if(current_puck_vector.y < 0)
@@ -451,6 +460,7 @@ void HockeyScene::update(float dt)
 			}
 			else if(puck_next_position.y > _screenSize.height -_table_bottom_right->getContentSize().height - _puck->get_radius())
 			{
+				playWallEffect();
 				puck_next_position.y = _screenSize.height -_table_bottom_right->getContentSize().height - _puck->get_radius();
 
 				if(current_puck_vector.y > 0)
@@ -531,6 +541,16 @@ void HockeyScene::update(float dt)
 		}
 	}
 }
+
+void HockeyScene::playWallEffect()
+{
+	if(_puck_wall_ticks > 10) // avoid that effect is played more than once every collision
+	{
+			SimpleAudioEngine::sharedEngine()->playEffect("puck_wall.wav");
+			_puck_wall_ticks = 0;
+	}
+}
+
 /********************************************//**
  *  AI for computer mallet
  ***********************************************/
@@ -879,11 +899,13 @@ void HockeyScene::showWinnerLabel(short int player)
 
 void HockeyScene::playAgain()
 {
+    SimpleAudioEngine::sharedEngine()->playEffect("button.wav");
     CCDirector::sharedDirector()->replaceScene(HockeyScene::scene());
 }
 
 void HockeyScene::goBack()
 {
+    SimpleAudioEngine::sharedEngine()->playEffect("button.wav");
     CCDirector::sharedDirector()->replaceScene(MenuScene::scene());
 }
 
@@ -896,6 +918,8 @@ void HockeyScene::goBack()
 
 void HockeyScene::playerScore(short int player)
 {
+	SimpleAudioEngine::sharedEngine()->playEffect("goal.mp3");
+
     _goToPuck = true;
 	CCPoint center;
 
@@ -909,6 +933,8 @@ void HockeyScene::playerScore(short int player)
 		_bottomPlayerScore++;
 		center = ccp(_screenSize.width / 2, _screenSize.height / 2 + _puck->get_radius());
 	}
+
+
 
     if(_bottomPlayerScore == 7 || _topPlayerScore == 7)
     {
@@ -1045,6 +1071,12 @@ void HockeyScene::puckCollisionVector(CCPoint objectCenter, float objectRadius, 
 {
 	if(pow(objectCenter.x - _puck->getPositionX(),2) + pow(objectCenter.y - _puck->getPositionY(), 2) < pow(objectRadius + _puck->get_radius(), 2))
 	{
+		if(_puck_ticks > 10) // avoid that effect is played more than once every collision
+		{
+				SimpleAudioEngine::sharedEngine()->playEffect("puck.wav");
+				_puck_ticks = 0;
+		}
+
 		CCPoint current_puck_vector = _puck->getVector();
 
 		float puck_vector_force = sqrt(pow(objectVector.x, 2) + pow(objectVector.y, 2) + pow(current_puck_vector.x, 2) + pow(current_puck_vector.y, 2)) * _friction;

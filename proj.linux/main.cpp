@@ -14,6 +14,7 @@ int main(int argc, char **argv)
     AppDelegate app;
 
     CCEGLView* eglView = CCEGLView::sharedOpenGLView();
+    //eglView->setFrameSize(240, 320); // galaxy young
     eglView->setFrameSize(480, 800); // nexus
     //eglView->setFrameSize(320, 480); // iphone
     //eglView->setFrameSize(640, 1136); // iphone 5

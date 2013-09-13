@@ -13,6 +13,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/MenuSprite.cpp \
                    ../../Classes/VectorSprite.cpp \
                    ../../Classes/MenuScene.cpp \
+                   ../../Classes/LevelsScene.cpp \
                    ../../Classes/HockeyScene.cpp \
                    ../../Classes/CCLocalizedString.cpp
                    
