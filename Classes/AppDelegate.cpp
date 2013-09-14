@@ -50,6 +50,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         CCFileUtils::sharedFileUtils()->addSearchPath("nexus10");
     }
 
+    //pDirector->setContentScaleFactor(4);
 
     std::string puck_effect = "puck.wav";
     char const * puck_effect_file = puck_effect.c_str();

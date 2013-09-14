@@ -271,6 +271,8 @@ void HockeyScene::ccTouchesBegan(CCSet* touches, CCEvent* event)
 				{
 					player = (VectorSprite *) _players->objectAtIndex(j);
 
+                    CCPoint current_player_position = player->getPosition();
+
 					if(player->boundingBox().containsPoint(tap))
 					{
 						player->setTouch(touch);
@@ -281,6 +283,10 @@ void HockeyScene::ccTouchesBegan(CCSet* touches, CCEvent* event)
                         _bottomPlayer->setPosition(tap);
                         _bottomPlayer->setNextPos(tap);
 
+                        CCPoint bottom_player_vector = ccpMult(ccpForAngle(ccpToAngle(ccp(tap.x - current_player_position.x, tap.y - current_player_position.y))), (_topPlayer->get_radius() / 3));
+                        _bottomPlayer->setVector(bottom_player_vector);
+
+
                         _bottomPlayer->setTouch(touch);
                     }
                     else if(_playersNumber > 1 && _topPlayer->getTouch() == NULL && tap.y > _screenSize.height / 2)
@@ -288,6 +294,9 @@ void HockeyScene::ccTouchesBegan(CCSet* touches, CCEvent* event)
                         tap = keepMalletInsideCourt(1, tap);
                         _topPlayer->setPosition(tap);
                         _topPlayer->setNextPos(tap);
+
+                        CCPoint top_player_vector = ccpMult(ccpForAngle(ccpToAngle(ccp(tap.x - current_player_position.x, tap.y - current_player_position.y))), (_topPlayer->get_radius() / 3));
+                        _topPlayer->setVector(top_player_vector);
 
                         _topPlayer->setTouch(touch);
                     }
@@ -964,15 +973,27 @@ void HockeyScene::playerScore(short int player)
 	_puck->setNextPos(center);
 	_puck->setPosition(center);
 
-	CCPoint top_player_pos = ccp(_screenSize.width / 2, (_screenSize.height * 3) / 4);
-	CCPoint bottom_player_pos = ccp(_screenSize.width / 2, _screenSize.height / 4);
+    CCPoint top_player_pos;
+
+    if(_playersNumber > 1)
+    {
+        top_player_pos = ccp(_screenSize.width / 2, (_screenSize.height * 3) / 4);
+    }
+    else
+    {
+        top_player_pos = ccp(_screenSize.width / 2 + _puck->get_radius(), (_screenSize.height * 3) / 4);
+    }
+
+    CCPoint bottom_player_pos = ccp(_screenSize.width / 2, _screenSize.height / 4);
 
 	_topPlayer->setPosition(top_player_pos);
 	_topPlayer->setNextPos(top_player_pos);
+    _topPlayer->setVector(ccp(0, 0));
 	_topPlayer->setTouch(NULL);
 
 	_bottomPlayer->setPosition(bottom_player_pos);
 	_bottomPlayer->setNextPos(bottom_player_pos);
+    _bottomPlayer->setVector(ccp(0, 0));
 	_bottomPlayer->setTouch(NULL);
 }
 
