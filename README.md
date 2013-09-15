@@ -1,4 +1,5 @@
 hockey_all_platforms
 ====================
 
-Air Hockey Game
+Cocos 2d x cross platflorm Air Hockey Game
+
