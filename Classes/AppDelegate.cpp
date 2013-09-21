@@ -24,9 +24,12 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
 
     CCSize screensize = CCEGLView::sharedOpenGLView()->getFrameSize();
+    
+    CCLog("screen width: %f", screensize.width);
 
     if(screensize.width < 321) // iphone 480x320
     {
+        CCLog("Iphone resources");
     	CCFileUtils::sharedFileUtils()->addSearchPath("iphone");
     }
     else if(screensize.width < 481) // nexus 800 x 480
@@ -35,6 +38,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     }
     else if(screensize.width < 769)  // iphone 5 1136x640
     {
+        CCLog("iphone retina resources");
     	CCFileUtils::sharedFileUtils()->addSearchPath("iphone5");
     }
     else if(screensize.width < 1001) // nexus 7 1280x800
@@ -103,8 +107,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    CCDirector::sharedDirector()->pause();
-
+    //CCDirector::sharedDirector()->pause();
+    CCDirector::sharedDirector()->stopAnimation();
+    
     // if you use SimpleAudioEngine, it must be pause
     // SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 }
@@ -112,7 +117,8 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    CCDirector::sharedDirector()->resume();
+    //CCDirector::sharedDirector()->resume();
+    CCDirector::sharedDirector()->startAnimation();
     CCNotificationCenter::sharedNotificationCenter()->postNotification(HOCKEY_PAUSED, NULL);
     // if you use SimpleAudioEngine, it must resume here
     // SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();

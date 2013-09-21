@@ -644,11 +644,11 @@ CCPoint HockeyScene::computerMalletPosition()
 		mallet_position.y += ((_screenSize.height * 0.75) - mallet_position.y) / return_speed;
 	}
 
-    CCLog("mallet position y: %f", mallet_position.y);
+    //CCLog("mallet position y: %f", mallet_position.y);
 
 	mallet_position = keepMalletInsideCourt(1, mallet_position);
 
-    CCLog("mallet position after keep inside court y: %f", mallet_position.y);
+    //CCLog("mallet position after keep inside court y: %f", mallet_position.y);
 
 	return mallet_position;
 }
@@ -825,7 +825,7 @@ void HockeyScene::showWinnerLabel(short int player)
     {
         char letter_file_name[] = {'g', 'o', 'a', 'l', '_', winnerName[i], '.', 'p', 'n', 'g', '\0'};
 
-        CCLog("%s", letter_file_name);
+        //CCLog("%s", letter_file_name);
 
         CCSprite * letter = CCSprite::create(letter_file_name);
 

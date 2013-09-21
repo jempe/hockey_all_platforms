@@ -9,16 +9,9 @@
 	<key>CFBundleExecutable</key>
 	<string>Hockey</string>
 	<key>CFBundleIconFile</key>
-	<string>Icon-57.png</string>
+	<string>iphone_hockey_icon.png</string>
 	<key>CFBundleIconFiles</key>
 	<array>
-		<string>Icon.png</string>
-		<string>Icon@2x.png</string>
-		<string>Icon-57.png</string>
-		<string>Icon-114.png</string>
-		<string>Icon-72.png</string>
-		<string>Icon-144.png</string>
-		<string>hockey_icon.png</string>
 		<string>iphone4_hockey_icon.png</string>
 		<string>iphone_hockey_icon.png</string>
 		<string>ipad_retina_hockey_icon.png</string>
@@ -30,13 +23,6 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
-				<string>Icon.png</string>
-				<string>Icon@2x.png</string>
-				<string>Icon-57.png</string>
-				<string>Icon-114.png</string>
-				<string>Icon-72.png</string>
-				<string>Icon-144.png</string>
-				<string>hockey_icon.png</string>
 				<string>iphone4_hockey_icon.png</string>
 				<string>iphone_hockey_icon.png</string>
 				<string>ipad_retina_hockey_icon.png</string>
