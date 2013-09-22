@@ -1,7 +1,10 @@
+#include "jni/JniHelper.h"
+#include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include "MenuScene.h"
 #include "HockeyScene.h"
 #include "LevelsScene.h"
 #include "SimpleAudioEngine.h"
+#include <jni.h>
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -102,6 +105,25 @@ void MenuScene::StartGame(short int players)
     CCUserDefault::sharedUserDefault()->setIntegerForKey("number_of_players", players);
     CCDirector::sharedDirector()->replaceScene(HockeyScene::scene());
 }
+
+/*void MenuScene::flurry_event(std::string event_n)
+{
+    JniMethodInfo methodInfo;
+    if (! JniHelper::getStaticMethodInfo(methodInfo, "org/jempe/hockey/Hockey"
+            ,"flurry_event"
+            ,"(Ljava/lang/String;)V"))
+    {
+        CCLOG("%s %d: error to get methodInfo", __FILE__, __LINE__);
+    }
+    else
+    {
+        char const * event_name = event_n.c_str();
+
+        jstring j_event_name = methodInfo.env->NewStringUTF(event_name);
+
+        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, j_event_name);
+    }
+}*/
 
 MenuScene::~MenuScene()
 {

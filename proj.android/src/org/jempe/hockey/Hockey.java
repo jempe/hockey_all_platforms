@@ -28,6 +28,8 @@ import org.cocos2dx.lib.Cocos2dxActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.flurry.android.FlurryAgent;
+
 public class Hockey extends Cocos2dxActivity{
 	
 	private static final String TAG = "Hockey Activity";
@@ -36,10 +38,28 @@ public class Hockey extends Cocos2dxActivity{
 		super.onCreate(savedInstanceState);
 		Log.v(TAG, "activity created");
 	}
+	
+	@Override
+	protected void onStart()
+	{
+		super.onStart();
+		FlurryAgent.onStartSession(this, getString(R.string.flurry_api_key));
+	}
+	
+	@Override
+	protected void onStop()
+	{
+		super.onStop();		
+		FlurryAgent.onEndSession(this);
+	}
     
     private native void pauseGame();
 	
     static {
          System.loadLibrary("game");
+    }
+    
+    static void flurry_event(final String event_name) {
+    	FlurryAgent.logEvent(event_name);
     }
 }

@@ -1,3 +1,10 @@
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    #include "jni/JniHelper.h"
+    #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+    #include <jni.h>
+#endif
+
+#include <math.h>
 #include "HockeyScene.h"
 #include "MenuScene.h"
 #include "SimpleAudioEngine.h"
@@ -246,6 +253,15 @@ bool HockeyScene::init()
     this->schedule(schedule_selector(HockeyScene::update));
 
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(HockeyScene::showPauseMenu), HOCKEY_PAUSED, NULL);
+
+    if(_playersNumber > 1)
+    {
+    	flurry_event("Start Game with a friend");
+    }
+    else
+    {
+    	flurry_event("Start Game with computer");
+    }
 
     return true;
 }
@@ -803,6 +819,44 @@ void HockeyScene::showWinnerLabel(short int player)
 {
 	_showingMenu = true;
 
+	if(_playersNumber > 1)
+	{
+		flurry_event("Finished game with a friend");
+	}
+	else
+	{
+		if(player > 1)
+		{
+			if(_computer_player_level == 1)
+			{
+				flurry_event("Computer won (Easy)");
+			}
+			else if (_computer_player_level == 2)
+			{
+				flurry_event("Computer won (Medium)");
+			}
+			else
+			{
+				flurry_event("Computer won (Hard)");
+			}
+		}
+		else
+		{
+			if(_computer_player_level == 1)
+			{
+				flurry_event("Player won (Easy)");
+			}
+			else if (_computer_player_level == 2)
+			{
+				flurry_event("Player won (Medium)");
+			}
+			else
+			{
+				flurry_event("Player won (Hard)");
+			}
+		}
+	}
+
     // create the winner message layer
     CCLayer * winner_message = new CCLayer();
     winner_message->setPosition(ccp(_screenSize.width / 2, _screenSize.height / 2));
@@ -1108,6 +1162,18 @@ void HockeyScene::puckCollisionVector(CCPoint objectCenter, float objectRadius, 
 		 *  check if object is a corner and dont let it overlap it
 		 */
 
+        // speed threshold speed will increase few after this point
+        float puck_speed_treshold = _puck->get_radius() * 1.92;
+
+
+        // log2 to avoid extremelly fast pucks
+        if(puck_vector_force / puck_speed_treshold > 1)
+        {
+            puck_vector_force = puck_speed_treshold + ((log_2(puck_vector_force / puck_speed_treshold)) * 2);
+        }
+
+        CCLog("puck force after : %f x puck radius", puck_vector_force / _puck->get_radius());
+
 		if(objectCenter.y == 0 || objectCenter.y == _screenSize.height)
 		{
 			CCPoint new_puck_position = ccp(objectCenter.x + (sin(puck_vector_angle + PI) * (objectRadius + _puck->get_radius())), objectCenter.y + (cos(puck_vector_angle + PI) * (objectRadius + _puck->get_radius())));
@@ -1115,14 +1181,42 @@ void HockeyScene::puckCollisionVector(CCPoint objectCenter, float objectRadius, 
 			_puck->setPosition(new_puck_position);
 		}
 
-        CCPoint new_puck_vector = ccp(puck_vector_force * 0.7 * cos(puck_vector_angle), puck_vector_force * sin(puck_vector_angle));
+        CCPoint new_puck_vector = ccp(puck_vector_force * cos(puck_vector_angle), puck_vector_force * sin(puck_vector_angle));
 
 		// multiply vector per vectors radio
 		_puck->setVector(new_puck_vector);
 	}
 }
 
+void HockeyScene::flurry_event(std::string event_n)
+{
+    char const * event_name = event_n.c_str();
+
+    CCLog("flurry_event %s", event_name);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    JniMethodInfo methodInfo;
+    if (! JniHelper::getStaticMethodInfo(methodInfo, "org/jempe/hockey/Hockey"
+            ,"flurry_event"
+            ,"(Ljava/lang/String;)V"))
+    {
+        CCLOG("%s %d: error to get methodInfo", __FILE__, __LINE__);
+    }
+    else
+    {
+        jstring j_event_name = methodInfo.env->NewStringUTF(event_name);
+
+        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, j_event_name);
+    }
+#endif
+}
+
 void HockeyScene::keyBackClicked()
 {
 	showPauseMenu();
+}
+
+float HockeyScene::log_2(float n)
+{
+    return log(n) / log(2);
 }

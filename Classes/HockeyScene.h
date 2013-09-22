@@ -110,6 +110,10 @@ public:
     virtual void ccTouchesEnded(CCSet* touches, CCEvent* event);
 
     virtual void keyBackClicked();
+
+    void flurry_event(std::string event_n);
+
+    float log_2(float n);
 };
 
 #endif // __HELLOWORLD_SCENE_H__

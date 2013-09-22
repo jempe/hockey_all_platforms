@@ -32,6 +32,8 @@ public:
     void StartTwoPlayers();
 
     void StartGame(short int players);
+
+    //void flurry_event(std::string event_n);
 };
 
 #endif // MENUSCENE_H

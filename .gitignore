@@ -35,6 +35,7 @@ proj.android/gen/
 proj.android/obj/
 proj.android/libs/armeabi/
 proj.android/assets/
+proj.android/libs/
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -48,6 +49,10 @@ proj.android/.settings
 *.o
 *.o.d
 *.so
+
+#flurry api key
+
+proj.android/res/values/flurry.xml
 
 #linux
 proj.linux/obj/
