@@ -47,5 +47,3 @@ Makefile
 ../Classes/MenuSprite.cpp
 ../Classes/LevelsScene.h
 ../Classes/LevelsScene.cpp
-../Classes/jni_methods.h
-../Classes/jni_methods.cpp

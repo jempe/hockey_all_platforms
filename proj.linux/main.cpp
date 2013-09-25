@@ -1,3 +1,4 @@
+
 #include "../Classes/AppDelegate.h"
 #include "cocos2d.h"
 
@@ -15,15 +16,15 @@ int main(int argc, char **argv)
 
     CCEGLView* eglView = CCEGLView::sharedOpenGLView();
     //eglView->setFrameSize(240, 320); // galaxy young
-    eglView->setFrameSize(480, 800); // nexus
     //eglView->setFrameSize(320, 480); // iphone
-    //eglView->setFrameSize(640, 1136); // iphone 5
+    eglView->setFrameSize(480, 800); // nexus
     //eglView->setFrameSize(640, 960); // iphone 4
-    //eglView->setFrameSize(800, 1280); // nexus 7
-    //eglView->setFrameSize(1200 / 4, 1920 / 4); // nexus 7 II
-    //eglView->setFrameSize(1600 / 4, 2560 / 4); // nexus 10
+    //eglView->setFrameSize(640, 1136); // iphone 5
     //eglView->setFrameSize(768, 1024); // ipad ipad mini
-    //eglView->setFrameSize(1536 /*/ 4*/, 2048 /*/ 4*/); // ipad 3
+    //eglView->setFrameSize(800, 1280); // nexus 7
+    //eglView->setFrameSize(1200, 1920); // nexus 7 II
+    //eglView->setFrameSize(1600, 2560); // nexus 10
+    //eglView->setFrameSize(1536, 2048); // ipad 3
 
     return CCApplication::sharedApplication()->run();
 }

@@ -34,6 +34,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     }
     else if(screensize.width < 481) // nexus 800 x 480
     {
+        CCLog("nexus s resources");
     	CCFileUtils::sharedFileUtils()->addSearchPath("nexus");
     }
     else if(screensize.width < 769)  // iphone 5 1136x640
@@ -43,14 +44,17 @@ bool AppDelegate::applicationDidFinishLaunching()
     }
     else if(screensize.width < 1001) // nexus 7 1280x800
     {
+        CCLog("nexus 7 resources");
         CCFileUtils::sharedFileUtils()->addSearchPath("nexus7");
     }
     else if(screensize.width < 1201) // nexus 7 II 1920x1200
     {
+        CCLog("nexus 7 II resources");
         CCFileUtils::sharedFileUtils()->addSearchPath("nexus7II");
     }
     else // nexus 10 2560x1600
     {
+        CCLog("nexus 10 resources");
         CCFileUtils::sharedFileUtils()->addSearchPath("nexus10");
     }
 
