@@ -1,13 +1,13 @@
-#if defined(ANDROID)
-    #include "jni/JniHelper.h"
-    #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
-    #include <jni.h>
-#endif
-
 #include <math.h>
 #include "HockeyScene.h"
 #include "MenuScene.h"
 #include "SimpleAudioEngine.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    #include "jni/JniHelper.h"
+    #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+    #include <jni.h>
+#endif
 
 using namespace cocos2d;
 using namespace CocosDenshion;
