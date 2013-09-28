@@ -53,6 +53,9 @@ proj.android/.settings
 #flurry api key
 
 proj.android/res/values/flurry.xml
+proj.ios/flurry_api_key.txt
+
+proj.ios/Flurry/*
 
 #linux
 proj.linux/obj/

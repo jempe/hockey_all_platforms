@@ -28,6 +28,8 @@
 #import "AppDelegate.h"
 
 #import "RootViewController.h"
+#import "Flurry.h"
+
 
 @implementation AppController
 
@@ -38,6 +40,25 @@
 static AppDelegate s_sharedApplication;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
+
+    [Flurry setCrashReportingEnabled:YES];
+    //note: iOS only allows one crash reporting tool per app; if using another, set to: NO
+    
+    NSString * flurry_api_key_file = [[NSBundle mainBundle] pathForResource:@"flurry_api_key" ofType:@"txt"];
+    
+    if(flurry_api_key_file)
+    {
+        NSString * flurry_api_key = [NSString stringWithContentsOfFile:flurry_api_key_file];
+        
+        NSLog(@"Flurry API: %@", flurry_api_key);
+        [Flurry startSession:flurry_api_key];
+    }
+    else
+    {
+        NSLog(@"create a text file flurry_api_key.txt with the Flurry API Key");
+    }
+    
+    //your code
     
     // Override point for customization after application launch.
 

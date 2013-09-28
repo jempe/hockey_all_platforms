@@ -32,6 +32,10 @@
 		BF365AA812A103F70050DCF4 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF365AA712A103F70050DCF4 /* AppController.mm */; };
 		BF4DE6AD138BB89600CF907D /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF4DE6AC138BB89600CF907D /* RootViewController.mm */; };
 		D4ABB4B313B4395300552E6E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ABB4B213B4395300552E6E /* main.m */; };
+		F0132E3717F3821900ECF5AA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0132E3617F3821900ECF5AA /* Security.framework */; };
+		F0247A1117F798EF00D30678 /* flurry_api_key.txt in Resources */ = {isa = PBXBuildFile; fileRef = F0247A1017F798EF00D30678 /* flurry_api_key.txt */; };
+		F03E683817F3785A000E1B5E /* libFlurry_4.2.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F03E683717F3785A000E1B5E /* libFlurry_4.2.3.a */; };
+		F03E683C17F379E3000E1B5E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F03E683B17F379E3000E1B5E /* SystemConfiguration.framework */; };
 		F06CA82717E902A400E13315 /* button.wav in Resources */ = {isa = PBXBuildFile; fileRef = F06CA81B17E902A400E13315 /* button.wav */; };
 		F06CA82817E902A400E13315 /* goal.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F06CA81C17E902A400E13315 /* goal.mp3 */; };
 		F06CA82917E902A400E13315 /* iphone in Resources */ = {isa = PBXBuildFile; fileRef = F06CA81D17E902A400E13315 /* iphone */; };
@@ -44,6 +48,7 @@
 		F06CA83017E902A400E13315 /* nexus10 in Resources */ = {isa = PBXBuildFile; fileRef = F06CA82417E902A400E13315 /* nexus10 */; };
 		F06CA83117E902A400E13315 /* puck_wall.wav in Resources */ = {isa = PBXBuildFile; fileRef = F06CA82517E902A400E13315 /* puck_wall.wav */; };
 		F06CA83217E902A400E13315 /* puck.wav in Resources */ = {isa = PBXBuildFile; fileRef = F06CA82617E902A400E13315 /* puck.wav */; };
+		F08A05D417F5FF20007B15D3 /* flurry_helper.mm in Sources */ = {isa = PBXBuildFile; fileRef = F08A05D317F5FF20007B15D3 /* flurry_helper.mm */; };
 		F0A4707117E6933F00975F65 /* CCLocalizedString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0A4706917E6933F00975F65 /* CCLocalizedString.cpp */; };
 		F0A4707217E6933F00975F65 /* LevelsScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0A4706B17E6933F00975F65 /* LevelsScene.cpp */; };
 		F0A4707317E6933F00975F65 /* MenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0A4706D17E6933F00975F65 /* MenuScene.cpp */; };
@@ -110,6 +115,11 @@
 		BF4DE6AB138BB89600CF907D /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		BF4DE6AC138BB89600CF907D /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
 		D4ABB4B213B4395300552E6E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F0132E3617F3821900ECF5AA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		F0247A1017F798EF00D30678 /* flurry_api_key.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = flurry_api_key.txt; sourceTree = "<group>"; };
+		F03E683617F3785A000E1B5E /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		F03E683717F3785A000E1B5E /* libFlurry_4.2.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.2.3.a; sourceTree = "<group>"; };
+		F03E683B17F379E3000E1B5E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		F06CA81B17E902A400E13315 /* button.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = button.wav; path = ../Resources/button.wav; sourceTree = "<group>"; };
 		F06CA81C17E902A400E13315 /* goal.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = goal.mp3; path = ../Resources/goal.mp3; sourceTree = "<group>"; };
 		F06CA81D17E902A400E13315 /* iphone */ = {isa = PBXFileReference; lastKnownFileType = folder; name = iphone; path = ../Resources/iphone; sourceTree = "<group>"; };
@@ -122,6 +132,8 @@
 		F06CA82417E902A400E13315 /* nexus10 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = nexus10; path = ../Resources/nexus10; sourceTree = "<group>"; };
 		F06CA82517E902A400E13315 /* puck_wall.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = puck_wall.wav; path = ../Resources/puck_wall.wav; sourceTree = "<group>"; };
 		F06CA82617E902A400E13315 /* puck.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = puck.wav; path = ../Resources/puck.wav; sourceTree = "<group>"; };
+		F08A05D217F5FF20007B15D3 /* flurry_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flurry_helper.h; sourceTree = "<group>"; };
+		F08A05D317F5FF20007B15D3 /* flurry_helper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = flurry_helper.mm; sourceTree = "<group>"; };
 		F0A4706917E6933F00975F65 /* CCLocalizedString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLocalizedString.cpp; sourceTree = "<group>"; };
 		F0A4706A17E6933F00975F65 /* CCLocalizedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLocalizedString.h; sourceTree = "<group>"; };
 		F0A4706B17E6933F00975F65 /* LevelsScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelsScene.cpp; sourceTree = "<group>"; };
@@ -149,6 +161,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0132E3717F3821900ECF5AA /* Security.framework in Frameworks */,
+				F03E683C17F379E3000E1B5E /* SystemConfiguration.framework in Frameworks */,
 				F0A471ED17E69AD500975F65 /* OpenAL.framework in Frameworks */,
 				F0A471EC17E69AB800975F65 /* AVFoundation.framework in Frameworks */,
 				F0A471EB17E69A8E00975F65 /* AudioToolbox.framework in Frameworks */,
@@ -160,6 +174,7 @@
 				BF1373F0128A899500D9F789 /* libxml2.dylib in Frameworks */,
 				BF1373F1128A899E00D9F789 /* libz.dylib in Frameworks */,
 				BF13742F128A8E6A00D9F789 /* QuartzCore.framework in Frameworks */,
+				F03E683817F3785A000E1B5E /* libFlurry_4.2.3.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,6 +200,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				F0247A1017F798EF00D30678 /* flurry_api_key.txt */,
+				F03E683517F3785A000E1B5E /* Flurry */,
 				F06CA81A17E901E500E13315 /* Resources */,
 				F0A471D717E698E800975F65 /* CocosDenshion */,
 				846431F317AB024300D38FC8 /* Default-Landscape~ipad.png */,
@@ -207,6 +224,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F0132E3617F3821900ECF5AA /* Security.framework */,
+				F03E683B17F379E3000E1B5E /* SystemConfiguration.framework */,
 				BF492B6912891AC600A09262 /* libz.dylib */,
 				BF137426128A8E4600D9F789 /* QuartzCore.framework */,
 				BF492D4B1289302400A09262 /* OpenGLES.framework */,
@@ -262,8 +281,19 @@
 				BF365AA712A103F70050DCF4 /* AppController.mm */,
 				BF4DE6AB138BB89600CF907D /* RootViewController.h */,
 				BF4DE6AC138BB89600CF907D /* RootViewController.mm */,
+				F08A05D217F5FF20007B15D3 /* flurry_helper.h */,
+				F08A05D317F5FF20007B15D3 /* flurry_helper.mm */,
 			);
 			name = ios;
+			sourceTree = "<group>";
+		};
+		F03E683517F3785A000E1B5E /* Flurry */ = {
+			isa = PBXGroup;
+			children = (
+				F03E683617F3785A000E1B5E /* Flurry.h */,
+				F03E683717F3785A000E1B5E /* libFlurry_4.2.3.a */,
+			);
+			path = Flurry;
 			sourceTree = "<group>";
 		};
 		F06CA81A17E901E500E13315 /* Resources */ = {
@@ -414,6 +444,7 @@
 				F06CA83017E902A400E13315 /* nexus10 in Resources */,
 				F06CA83117E902A400E13315 /* puck_wall.wav in Resources */,
 				F06CA83217E902A400E13315 /* puck.wav in Resources */,
+				F0247A1117F798EF00D30678 /* flurry_api_key.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,6 +470,7 @@
 				F0A471E817E6992600975F65 /* CocosDenshion.m in Sources */,
 				F0A471E917E6992600975F65 /* SimpleAudioEngine.mm in Sources */,
 				F0A471EA17E6992600975F65 /* SimpleAudioEngine_objc.m in Sources */,
+				F08A05D417F5FF20007B15D3 /* flurry_helper.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,6 +520,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../Classes/TestFlightSDK2.0.0\"",
+					"\"$(SRCROOT)/Flurry\"",
 				);
 				PRODUCT_NAME = Hockey;
 				PROVISIONING_PROFILE = "525ECF75-5C00-4B76-A4B0-CF341CFFC0F9";
@@ -532,6 +565,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../Classes/TestFlightSDK2.0.0\"",
+					"\"$(SRCROOT)/Flurry\"",
 				);
 				PRODUCT_NAME = Hockey;
 				PROVISIONING_PROFILE = "525ECF75-5C00-4B76-A4B0-CF341CFFC0F9";

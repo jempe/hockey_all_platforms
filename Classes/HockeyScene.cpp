@@ -8,6 +8,9 @@
     #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
     #include <jni.h>
 #endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    #include "flurry_helper.h";
+#endif
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -1208,6 +1211,10 @@ void HockeyScene::flurry_event(std::string event_n)
 
         methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, j_event_name);
     }
+#endif
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    flurry_helper::logEvent(event_name);
 #endif
 }
 
