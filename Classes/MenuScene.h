@@ -11,6 +11,8 @@
 
 class MenuScene : public cocos2d::CCLayerGradient
 {
+    CCSpriteBatchNode * _gameBatchNode;
+
     CCMenu * _playMenu;
     CCSprite * _one_player;
     CCSprite * _two_players;

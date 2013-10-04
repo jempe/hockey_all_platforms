@@ -34,10 +34,14 @@ bool MenuScene::init()
 
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
 
-    CCSprite * game_title = CCSprite::create("game_title.png");
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("sprite_sheet.plist");
+    _gameBatchNode = CCSpriteBatchNode::create("sprite_sheet.png", 1);
+    this->addChild(_gameBatchNode);
+
+    CCSprite * game_title = CCSprite::createWithSpriteFrameName("game_title.png");
     game_title->setPosition(ccp(screenSize.width / 2, screenSize.height * 0.75));
     game_title->setOpacity(0);
-    this->addChild(game_title);
+    _gameBatchNode->addChild(game_title);
 
     game_title->runAction(CCFadeIn::create(2.0f));
 

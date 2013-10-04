@@ -10,3 +10,4 @@ RESUME = "Resume";
 EASY = "Easy";
 MEDIUM = "Medium";
 HARD = "Hard";
+YOURSCORE = "Your Score";

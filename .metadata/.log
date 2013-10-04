@@ -1,0 +1,31 @@
+!SESSION 2013-09-17 20:46:28.106 -----------------------------------------------
+eclipse.buildId=2.2.0
+java.version=1.7.0_40
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en
+Framework arguments:  -Dorg.eclipse.swt.browser.DefaultType=MOZILLA
+Command-line arguments:  -data /home/sucio/bin/cocos2dx2.1/jempeGames/Cpp/Hockey -os linux -ws gtk -arch x86_64 -clean -Dorg.eclipse.swt.browser.DefaultType=MOZILLA
+
+!ENTRY org.eclipse.update.configurator 4 0 2013-09-17 20:47:02.495
+!MESSAGE Plugin does not have a valid identifier: plugins/org.tizen.native.apireference_2.2.0.jar
+
+!ENTRY org.eclipse.update.configurator 4 0 2013-09-17 20:47:02.499
+!MESSAGE Plugin does not have a valid version: plugins/org.tizen.native.apireference_2.2.0.jar
+
+!ENTRY org.eclipse.update.configurator 4 0 2013-09-17 20:47:02.817
+!MESSAGE Plugin does not have a valid identifier: plugins/org.tizen.native.apireference/
+
+!ENTRY org.eclipse.update.configurator 4 0 2013-09-17 20:47:02.817
+!MESSAGE Plugin does not have a valid version: plugins/org.tizen.native.apireference/
+
+!ENTRY org.eclipse.ui 4 4 2013-09-17 20:47:06.004
+!MESSAGE Part already exists in page layout: org.tizen.webuibuilder.ui.views.PagesView.
+
+!ENTRY org.tizen.common.ui.Startup 1 0 2013-09-17 20:47:15.884
+!MESSAGE SDK Information: Path [/home/sucio/tizen-sdk], Data Path [/home/sucio/tizen-sdk-data], Platform Path [/home/sucio/tizen-sdk/platforms/tizen2.2]
+
+!ENTRY org.eclipse.ui 4 4 2013-09-17 20:47:51.219
+!MESSAGE Invalid preference page path: Field Assist
+
+!ENTRY org.eclipse.ui 4 4 2013-09-17 20:47:51.219
+!MESSAGE Invalid preference page path: Library Hover

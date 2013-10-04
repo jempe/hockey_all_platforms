@@ -8,12 +8,18 @@
 
 class HockeyScene : public cocos2d::CCLayerColor
 {
+    const char * _font_file;
+
+    CCSpriteBatchNode * _gameBatchNode;
+
 	VectorSprite * _topPlayer;
 	VectorSprite * _bottomPlayer;
 
 	VectorSprite * _puck;
 
 	short unsigned int _playersNumber;
+
+    unsigned int _seconds_played;
 
 	unsigned int _puck_ticks;
 	unsigned int _puck_wall_ticks;
@@ -26,8 +32,8 @@ class HockeyScene : public cocos2d::CCLayerColor
 	CCSprite * _table_left;
 	CCSprite * _center_circle;
 
-	CCLabelBMFont * _top_player_score;
-	CCLabelBMFont * _bottom_player_score;
+    CCLabelTTF * _top_player_score;
+    CCLabelTTF * _bottom_player_score;
 
 	CCPoint _computer_mallet_rest;
 
@@ -42,6 +48,11 @@ class HockeyScene : public cocos2d::CCLayerColor
 	short unsigned int _topPlayerScore;
 	short unsigned int _bottomPlayerScore;
 
+    unsigned int _playerScore;
+    short unsigned int _current_score_digit;
+    short unsigned int _score_digits;
+    short unsigned int _current_digit_value;
+
 	short unsigned int _computer_player_level;
 	float _computer_mallet_speed;
 
@@ -49,6 +60,8 @@ class HockeyScene : public cocos2d::CCLayerColor
     CCLayer * _goal_message;
     CCSprite * _goal_message_background;
     CCArray * _goal_message_letters;
+
+    CCLabelTTF * _final_score;
 
     CCLayerColor * _overlay;
 
@@ -77,6 +90,8 @@ public:
 
     void update(float dt);
 
+    void timer();
+
     void resumeAfterGoal();
 
     void playAgain();
@@ -86,6 +101,10 @@ public:
     void showPauseMenu();
 
     void resumeGame();
+
+    void generate_score();
+
+    void showScoreCongrats();
 
     void showWinnerMenu();
 

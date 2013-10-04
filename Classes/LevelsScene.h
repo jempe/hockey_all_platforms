@@ -11,6 +11,7 @@
 
 class LevelsScene : public cocos2d::CCLayerGradient
 {
+    CCSpriteBatchNode * _gameBatchNode;
     CCMenu * _levelsMenu;
 
 public:

@@ -18,6 +18,8 @@ SHAREDLIBS += -lcocos2d -lcocosdenshion
 COCOS_LIBS = $(LIB_DIR)/libcocos2d.so $(LIB_DIR)/libcocosdenshion.so
 INCLUDES += -I$(COCOS_ROOT)/CocosDenshion/include
 
+CXXFLAGS += -g -Wall -D_DEBUG ${INCLUDEFLAGS}
+
 $(TARGET): $(OBJECTS) $(STATICLIBS) $(COCOS_LIBS) $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
 	$(LOG_LINK)$(CXX) $(CXXFLAGS) $(OBJECTS) -o $@ $(SHAREDLIBS) $(STATICLIBS)

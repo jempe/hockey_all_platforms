@@ -1,0 +1,4 @@
+eclipse.preferences.version=1
+org.tizen.common.logger.cp=[%d{yyyy.MM.dd HH\:mm\:ss}][%-5p] %F(%L) - %m%n
+org.tizen.common.logger.level=ERROR
+org.tizen.common.logger.location2=%X{workspace}/.metadata/ide-%d{yyyyMMdd}.log

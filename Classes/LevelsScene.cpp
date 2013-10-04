@@ -38,6 +38,10 @@ bool LevelsScene::init()
 
     CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
 
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("sprite_sheet.plist");
+    _gameBatchNode = CCSpriteBatchNode::create("sprite_sheet.png", 1);
+    this->addChild(_gameBatchNode);
+
     MenuSprite * easy_button = MenuSprite::createWithText(CCLocalizedString("EASY"), false);
     easy_button->setPositionX(screenSize.width * 0.5 + (easy_button->getContentSize().width / 2));
 
@@ -74,9 +78,9 @@ bool LevelsScene::init()
                 menu_selector(LevelsScene::StartHard)
                 );
 
-    CCSprite * back_button = CCSprite::create("back_button.png");
+    CCSprite * back_button = CCSprite::createWithSpriteFrameName("back_button.png");
 
-    CCSprite * back_button_active = CCSprite::create("back_button_active.png");
+    CCSprite * back_button_active = CCSprite::createWithSpriteFrameName("back_button_active.png");
 
     CCMenuItemSprite * back_button_item = CCMenuItemSprite::create(
                 back_button,

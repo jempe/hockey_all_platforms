@@ -10,3 +10,4 @@ RESUME = "Continuar";
 EASY = "Fácil";
 MEDIUM = "Medio";
 HARD = "Difícil";
+YOURSCORE = "Tu Puntaje";
