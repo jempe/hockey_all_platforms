@@ -25,6 +25,9 @@ CCScene* MenuScene::scene()
 // on "init" you need to initialize your instance
 bool MenuScene::init()
 {
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
+	 this->setKeypadEnabled(true);
+#endif
     //////////////////////////////
     // 1. super init first
     if ( ! CCLayerGradient::initWithColor(ccc4(113, 152, 210, 255), ccc4(222, 231, 244, 255), ccp(0, -1)))
@@ -105,6 +108,16 @@ void MenuScene::StartGame(short int players)
 {
     CCUserDefault::sharedUserDefault()->setIntegerForKey("number_of_players", players);
     CCDirector::sharedDirector()->replaceScene(HockeyScene::scene());
+}
+
+void MenuScene::keyBackClicked()
+{
+	CCLog("back key");
+    CCDirector::sharedDirector()->end();
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    exit(0);
+#endif
 }
 
 MenuScene::~MenuScene()

@@ -933,8 +933,6 @@ void HockeyScene::generate_score()
     }
 
     _final_score->setString(display_numbers);
-
-    CCLog("animate score %s", display_numbers);
 }
 
 /********************************************//**
@@ -943,6 +941,49 @@ void HockeyScene::generate_score()
 
 void HockeyScene::showScoreCongrats()
 {
+	const char * high_score_recipient;
+
+	if(_computer_player_level == 1)
+	{
+		high_score_recipient = "high_score1";
+	}
+	else if(_computer_player_level == 2)
+	{
+		high_score_recipient = "high_score2";
+	}
+	else
+	{
+		high_score_recipient = "high_score3";
+	}
+
+    unsigned int high_score = CCUserDefault::sharedUserDefault()->getIntegerForKey(high_score_recipient);
+
+    if(_playerScore >= high_score)
+	{
+        CCSprite * high_score_label = CCSprite::createWithSpriteFrameName(CCLocalizedString("HIGHSCORELABEL"));
+        high_score_label->setPosition(ccp(_screenSize.width / 2, _screenSize.height * 0.75));
+        high_score_label->setOpacity(0.0f);
+        high_score_label->setScale(2.0f);
+        this->addChild(high_score_label);
+
+        CCSequence * show_high_score_label =
+                CCSequence::create(
+                    CCScaleTo::create(1.0, 2.0f),
+                    CCSpawn::create(
+                        CCFadeIn::create(0.2f),
+                        CCScaleTo::create(0.2f, 1.0f),
+                        NULL
+                        ),
+                    NULL
+                    );
+        high_score_label->runAction(show_high_score_label);
+
+		CCLog("new %s: %u", high_score_recipient, _playerScore);
+		CCUserDefault::sharedUserDefault()->setIntegerForKey(high_score_recipient, _playerScore);
+	}
+
+    _overlay->setVisible(true);
+
     CCSprite * yellow_circle = CCSprite::createWithSpriteFrameName("score_yellow.png");
     yellow_circle->setPosition(ccp(_screenSize.width / 2, _screenSize.height / 2));
     yellow_circle->setScale(0.1f);
@@ -962,6 +1003,31 @@ void HockeyScene::showScoreCongrats()
     your_score->setPosition(ccp(_screenSize.width / 2, _screenSize.height / 2 + (_topPlayer->get_radius() * 1.3)));
     your_score->setColor(ccc3(0,0,0));
     this->addChild(your_score);
+
+    CCSprite * back_button = CCSprite::createWithSpriteFrameName("back_button.png");
+    CCSprite * back_button_active = CCSprite::createWithSpriteFrameName("back_button_active.png");
+
+    CCMenuItemSprite * back_button_item = CCMenuItemSprite::create(
+                back_button,
+                back_button_active,
+                this,
+                menu_selector(HockeyScene::goBack)
+                );
+
+    CCSprite * replay_button = CCSprite::createWithSpriteFrameName("replay_button.png");
+    CCSprite * replay_button_active = CCSprite::createWithSpriteFrameName("replay_button_active.png");
+
+    CCMenuItemSprite * replay_button_item = CCMenuItemSprite::create(
+                replay_button,
+                replay_button_active,
+                this,
+                menu_selector(HockeyScene::playAgain)
+                );
+
+    CCMenu * replay_menu = CCMenu::create(back_button_item, replay_button_item, NULL);
+    replay_menu->alignItemsHorizontallyWithPadding(back_button->getContentSize().width * 0.15);
+    replay_menu->setPosition(ccp(_screenSize.width / 2, _screenSize.height / 2 - (yellow_circle->getContentSize().width * 0.75)));
+    this->addChild(replay_menu);
 
     // create score label
     _final_score = CCLabelTTF::create("0", _font_file, (int) (_puck->get_radius() * 2.5));
@@ -1062,12 +1128,7 @@ void HockeyScene::showWinnerLabel(short int player)
 
             user_score = (((float) _bottomPlayerScore - (float) _topPlayerScore) / (float) _seconds_played) * 500.0f;
 
-            CCLog("seconds played: %u", _seconds_played);
-            CCLog("user score: %f", user_score);
-
             _playerScore = (int) (user_score * user_score);
-
-            CCLog("user score: %u", _playerScore);
 
 			if(_computer_player_level == 1)
 			{
@@ -1137,10 +1198,17 @@ void HockeyScene::showWinnerLabel(short int player)
         winner_message->setRotation(0);
     }
 
-    //CCFiniteTimeAction* winner_label_done = CCCallFuncN::create( this,
-    //                                        callfuncN_selector(HockeyScene::showWinnerMenu));
+    CCFiniteTimeAction* winner_label_done;
 
-    CCFiniteTimeAction* winner_label_done = CCCallFuncN::create( this, callfuncN_selector(HockeyScene::showScoreCongrats));
+    if(_playersNumber == 1 && player == 1)
+    {
+        winner_label_done = CCCallFuncN::create( this, callfuncN_selector(HockeyScene::showScoreCongrats));
+    }
+    else
+    {
+        winner_label_done = CCCallFuncN::create( this, callfuncN_selector(HockeyScene::showWinnerMenu));
+    }
+
 
     float fade_time = 0.2f;
     float scale_time = 0.1f;
@@ -1228,7 +1296,8 @@ void HockeyScene::playerScore(short int player)
 
 
 
-    if(_bottomPlayerScore == 7 || _topPlayerScore == 7)
+    //if(_bottomPlayerScore == 7 || _topPlayerScore == 7)
+    if(_bottomPlayerScore == 1 || _topPlayerScore == 1)
     {
         showWinnerLabel(player);
     }

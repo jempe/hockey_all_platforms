@@ -50,6 +50,9 @@ proj.android/.settings
 *.o.d
 *.so
 
+# eclipse
+.metadata
+
 #flurry api key
 
 proj.android/res/values/flurry.xml

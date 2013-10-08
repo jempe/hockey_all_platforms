@@ -158,6 +158,7 @@ void LevelsScene::StartGame()
 
 void LevelsScene::keyBackClicked()
 {
+	CCLog("back key clicked");
 	GoBack();
 }
 

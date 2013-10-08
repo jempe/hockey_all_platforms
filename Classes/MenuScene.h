@@ -35,6 +35,8 @@ public:
 
     void StartGame(short int players);
 
+    virtual void keyBackClicked();
+
     //void flurry_event(std::string event_n);
 };
 

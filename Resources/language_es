@@ -11,3 +11,4 @@ EASY = "Fácil";
 MEDIUM = "Medio";
 HARD = "Difícil";
 YOURSCORE = "Tu Puntaje";
+HIGHSCORELABEL = "nuevo_record.png"

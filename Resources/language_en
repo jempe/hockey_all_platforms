@@ -11,3 +11,4 @@ EASY = "Easy";
 MEDIUM = "Medium";
 HARD = "Hard";
 YOURSCORE = "Your Score";
+HIGHSCORELABEL = "new_high_score.png"

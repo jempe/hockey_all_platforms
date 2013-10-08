@@ -1,12 +1,14 @@
 #include "AppDelegate.h"
 #include "SimpleAudioEngine.h"
 
-#include "cocos2d.h"
+#include <vector>
+#include <string>
+
 #include "MenuScene.h"
-#include "HockeyScene.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
+using namespace std;
 
 AppDelegate::AppDelegate()
 {
@@ -20,43 +22,54 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    CCDirector *pDirector = CCDirector::sharedDirector();
-    pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
+    CCDirector* pDirector = CCDirector::sharedDirector();
+    CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
 
-    CCSize screensize = CCEGLView::sharedOpenGLView()->getFrameSize();
+	pDirector->setOpenGLView(pEGLView);
+
+    CCSize screensize = pEGLView->getFrameSize();
     
     CCLog("screen width: %f", screensize.width);
+
+	vector<string> searchPath;
 
     if(screensize.width < 321) // iphone 480x320
     {
         CCLog("Iphone resources");
-    	CCFileUtils::sharedFileUtils()->addSearchPath("iphone");
+        searchPath.push_back("iphone");
     }
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
     else if(screensize.width < 481) // nexus 800 x 480
     {
         CCLog("nexus s resources");
-    	CCFileUtils::sharedFileUtils()->addSearchPath("nexus");
+		searchPath.push_back("nexus");
     }
+#endif
     else if(screensize.width < 769)  // iphone 5 1136x640
     {
         CCLog("iphone retina resources");
-    	CCFileUtils::sharedFileUtils()->addSearchPath("iphone5");
+        searchPath.push_back("iphone5");
     }
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
     else if(screensize.width < 1001) // nexus 7 1280x800
     {
         CCLog("nexus 7 resources");
-        CCFileUtils::sharedFileUtils()->addSearchPath("nexus7");
+        searchPath.push_back("nexus7");
     }
     else if(screensize.width < 1201) // nexus 7 II 1920x1200
     {
         CCLog("nexus 7 II resources");
-        CCFileUtils::sharedFileUtils()->addSearchPath("nexus7II");
+        searchPath.push_back("nexus7II");
     }
+#endif
     else // nexus 10 2560x1600
     {
         CCLog("nexus 10 resources");
-        CCFileUtils::sharedFileUtils()->addSearchPath("nexus10");
+        searchPath.push_back("nexus10");
     }
+
+    // set searching path
+	CCFileUtils::sharedFileUtils()->setSearchPaths(searchPath);
 
     //pDirector->setContentScaleFactor(4);
 
@@ -100,7 +113,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     // create a scene. it's an autorelease object
     CCScene *pScene = MenuScene::scene();
-    //CCScene *pScene = HockeyScene::scene();
 
     // run
     pDirector->runWithScene(pScene);
@@ -111,12 +123,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
-    CCDirector::sharedDirector()->pause();
-#else
     CCDirector::sharedDirector()->stopAnimation();
-#endif
-    
+
     // if you use SimpleAudioEngine, it must be pause
     // SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 }
@@ -124,11 +132,7 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
-    CCDirector::sharedDirector()->resume();
-#else
     CCDirector::sharedDirector()->startAnimation();
-#endif
 
     CCNotificationCenter::sharedNotificationCenter()->postNotification(HOCKEY_PAUSED, NULL);
     // if you use SimpleAudioEngine, it must resume here
