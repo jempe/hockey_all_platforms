@@ -23,6 +23,40 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
+				<string>icon80</string>
+				<string>icon58</string>
+				<string>icon29</string>
+				<string>icon120</string>
+				<string>icon114</string>
+				<string>icon57</string>
+				<string>iphone4_hockey_icon.png</string>
+				<string>iphone_hockey_icon.png</string>
+				<string>ipad_retina_hockey_icon.png</string>
+				<string>ipad_hockey_icon.png</string>
+			</array>
+			<key>UIPrerenderedIcon</key>
+			<true/>
+		</dict>
+	</dict>
+	<key>CFBundleIcons~ipad</key>
+	<dict>
+		<key>CFBundlePrimaryIcon</key>
+		<dict>
+			<key>CFBundleIconFiles</key>
+			<array>
+				<string>icon58</string>
+				<string>icon80</string>
+				<string>icon40</string>
+				<string>icon100</string>
+				<string>icon29</string>
+				<string>icon50</string>
+				<string>icon152</string>
+				<string>icon76</string>
+				<string>icon144</string>
+				<string>icon72</string>
+				<string>icon120</string>
+				<string>icon114</string>
+				<string>icon57</string>
 				<string>iphone4_hockey_icon.png</string>
 				<string>iphone_hockey_icon.png</string>
 				<string>ipad_retina_hockey_icon.png</string>
@@ -50,7 +84,13 @@
 	<true/>
 	<key>NSMainNibFile</key>
 	<string></string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>LondrinaSolid-Regular.ttf</string>
+	</array>
 	<key>UIPrerenderedIcon</key>
+	<true/>
+	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>

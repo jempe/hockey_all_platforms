@@ -23,6 +23,10 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.jempe.hockey;
 
+import me.kiip.sdk.Kiip;
+import me.kiip.sdk.KiipFragmentCompat;
+import me.kiip.sdk.Poptart;
+
 import org.cocos2dx.lib.Cocos2dxActivity;
 
 import android.os.Bundle;
@@ -32,26 +36,67 @@ import com.flurry.android.FlurryAgent;
 
 public class Hockey extends Cocos2dxActivity{
 	
+    private final static String KIIP_TAG = "kiip_fragment_tag";
+
+    private static KiipFragmentCompat mKiipFragment;
+    
 	private static final String TAG = "Hockey Activity";
 
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		Log.v(TAG, "activity created");
+		
+		// Change libcocos2dx Activity class to FragmentActivity need to add android-support-v4.jar
+		// add KiipSDK.jar to the libs folder
+		
+        // Create or re-use KiipFragment.
+        if (savedInstanceState != null) {
+            mKiipFragment = (KiipFragmentCompat) getSupportFragmentManager().findFragmentByTag(KIIP_TAG);
+        } else {
+            mKiipFragment = new KiipFragmentCompat();
+            getSupportFragmentManager().beginTransaction().add(mKiipFragment, KIIP_TAG).commit();
+        }
 	}
 	
 	@Override
 	protected void onStart()
 	{
 		super.onStart();
+        Kiip.getInstance().startSession(new Kiip.Callback() {
+            @Override
+            public void onFailed(Kiip kiip, Exception exception) {
+                // handle failure
+            }
+
+            @Override
+            public void onFinished(Kiip kiip, Poptart poptart) {
+                onPoptart(poptart);
+            }
+        });
+		
 		FlurryAgent.onStartSession(this, getString(R.string.flurry_api_key));
 	}
 	
 	@Override
 	protected void onStop()
 	{
-		super.onStop();		
+		super.onStop();	
 		FlurryAgent.onEndSession(this);
+        Kiip.getInstance().endSession(new Kiip.Callback() {
+            @Override
+            public void onFailed(Kiip kiip, Exception exception) {
+                // handle failure
+            }
+
+            @Override
+            public void onFinished(Kiip kiip, Poptart poptart) {
+                onPoptart(poptart);
+            }
+        });
 	}
+	
+    static void onPoptart(Poptart poptart) {
+        mKiipFragment.showPoptart(poptart);
+    }
     
     private native void pauseGame();
 	
@@ -59,7 +104,25 @@ public class Hockey extends Cocos2dxActivity{
          System.loadLibrary("game");
     }
     
-    static void flurry_event(final String event_name) {
+    static void flurry_event(final String event_name)
+    {
     	FlurryAgent.logEvent(event_name);
+    }
+  
+    static void kiip_moment(final String moment_name)
+    {
+       	Kiip.getInstance().saveMoment(moment_name, new Kiip.Callback() {
+    		@Override
+    		public void onFinished(Kiip kiip, Poptart reward) 
+    		{
+    			onPoptart(reward);
+    			Log.d("kiip", "kiip reward");
+    		}
+
+    		@Override
+    		public void onFailed(Kiip kiip, Exception exception) {
+    			// handle failure
+    		}
+    	});
     }
 }
