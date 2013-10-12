@@ -53,10 +53,12 @@ proj.android/.settings
 # eclipse
 .metadata
 
-#flurry api key
+#flurry and kiip api key
 
 proj.android/res/values/flurry.xml
 proj.ios/flurry_api_key.txt
+proj.ios/kiip_key.txt
+proj.ios/kiip_secret.txt
 
 proj.ios/Flurry/*
 

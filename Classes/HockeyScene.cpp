@@ -11,6 +11,7 @@
 #endif
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #include "flurry_helper.h"
+    #include "kiip_helper.h"
 #endif
 
 using namespace cocos2d;
@@ -1539,7 +1540,7 @@ void HockeyScene::save_moment(std::string moment_n)
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    //flurry_helper::logEvent(event_name);
+    kiip_helper::saveMoment(moment_name);
 #endif
 }
 

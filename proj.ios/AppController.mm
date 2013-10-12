@@ -30,7 +30,6 @@
 #import "RootViewController.h"
 #import "Flurry.h"
 
-
 @implementation AppController
 
 #pragma mark -
@@ -50,7 +49,6 @@ static AppDelegate s_sharedApplication;
     {
         NSString * flurry_api_key = [NSString stringWithContentsOfFile:flurry_api_key_file];
         
-        NSLog(@"Flurry API: %@", flurry_api_key);
         [Flurry startSession:flurry_api_key];
     }
     else
@@ -58,6 +56,22 @@ static AppDelegate s_sharedApplication;
         NSLog(@"create a text file flurry_api_key.txt with the Flurry API Key");
     }
     
+    NSString * kiip_key_file = [[NSBundle mainBundle] pathForResource:@"kiip_key" ofType:@"txt"];
+    NSString * kiip_secret_file = [[NSBundle mainBundle] pathForResource:@"kiip_secret" ofType:@"txt"];
+    
+    if(kiip_key_file && kiip_secret_file)
+    {
+        NSString * kiip_key = [NSString stringWithContentsOfFile:kiip_key_file];
+        NSString * kiip_secret = [NSString stringWithContentsOfFile:kiip_secret_file];
+        
+        Kiip *kiip = [[Kiip alloc] initWithAppKey:kiip_key andSecret:kiip_secret];
+        kiip.delegate = self;
+        [Kiip setSharedInstance:kiip];
+    }
+    else
+    {
+        NSLog(@"create a text file flurry_api_key.txt with the Flurry API Key");
+    }
     //your code
     
     // Override point for customization after application launch.

@@ -22,9 +22,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#import <KiipSDK/KiipSDK.h>
+
 @class RootViewController;
 
-@interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate,UIApplicationDelegate> {
+@interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate,UIApplicationDelegate, KiipDelegate> {
     UIWindow *window;
     RootViewController    *viewController;
 }
