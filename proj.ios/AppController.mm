@@ -33,6 +33,29 @@
 @implementation AppController
 
 #pragma mark -
+#pragma mark Game Center Support
+
+@synthesize currentPlayerID,
+gameCenterAuthenticationComplete;
+
+#pragma mark -
+#pragma mark Game Center Support
+
+// Check for the availability of Game Center API.
+static BOOL isGameCenterAPIAvailable()
+{
+    // Check for presence of GKLocalPlayer API.
+    Class gcClass = (NSClassFromString(@"GKLocalPlayer"));
+    
+    // The device must be running running iOS 4.1 or later.
+    NSString *reqSysVer = @"4.1";
+    NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
+    BOOL osVersionSupported = ([currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending);
+    
+    return (gcClass && osVersionSupported);
+}
+
+#pragma mark -
 #pragma mark Application lifecycle
 
 // cocos2d application instance
@@ -109,6 +132,62 @@ static AppDelegate s_sharedApplication;
     [[UIApplication sharedApplication] setStatusBarHidden: YES];
     
     cocos2d::CCApplication::sharedApplication()->run();
+    
+    self.gameCenterAuthenticationComplete = NO;
+    
+    if (!isGameCenterAPIAvailable()) {
+        // Game Center is not available.
+    } else {
+        
+        GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
+        
+        /*
+         The authenticateWithCompletionHandler method is like all completion handler methods and runs a block
+         of code after completing its task. The difference with this method is that it does not release the
+         completion handler after calling it. Whenever your application returns to the foreground after
+         running in the background, Game Kit re-authenticates the user and calls the retained completion
+         handler. This means the authenticateWithCompletionHandler: method only needs to be called once each
+         time your application is launched. This is the reason the sample authenticates in the application
+         delegate's application:didFinishLaunchingWithOptions: method instead of in the view controller's
+         viewDidLoad method.
+         
+         Remember this call returns immediately, before the user is authenticated. This is because it uses
+         Grand Central Dispatch to call the block asynchronously once authentication completes.
+         */
+        [[GKLocalPlayer localPlayer] authenticateWithCompletionHandler:^(NSError *error) {
+            // If there is an error, do not assume local player is not authenticated.
+            if (localPlayer.isAuthenticated) {
+                
+                // Enable Game Center Functionality
+                self.gameCenterAuthenticationComplete = YES;
+                
+                if (! self.currentPlayerID || ! [self.currentPlayerID isEqualToString:localPlayer.playerID]) {
+                    
+                    // Switching Users
+                    if (! viewController.player || ![self.currentPlayerID isEqualToString:localPlayer.playerID]) {
+                        // If there is an existing player, replace the existing PlayerModel object with a
+                        // new object, and use it to load the new player's saved achievements.
+                        // It is not necessary for the previous PlayerModel object to writes its data first;
+                        // It automatically saves the changes whenever its list of stored
+                        // achievements changes.
+                        
+                        viewController.player = [[[PlayerModel alloc] init] autorelease];
+                    }
+                    [[viewController player] loadStoredScores];
+                    [[viewController player] resubmitStoredScores];
+                    
+                    // Load new game instance around new player being logged in.
+                    
+                }
+                [viewController enableGameCenter:YES];
+            } else {
+                // User has logged out of Game Center or can not login to Game Center, your app should run
+				// without GameCenter support or user interface.
+                self.gameCenterAuthenticationComplete = NO;
+                [viewController enableGameCenter:NO];
+            }
+        }];
+    }
     return YES;
 }
 

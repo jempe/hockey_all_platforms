@@ -76,6 +76,7 @@
 		F0A471EB17E69A8E00975F65 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 781C33B31547F06B00633F88 /* AudioToolbox.framework */; };
 		F0A471EC17E69AB800975F65 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 781C33B51547F06B00633F88 /* AVFoundation.framework */; };
 		F0A471ED17E69AD500975F65 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 781C33B11547F06B00633F88 /* OpenAL.framework */; };
+		F0FA78921809FC9300183A4C /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0FA78911809FC9300183A4C /* GameKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -185,6 +186,7 @@
 		F0A471E317E6992600975F65 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
 		F0A471E417E6992600975F65 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		F0A471E517E6992600975F65 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
+		F0FA78911809FC9300183A4C /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +194,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0FA78921809FC9300183A4C /* GameKit.framework in Frameworks */,
 				F07BB71C1808C331004408BF /* PassKit.framework in Frameworks */,
 				F07BB71A1808C316004408BF /* AdSupport.framework in Frameworks */,
 				F07BB7181808C2D2004408BF /* CoreTelephony.framework in Frameworks */,
@@ -262,6 +265,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F0FA78911809FC9300183A4C /* GameKit.framework */,
 				F07BB71B1808C331004408BF /* PassKit.framework */,
 				F07BB7191808C316004408BF /* AdSupport.framework */,
 				F07BB7171808C2D2004408BF /* CoreTelephony.framework */,
