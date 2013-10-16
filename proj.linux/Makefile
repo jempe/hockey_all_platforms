@@ -6,6 +6,7 @@ SOURCES = main.cpp \
               ../Classes/AppDelegate.cpp \
               ../Classes/VectorSprite.cpp \
               ../Classes/MenuSprite.cpp \
+              ../Classes/SquareButton.cpp \
               ../Classes/HockeyScene.cpp \
               ../Classes/MenuScene.cpp \
               ../Classes/LevelsScene.cpp \

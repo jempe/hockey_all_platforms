@@ -42,7 +42,9 @@ bool MenuScene::init()
     this->addChild(_gameBatchNode);
 
     CCSprite * game_title = CCSprite::createWithSpriteFrameName("game_title.png");
-    game_title->setPosition(ccp(screenSize.width / 2, screenSize.height * 0.75));
+    game_title->setPosition(ccp(screenSize.width / 2,
+                                screenSize.height -
+                                (((screenSize.height / 2) - (game_title->getContentSize().height * 0.6)) / 2)));
     game_title->setOpacity(0);
     _gameBatchNode->addChild(game_title);
 
@@ -74,7 +76,7 @@ bool MenuScene::init()
 
     _playMenu = CCMenu::create(menu_one_player, menu_two_players, NULL);
     _playMenu->alignItemsVerticallyWithPadding(_two_players->getContentSize().height * 0.35);
-    _playMenu->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.35));
+    _playMenu->setPosition(ccp(screenSize.width * 0.5, screenSize.height * 0.5));
 
     this->addChild(_playMenu);
 
@@ -88,6 +90,10 @@ bool MenuScene::init()
                     NULL
                     )
                 );
+
+    SquareButton * leaderboard_button = SquareButton::createWithIcon("leaderboard_icon.png", false);
+    leaderboard_button->setPosition(ccp(screenSize.width / 2, leaderboard_button->getContentSize().height * 0.65));
+    this->addChild(leaderboard_button);
 
     return true;
 }

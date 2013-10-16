@@ -28,6 +28,8 @@
 
 @implementation RootViewController
 
+@synthesize player;
+
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -44,13 +46,14 @@
 }
 */
 
-/*
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
-    [super viewDidLoad];
+    //[super viewDidLoad];
+    [self enableGameCenter:NO];
 }
  
-*/
+
 // Override to allow orientations other than the default portrait orientation.
 // This method is deprecated on ios6
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -88,8 +91,30 @@
     // e.g. self.myOutlet = nil;
 }
 
+/*// Example of how to bring up a specific leaderboard
+- (void)showLeaderboard:(NSString *)leaderboard 
+{
+    GKLeaderboardViewController * leaderboardViewController = [[GKLeaderboardViewController alloc] init];
+    [leaderboardViewController setCategory:leaderboard];
+    [leaderboardViewController setLeaderboardDelegate:self];
+    [self presentModalViewController:leaderboardViewController  animated:YES];
+    [leaderboardViewController release];
+}
+
+- (void)leaderboardViewControllerDidFinish:(GKLeaderboardViewController *)viewController  
+{
+	[self dismissModalViewControllerAnimated: YES];
+}*/
+
+// Disable GameCenter options from view 
+- (void)enableGameCenter:(BOOL)enableGameCenter 
+{
+    //[showLeaderboardButton setEnabled:enableGameCenter];
+}
+
 
 - (void)dealloc {
+    [player release];
     [super dealloc];
 }
 

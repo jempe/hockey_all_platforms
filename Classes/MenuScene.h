@@ -7,6 +7,7 @@
 
 #include "cocos2d.h"
 #include "MenuSprite.h"
+#include "SquareButton.h"
 #include "CCLocalizedString.h"
 
 class MenuScene : public cocos2d::CCLayerGradient

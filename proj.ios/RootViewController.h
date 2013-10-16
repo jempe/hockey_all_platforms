@@ -24,10 +24,25 @@
  ****************************************************************************/
 
 #import <UIKit/UIKit.h>
+#import <GameKit/GameKit.h>
+#import "PlayerModel.h"
 
 
 @interface RootViewController : UIViewController {
 
 }
+
+
+// This assists in caching game center data until 
+@property (readwrite, retain) PlayerModel * player;
+
+// present the leaderboard as a modal window 
+- (void)showLeaderboard:(NSString *)leaderboard ;
+
+// An example of how to use Current time as a score 
+//- (void)insertCurrentTimeIntoLeaderboard:(NSString*)leaderboard ;
+
+// Disable all GameCenter functionality. 
+- (void)enableGameCenter:(BOOL)enableGameCenter ;
 
 @end

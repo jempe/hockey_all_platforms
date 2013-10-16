@@ -964,8 +964,12 @@ void HockeyScene::showScoreCongrats()
 
     if(_playerScore >= high_score)
 	{
+
         CCSprite * high_score_label = CCSprite::createWithSpriteFrameName(CCLocalizedString("HIGHSCORELABEL"));
-        high_score_label->setPosition(ccp(_screenSize.width / 2, _screenSize.height * 0.75));
+        high_score_label->setPosition(
+                    ccp(_screenSize.width / 2,
+                        (_screenSize.height / 2) + (high_score_label->getContentSize().height * 1.65)
+                                          ));
         high_score_label->setOpacity(0.0f);
         high_score_label->setScale(2.0f);
         this->addChild(high_score_label);

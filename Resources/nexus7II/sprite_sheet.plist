@@ -482,7 +482,7 @@
             <key>size</key>
             <string>{1024,4096}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:3365290d889c8ebca3423ef02e8b9a6c$</string>
+            <string>$TexturePacker:SmartUpdate:bb92c0e0389442891b6ec5f404933aee$</string>
             <key>textureFileName</key>
             <string>sprite_sheet.png</string>
         </dict>

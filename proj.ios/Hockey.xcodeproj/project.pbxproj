@@ -77,6 +77,7 @@
 		F0A471EC17E69AB800975F65 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 781C33B51547F06B00633F88 /* AVFoundation.framework */; };
 		F0A471ED17E69AD500975F65 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 781C33B11547F06B00633F88 /* OpenAL.framework */; };
 		F0FA78921809FC9300183A4C /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0FA78911809FC9300183A4C /* GameKit.framework */; };
+		F0FA7897180A025D00183A4C /* PlayerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F0FA7894180A025D00183A4C /* PlayerModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -187,6 +188,8 @@
 		F0A471E417E6992600975F65 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		F0A471E517E6992600975F65 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
 		F0FA78911809FC9300183A4C /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		F0FA7893180A025D00183A4C /* PlayerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerModel.h; sourceTree = "<group>"; };
+		F0FA7894180A025D00183A4C /* PlayerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -331,6 +334,8 @@
 		BF5681CC1313A84D0055EEAC /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				F0FA7893180A025D00183A4C /* PlayerModel.h */,
+				F0FA7894180A025D00183A4C /* PlayerModel.m */,
 				F07BB71D1808C3A6004408BF /* kiip_helper.h */,
 				F07BB71E1808C3A6004408BF /* kiip_helper.mm */,
 				D4ABB4B213B4395300552E6E /* main.m */,
@@ -540,6 +545,7 @@
 				F0A4707417E6933F00975F65 /* MenuSprite.cpp in Sources */,
 				F0A471E617E6992600975F65 /* CDAudioManager.m in Sources */,
 				F0A471E717E6992600975F65 /* CDOpenALSupport.m in Sources */,
+				F0FA7897180A025D00183A4C /* PlayerModel.m in Sources */,
 				F07BB71F1808C3A6004408BF /* kiip_helper.mm in Sources */,
 				F0A471E817E6992600975F65 /* CocosDenshion.m in Sources */,
 				F0A471E917E6992600975F65 /* SimpleAudioEngine.mm in Sources */,
