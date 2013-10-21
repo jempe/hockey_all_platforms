@@ -91,25 +91,81 @@
     // e.g. self.myOutlet = nil;
 }
 
-/*// Example of how to bring up a specific leaderboard
-- (void)showLeaderboard:(NSString *)leaderboard 
-{
-    GKLeaderboardViewController * leaderboardViewController = [[GKLeaderboardViewController alloc] init];
-    [leaderboardViewController setCategory:leaderboard];
-    [leaderboardViewController setLeaderboardDelegate:self];
-    [self presentModalViewController:leaderboardViewController  animated:YES];
-    [leaderboardViewController release];
-}
-
-- (void)leaderboardViewControllerDidFinish:(GKLeaderboardViewController *)viewController  
-{
-	[self dismissModalViewControllerAnimated: YES];
-}*/
 
 // Disable GameCenter options from view 
 - (void)enableGameCenter:(BOOL)enableGameCenter 
 {
+	if(enableGameCenter)
+	{
+		NSLog(@"enable game center");
+	}
+	else
+	{
+		NSLog(@"disable game center");
+	}
     //[showLeaderboardButton setEnabled:enableGameCenter];
+}
+
+
+// Example of how to bring up a specific leaderboard 
+- (void)showLeaderboard:(NSNotification *)notification 
+{
+    NSString * leaderboard = [notification.userInfo valueForKey:@"leaderboard"];
+
+    GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
+    if (gameCenterController != nil)
+    {
+       gameCenterController.gameCenterDelegate = self;
+       gameCenterController.viewState = GKGameCenterViewControllerStateLeaderboards;
+       gameCenterController.leaderboardTimeScope = GKLeaderboardTimeScopeToday;
+       gameCenterController.leaderboardCategory = leaderboard;
+       [self presentViewController: gameCenterController animated: YES completion:nil];
+    }
+}
+
+- (void)saveScore:(NSNotification *)notification
+{   
+    NSString * leaderboard = [notification.userInfo valueForKey:@"leaderboard"];
+    
+    NSDictionary* userInfo = notification.userInfo;
+    
+    int64_t score = [[userInfo objectForKey:@"score"] intValue];
+    
+    // Check if the device is running iOS 7.0 or later.
+    NSString *reqSysVer = @"7.0";
+    NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
+    BOOL isIOS7 = ([currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending);
+    
+    GKScore * submitScore;
+    
+    if(isIOS7)
+    {
+    	submitScore = [[GKScore alloc] initWithLeaderboardIdentifier:leaderboard];
+        NSLog(@"Submit score iOS7");
+    }
+    else
+    {
+        submitScore = [[GKScore alloc] initWithCategory:leaderboard];
+        NSLog(@"Submit score iOS6");
+    }
+    [submitScore setValue:score]; 
+    
+    // New feature in iOS5 tells GameCenter which leaderboard is the default per user.
+    // This can be used to show a user's favorite course/track associated leaderboard, or just show the latest score submitted.
+    [submitScore setShouldSetDefaultLeaderboard:YES];
+    
+    // New feature in iOS5 allows you to set the context to which the score was sent. For instance this will set the context to be 
+    //the count of the button press per run time. Information stored in context isn't accessable in standard GKLeaderboardViewController,
+    //instead it's accessable from GKLeaderboard's loadScoresWithCompletionHandler:
+    //[submitScore setContext:context++];
+    
+    [self.player submitScore:submitScore];
+    [submitScore release];
+}
+
+- (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 

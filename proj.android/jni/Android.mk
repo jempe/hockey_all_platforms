@@ -11,6 +11,7 @@ LOCAL_MODULE_FILENAME := libgame
 LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/AppDelegate.cpp \
                    ../../Classes/MenuSprite.cpp \
+                   ../../Classes/SquareButton.cpp \
                    ../../Classes/VectorSprite.cpp \
                    ../../Classes/MenuScene.cpp \
                    ../../Classes/LevelsScene.cpp \

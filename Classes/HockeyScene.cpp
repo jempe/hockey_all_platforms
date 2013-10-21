@@ -12,6 +12,7 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #include "flurry_helper.h"
     #include "kiip_helper.h"
+    #include "game_center.h"
 #endif
 
 using namespace cocos2d;
@@ -165,7 +166,8 @@ bool HockeyScene::init()
     _bottomPlayer->setOpacity(128);
     this->addChild(_bottomPlayer);
 
-    _computer_mallet_speed = _topPlayer->get_radius() / CCUserDefault::sharedUserDefault()->getIntegerForKey("computer_speed");
+    //_computer_mallet_speed = _topPlayer->get_radius() / CCUserDefault::sharedUserDefault()->getIntegerForKey("computer_speed");
+    _computer_mallet_speed = _topPlayer->get_radius() / 10; // really slow speed to test
 
     _players = CCArray::create(_bottomPlayer, _topPlayer, NULL);
     _players->retain();
@@ -943,28 +945,40 @@ void HockeyScene::generate_score()
 void HockeyScene::showScoreCongrats()
 {
 	const char * high_score_recipient;
+    const char * high_score_category;
 
 	if(_computer_player_level == 1)
 	{
 		save_moment("Won Level 1");
 		high_score_recipient = "high_score1";
+        high_score_category = "easy";
 	}
 	else if(_computer_player_level == 2)
 	{
 		save_moment("Won Level 2");
 		high_score_recipient = "high_score2";
+        high_score_category = "medium";
 	}
 	else
 	{
 		save_moment("Won Level 3");
 		high_score_recipient = "high_score3";
+        high_score_category = "hard";
 	}
 
     unsigned int high_score = CCUserDefault::sharedUserDefault()->getIntegerForKey(high_score_recipient);
 
+    // save high score in google play, game center or gamecircle
+    if(_bottomPlayerScore == 7)
+    {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        game_center::saveScore(high_score_category, _playerScore);
+#endif
+    }
+    
+    
     if(_playerScore >= high_score)
 	{
-
         CCSprite * high_score_label = CCSprite::createWithSpriteFrameName(CCLocalizedString("HIGHSCORELABEL"));
         high_score_label->setPosition(
                     ccp(_screenSize.width / 2,
@@ -1304,8 +1318,8 @@ void HockeyScene::playerScore(short int player)
 
 
 
-    //if(_bottomPlayerScore == 7 || _topPlayerScore == 7)
-    if(_bottomPlayerScore == 1 || _topPlayerScore == 1)
+    if(_bottomPlayerScore == 7 || _topPlayerScore == 7)
+    //if(_bottomPlayerScore == 1 || _topPlayerScore == 1)
     {
         showWinnerLabel(player);
     }

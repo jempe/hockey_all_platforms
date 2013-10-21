@@ -203,6 +203,8 @@ static AppDelegate s_sharedApplication;
      Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
      */
     cocos2d::CCDirector::sharedDirector()->pause();
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"showLeaderBoard" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"saveScore" object:nil];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -210,6 +212,8 @@ static AppDelegate s_sharedApplication;
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
     cocos2d::CCDirector::sharedDirector()->resume();
+    [[NSNotificationCenter defaultCenter] addObserver:viewController selector:@selector(showLeaderboard:) name:@"showLeaderBoard" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:viewController selector:@selector(saveScore:) name:@"saveScore" object:nil];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {

@@ -28,7 +28,7 @@
 #import "PlayerModel.h"
 
 
-@interface RootViewController : UIViewController {
+@interface RootViewController : UIViewController <GKGameCenterControllerDelegate>{
 
 }
 
@@ -36,13 +36,12 @@
 // This assists in caching game center data until 
 @property (readwrite, retain) PlayerModel * player;
 
-// present the leaderboard as a modal window 
-- (void)showLeaderboard:(NSString *)leaderboard ;
-
-// An example of how to use Current time as a score 
-//- (void)insertCurrentTimeIntoLeaderboard:(NSString*)leaderboard ;
-
 // Disable all GameCenter functionality. 
-- (void)enableGameCenter:(BOOL)enableGameCenter ;
+- (void)enableGameCenter:(BOOL)enableGameCenter;
+
+// present the leaderboard as a modal window 
+- (void)showLeaderboard:(NSNotification *)notification;
+
+- (void)saveScore:(NSNotification *)notification;
 
 @end

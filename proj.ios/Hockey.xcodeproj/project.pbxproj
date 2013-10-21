@@ -27,6 +27,7 @@
 		BF365AA812A103F70050DCF4 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF365AA712A103F70050DCF4 /* AppController.mm */; };
 		BF4DE6AD138BB89600CF907D /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF4DE6AC138BB89600CF907D /* RootViewController.mm */; };
 		D4ABB4B313B4395300552E6E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ABB4B213B4395300552E6E /* main.m */; };
+		F00074FD181417C200BD3715 /* game_center.mm in Sources */ = {isa = PBXBuildFile; fileRef = F00074FC181417C200BD3715 /* game_center.mm */; };
 		F0132E3717F3821900ECF5AA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0132E3617F3821900ECF5AA /* Security.framework */; };
 		F0247A1117F798EF00D30678 /* flurry_api_key.txt in Resources */ = {isa = PBXBuildFile; fileRef = F0247A1017F798EF00D30678 /* flurry_api_key.txt */; };
 		F03981171804DD9900D436D4 /* icon29.png in Resources */ = {isa = PBXBuildFile; fileRef = F039810A1804DD9900D436D4 /* icon29.png */; };
@@ -63,6 +64,7 @@
 		F07BB7231808C417004408BF /* kiip_secret.txt in Resources */ = {isa = PBXBuildFile; fileRef = F07BB7221808C417004408BF /* kiip_secret.txt */; };
 		F07BB7251808CB57004408BF /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F07BB7241808CB57004408BF /* AppDelegate.cpp */; };
 		F07FCEFF1804D65C0087419F /* LondrinaSolid-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F07FCEFE1804D65C0087419F /* LondrinaSolid-Regular.ttf */; };
+		F0852482181418BA0052E114 /* SquareButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0852480181418BA0052E114 /* SquareButton.cpp */; };
 		F08A05D417F5FF20007B15D3 /* flurry_helper.mm in Sources */ = {isa = PBXBuildFile; fileRef = F08A05D317F5FF20007B15D3 /* flurry_helper.mm */; };
 		F0A4707117E6933F00975F65 /* CCLocalizedString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0A4706917E6933F00975F65 /* CCLocalizedString.cpp */; };
 		F0A4707217E6933F00975F65 /* LevelsScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0A4706B17E6933F00975F65 /* LevelsScene.cpp */; };
@@ -127,6 +129,8 @@
 		BF4DE6AB138BB89600CF907D /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		BF4DE6AC138BB89600CF907D /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
 		D4ABB4B213B4395300552E6E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F00074FB181417C200BD3715 /* game_center.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = game_center.h; sourceTree = "<group>"; };
+		F00074FC181417C200BD3715 /* game_center.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = game_center.mm; sourceTree = "<group>"; };
 		F0132E3617F3821900ECF5AA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		F0247A1017F798EF00D30678 /* flurry_api_key.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = flurry_api_key.txt; sourceTree = "<group>"; };
 		F039810A1804DD9900D436D4 /* icon29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon29.png; sourceTree = "<group>"; };
@@ -165,6 +169,8 @@
 		F07BB7221808C417004408BF /* kiip_secret.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = kiip_secret.txt; sourceTree = "<group>"; };
 		F07BB7241808CB57004408BF /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		F07FCEFE1804D65C0087419F /* LondrinaSolid-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "LondrinaSolid-Regular.ttf"; path = "../Resources/LondrinaSolid-Regular.ttf"; sourceTree = "<group>"; };
+		F0852480181418BA0052E114 /* SquareButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SquareButton.cpp; sourceTree = "<group>"; };
+		F0852481181418BA0052E114 /* SquareButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SquareButton.h; sourceTree = "<group>"; };
 		F08A05D217F5FF20007B15D3 /* flurry_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flurry_helper.h; sourceTree = "<group>"; };
 		F08A05D317F5FF20007B15D3 /* flurry_helper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = flurry_helper.mm; sourceTree = "<group>"; };
 		F0A4706917E6933F00975F65 /* CCLocalizedString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLocalizedString.cpp; sourceTree = "<group>"; };
@@ -312,6 +318,8 @@
 		84AB1EDC179857840076489C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F0852480181418BA0052E114 /* SquareButton.cpp */,
+				F0852481181418BA0052E114 /* SquareButton.h */,
 				F0A4706917E6933F00975F65 /* CCLocalizedString.cpp */,
 				F0A4706A17E6933F00975F65 /* CCLocalizedString.h */,
 				F0A4706B17E6933F00975F65 /* LevelsScene.cpp */,
@@ -334,6 +342,8 @@
 		BF5681CC1313A84D0055EEAC /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				F00074FB181417C200BD3715 /* game_center.h */,
+				F00074FC181417C200BD3715 /* game_center.mm */,
 				F0FA7893180A025D00183A4C /* PlayerModel.h */,
 				F0FA7894180A025D00183A4C /* PlayerModel.m */,
 				F07BB71D1808C3A6004408BF /* kiip_helper.h */,
@@ -535,6 +545,7 @@
 			files = (
 				BF365AA812A103F70050DCF4 /* AppController.mm in Sources */,
 				BF4DE6AD138BB89600CF907D /* RootViewController.mm in Sources */,
+				F0852482181418BA0052E114 /* SquareButton.cpp in Sources */,
 				F07BB7251808CB57004408BF /* AppDelegate.cpp in Sources */,
 				D4ABB4B313B4395300552E6E /* main.m in Sources */,
 				84AB1EE4179857840076489C /* HockeyScene.cpp in Sources */,
@@ -551,6 +562,7 @@
 				F0A471E917E6992600975F65 /* SimpleAudioEngine.mm in Sources */,
 				F0A471EA17E6992600975F65 /* SimpleAudioEngine_objc.m in Sources */,
 				F08A05D417F5FF20007B15D3 /* flurry_helper.mm in Sources */,
+				F00074FD181417C200BD3715 /* game_center.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
