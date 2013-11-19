@@ -8,6 +8,7 @@
     #include "jni/JniHelper.h"
     #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
     #include <jni.h>
+	#include "includes/LeaderboardsClientInterface.h"
 #endif
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #include "flurry_helper.h"
@@ -166,8 +167,8 @@ bool HockeyScene::init()
     _bottomPlayer->setOpacity(128);
     this->addChild(_bottomPlayer);
 
-    //_computer_mallet_speed = _topPlayer->get_radius() / CCUserDefault::sharedUserDefault()->getIntegerForKey("computer_speed");
-    _computer_mallet_speed = _topPlayer->get_radius() / 10; // really slow speed to test
+    _computer_mallet_speed = _topPlayer->get_radius() / CCUserDefault::sharedUserDefault()->getIntegerForKey("computer_speed");
+    //_computer_mallet_speed = _topPlayer->get_radius() / 20; // really slow speed to test
 
     _players = CCArray::create(_bottomPlayer, _topPlayer, NULL);
     _players->retain();
@@ -176,11 +177,13 @@ bool HockeyScene::init()
     _top_player_score = CCLabelTTF::create("0", _font_file, (int) _bottomPlayer->get_radius());
     _top_player_score->setPosition(ccp(_screenSize.width - _bottomPlayer->get_radius(), (_screenSize.height / 2) + (_bottomPlayer->get_radius() * 0.8f)));
     _top_player_score->setColor(ccc3(0, 0, 0));
+    _top_player_score->setRotation(90);
     this->addChild(_top_player_score);
 
     _bottom_player_score = CCLabelTTF::create("0", _font_file, (int) _bottomPlayer->get_radius());
     _bottom_player_score->setPosition(ccp(_screenSize.width - _bottomPlayer->get_radius(), (_screenSize.height / 2) - (_bottomPlayer->get_radius() * 0.8f)));
     _bottom_player_score->setColor(ccc3(0, 0, 0));
+    _bottom_player_score->setRotation(90);
     this->addChild(_bottom_player_score);
 
     // create puck
@@ -284,7 +287,65 @@ bool HockeyScene::init()
     	flurry_event("Start Game with computer");
     }
 
+    getHighScores(getLeaderBoardName());
+
     return true;
+}
+
+void HockeyScene::getHighScores(const char * leaderboard)
+{
+	/*AmazonGames::HandleWrapper<AmazonGames::IGetScoresHandle> getLbsHandle =
+    		AmazonGames::LeaderboardsClientInterface::getScores(leaderboard,
+    				AmazonGames::GLOBAL_DAY);
+
+    int loopCount = 0;
+
+    bool resultReceived = false;
+
+    while (loopCount < 20) {
+
+        if (getLbsHandle.handle()->getHandleStatus() != AmazonGames::HANDLE_WAITING) {
+            resultReceived = true;
+            break;
+        }
+
+        usleep(100000);
+        loopCount++;
+    }
+
+/*    for(unsigned int i = 10000; i > 999; i-=1000)
+    {
+        _high_scores.push_back(i);
+        CCLog("High Score %i", i);
+    }*/
+
+    CCLog("get %s High Scores", leaderboard);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        //game_center::saveScore(high_score_category, _playerScore);
+#endif
+
+}
+
+unsigned int HockeyScene::getScoreRanking(unsigned int score)
+{
+    unsigned int rank = 0;
+    std::vector<unsigned int>::iterator it;
+
+    unsigned int total_scores = _high_scores.size();
+
+    for(it = _high_scores.begin() ; it < _high_scores.end(); it++, rank++)
+    {
+        if(*it < score)
+        {
+            if(rank < total_scores)
+            {
+                return rank;
+            }
+        }
+    }
+
+    return 0;
 }
 
 void HockeyScene::timer()
@@ -945,25 +1006,22 @@ void HockeyScene::generate_score()
 void HockeyScene::showScoreCongrats()
 {
 	const char * high_score_recipient;
-    const char * high_score_category;
+    const char * high_score_category = getLeaderBoardName();
 
 	if(_computer_player_level == 1)
 	{
 		save_moment("Won Level 1");
 		high_score_recipient = "high_score1";
-        high_score_category = "easy";
 	}
 	else if(_computer_player_level == 2)
 	{
 		save_moment("Won Level 2");
 		high_score_recipient = "high_score2";
-        high_score_category = "medium";
 	}
 	else
 	{
 		save_moment("Won Level 3");
 		high_score_recipient = "high_score3";
-        high_score_category = "hard";
 	}
 
     unsigned int high_score = CCUserDefault::sharedUserDefault()->getIntegerForKey(high_score_recipient);
@@ -971,14 +1029,23 @@ void HockeyScene::showScoreCongrats()
     // save high score in google play, game center or gamecircle
     if(_bottomPlayerScore == 7)
     {
+        CCLog("save score in leaderboard: %s", high_score_category);
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         game_center::saveScore(high_score_category, _playerScore);
 #endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    AmazonGames::LeaderboardsClientInterface::submitScore(high_score_category, _playerScore);
+#endif
     }
+
+    unsigned int ranking = getScoreRanking(_playerScore);
     
     
-    if(_playerScore >= high_score)
+    if(ranking > 0 || _playerScore > high_score)
 	{
+        CCLog("Current Ranking: %i", ranking);
+
         CCSprite * high_score_label = CCSprite::createWithSpriteFrameName(CCLocalizedString("HIGHSCORELABEL"));
         high_score_label->setPosition(
                     ccp(_screenSize.width / 2,
@@ -1036,6 +1103,16 @@ void HockeyScene::showScoreCongrats()
                 menu_selector(HockeyScene::goBack)
                 );
 
+    CCSprite * leaderboard_button = CCSprite::createWithSpriteFrameName("leaderboard_button.png");
+    CCSprite * leaderboard_button_active = CCSprite::createWithSpriteFrameName("leaderboard_button_active.png");
+
+    CCMenuItemSprite * leaderboard_button_item = CCMenuItemSprite::create(
+                leaderboard_button,
+                leaderboard_button_active,
+                this,
+                menu_selector(HockeyScene::showLeaderboard)
+                );
+
     CCSprite * replay_button = CCSprite::createWithSpriteFrameName("replay_button.png");
     CCSprite * replay_button_active = CCSprite::createWithSpriteFrameName("replay_button_active.png");
 
@@ -1046,7 +1123,7 @@ void HockeyScene::showScoreCongrats()
                 menu_selector(HockeyScene::playAgain)
                 );
 
-    CCMenu * replay_menu = CCMenu::create(back_button_item, replay_button_item, NULL);
+    CCMenu * replay_menu = CCMenu::create(back_button_item, leaderboard_button_item, replay_button_item, NULL);
     replay_menu->alignItemsHorizontallyWithPadding(back_button->getContentSize().width * 0.15);
     replay_menu->setPosition(ccp(_screenSize.width / 2, _screenSize.height / 2 - (yellow_circle->getContentSize().width * 0.75)));
     this->addChild(replay_menu);
@@ -1289,6 +1366,37 @@ void HockeyScene::goBack()
 {
     SimpleAudioEngine::sharedEngine()->playEffect("button.wav");
     CCDirector::sharedDirector()->replaceScene(MenuScene::scene());
+}
+
+const char * HockeyScene::getLeaderBoardName()
+{
+    if(_computer_player_level == 1)
+    {
+        return "easy";
+    }
+    else if(_computer_player_level == 2)
+    {
+        return "medium";
+    }
+    else
+    {
+        return "hard";
+    }
+}
+
+void HockeyScene::showLeaderboard()
+{
+    const char * high_score_category = getLeaderBoardName();
+
+    CCLog("show leaderboard: %s", high_score_category);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    game_center::showLeaderBoard(high_score_category);
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    AmazonGames::LeaderboardsClientInterface::showLeaderboardOverlay(high_score_category);
+#endif
+
 }
 
 /********************************************//**

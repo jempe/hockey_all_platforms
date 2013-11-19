@@ -4,6 +4,7 @@ APPNAME="Hockey"
 # options
 
 buildexternalsfromsource=
+api_key="google"
 
 usage(){
 cat << EOF
@@ -17,8 +18,8 @@ OPTIONS:
 EOF
 }
 
-while getopts "sh" OPTION; do
-case "$OPTION" in
+while getopts "shk" OPTION; do
+case "${OPTION}" in
 s)
 buildexternalsfromsource=1
 ;;
@@ -79,6 +80,8 @@ if [ -f "$file" ]; then
     cp "$file" "$APP_ANDROID_ROOT"/assets
 fi
 done
+
+cp "$APP_ROOT"/amazon_api_keys/api_key_"$api_key".txt "$APP_ANDROID_ROOT"/assets/api_key.txt
 
 if [[ "$buildexternalsfromsource" ]]; then
     echo "Building external dependencies from source"

@@ -66,4 +66,10 @@ proj.ios/Flurry/*
 proj.linux/obj/
 proj.linux/bin/
 
+# Amazon Gamecircle
+
+proj.android/assets/api_key.txt
+proj.android/jni/includes/*
+proj.android/jni/libs/*
+
 *~

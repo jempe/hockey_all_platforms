@@ -7,6 +7,7 @@
     #include "jni/JniHelper.h"
     #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
     #include <jni.h>
+	#include "includes/LeaderboardsClientInterface.h"
 #endif
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     //#include "flurry_helper.h"
@@ -154,6 +155,9 @@ void MenuScene::ShowLeaderBoard()
     CCLog("Show leaderboard");
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     game_center::showLeaderBoard("hard");
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    AmazonGames::LeaderboardsClientInterface::showLeaderboardOverlay("hard");
 #endif
 }
 

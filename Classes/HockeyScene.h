@@ -1,6 +1,7 @@
 #ifndef __HELLOWORLD_SCENE_H__
 #define __HELLOWORLD_SCENE_H__
 
+#include <vector>
 #include "cocos2d.h"
 #include "VectorSprite.h"
 #include "MenuSprite.h"
@@ -23,6 +24,8 @@ class HockeyScene : public cocos2d::CCLayerColor
 
 	unsigned int _puck_ticks;
 	unsigned int _puck_wall_ticks;
+
+    std::vector<unsigned int> _high_scores;
 
 	CCArray * _players;
 
@@ -97,6 +100,14 @@ public:
     void playAgain();
 
     void goBack();
+
+    void getHighScores(const char *leaderboard);
+
+    const char * getLeaderBoardName();
+
+    unsigned int getScoreRanking(unsigned int score);
+
+    void showLeaderboard();
 
     void showPauseMenu();
 

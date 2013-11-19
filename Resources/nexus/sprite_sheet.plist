@@ -20,7 +20,7 @@
             <key>back_button.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{25,818},{92,93}}</string>
+                <string>{{297,913},{92,93}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -33,11 +33,11 @@
             <key>back_button_active.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{375,530},{92,93}}</string>
+                <string>{{213,818},{92,93}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{92,93}}</string>
                 <key>sourceSize</key>
@@ -189,11 +189,11 @@
             <key>goal_e.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{375,386},{48,105}}</string>
+                <string>{{25,510},{48,105}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{48,105}}</string>
                 <key>sourceSize</key>
@@ -228,7 +228,7 @@
             <key>goal_n.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{25,510},{47,105}}</string>
+                <string>{{25,617},{47,105}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -241,11 +241,11 @@
             <key>goal_o.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{482,411},{46,105}}</string>
+                <string>{{25,724},{46,105}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{46,105}}</string>
                 <key>sourceSize</key>
@@ -289,6 +289,32 @@
                 <string>{{0,0},{182,82}}</string>
                 <key>sourceSize</key>
                 <string>{182,82}</string>
+            </dict>
+            <key>leaderboard_button.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{203,913},{92,93}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{92,93}}</string>
+                <key>sourceSize</key>
+                <string>{92,93}</string>
+            </dict>
+            <key>leaderboard_button_active.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{119,818},{92,93}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{92,93}}</string>
+                <key>sourceSize</key>
+                <string>{92,93}</string>
             </dict>
             <key>leaderboard_icon.png</key>
             <dict>
@@ -358,11 +384,11 @@
             <key>replay_button.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{470,459},{92,93}}</string>
+                <string>{{109,926},{92,93}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{92,93}}</string>
                 <key>sourceSize</key>
@@ -371,11 +397,11 @@
             <key>replay_button_active.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{375,436},{92,93}}</string>
+                <string>{{25,831},{92,93}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{92,93}}</string>
                 <key>sourceSize</key>
@@ -384,41 +410,41 @@
             <key>score_orange.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{375,624},{257,264}}</string>
+                <string>{{109,559},{257,257}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{257,264}}</string>
+                <string>{{0,0},{257,257}}</string>
                 <key>sourceSize</key>
-                <string>{257,264}</string>
+                <string>{257,257}</string>
             </dict>
             <key>score_red.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{109,559},{257,264}}</string>
+                <string>{{368,411},{257,257}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{257,264}}</string>
+                <string>{{0,0},{257,257}}</string>
                 <key>sourceSize</key>
-                <string>{257,264}</string>
+                <string>{257,257}</string>
             </dict>
             <key>score_yellow.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{109,300},{257,264}}</string>
+                <string>{{109,300},{257,257}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{257,264}}</string>
+                <string>{{0,0},{257,257}}</string>
                 <key>sourceSize</key>
-                <string>{257,264}</string>
+                <string>{257,257}</string>
             </dict>
             <key>square_button.png</key>
             <dict>
@@ -482,7 +508,7 @@
             <key>size</key>
             <string>{1024,1024}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:41608d9dc66af7f1641d6782e91e8f00$</string>
+            <string>$TexturePacker:SmartUpdate:019b967a102840125f6444f0d9a9be76$</string>
             <key>textureFileName</key>
             <string>sprite_sheet.png</string>
         </dict>
