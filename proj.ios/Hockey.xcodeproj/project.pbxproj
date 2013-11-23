@@ -458,6 +458,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0500;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						DevelopmentTeam = A5T9X3NS8C;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Hockey" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -618,8 +623,8 @@
 					"\"$(SRCROOT)/Flurry\"",
 				);
 				PRODUCT_NAME = Hockey;
-				PROVISIONING_PROFILE = "525ECF75-5C00-4B76-A4B0-CF341CFFC0F9";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "525ECF75-5C00-4B76-A4B0-CF341CFFC0F9";
+				PROVISIONING_PROFILE = "ED43E02B-8679-4095-A55D-8E0E2716CD39";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "ED43E02B-8679-4095-A55D-8E0E2716CD39";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -666,8 +671,8 @@
 					"\"$(SRCROOT)/Flurry\"",
 				);
 				PRODUCT_NAME = Hockey;
-				PROVISIONING_PROFILE = "525ECF75-5C00-4B76-A4B0-CF341CFFC0F9";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "525ECF75-5C00-4B76-A4B0-CF341CFFC0F9";
+				PROVISIONING_PROFILE = "ED43E02B-8679-4095-A55D-8E0E2716CD39";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "ED43E02B-8679-4095-A55D-8E0E2716CD39";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";

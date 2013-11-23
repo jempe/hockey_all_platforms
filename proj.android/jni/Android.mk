@@ -3,11 +3,6 @@ LOCAL_PATH := $(call my-dir)
 PATH_TO_LIBS = libs
   
 include $(CLEAR_VARS)
-LOCAL_MODULE := AmazonGamesJni
-LOCAL_SRC_FILES := $(PATH_TO_LIBS)/libAmazonGamesJni.so
-include $(PREBUILT_SHARED_LIBRARY)
-
-include $(CLEAR_VARS)
 
 LOCAL_MODULE := game_shared
 
@@ -25,12 +20,10 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/HockeyScene.cpp \
                    ../../Classes/CCLocalizedString.cpp
                    
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes  \
-			$(LOCAL_PATH)/../includes             
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes            
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static cocosdenshion_static cocos_extension_static
             
-LOCAL_SHARED_LIBRARIES := AmazonGamesJni
 include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,CocosDenshion/android) \

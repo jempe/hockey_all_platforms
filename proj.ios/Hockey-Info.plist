@@ -8,15 +8,8 @@
 	<string>Jempe Hockey</string>
 	<key>CFBundleExecutable</key>
 	<string>Hockey</string>
-	<key>CFBundleIconFile</key>
-	<string>iphone_hockey_icon.png</string>
 	<key>CFBundleIconFiles</key>
-	<array>
-		<string>iphone4_hockey_icon.png</string>
-		<string>iphone_hockey_icon.png</string>
-		<string>ipad_retina_hockey_icon.png</string>
-		<string>ipad_hockey_icon.png</string>
-	</array>
+	<array/>
 	<key>CFBundleIcons</key>
 	<dict>
 		<key>CFBundlePrimaryIcon</key>
@@ -29,10 +22,6 @@
 				<string>icon120</string>
 				<string>icon114</string>
 				<string>icon57</string>
-				<string>iphone4_hockey_icon.png</string>
-				<string>iphone_hockey_icon.png</string>
-				<string>ipad_retina_hockey_icon.png</string>
-				<string>ipad_hockey_icon.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
 			<true/>
@@ -57,10 +46,6 @@
 				<string>icon120</string>
 				<string>icon114</string>
 				<string>icon57</string>
-				<string>iphone4_hockey_icon.png</string>
-				<string>iphone_hockey_icon.png</string>
-				<string>ipad_retina_hockey_icon.png</string>
-				<string>ipad_hockey_icon.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
 			<true/>

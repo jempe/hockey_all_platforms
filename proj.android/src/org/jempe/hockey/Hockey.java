@@ -23,8 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.jempe.hockey;
 
-import java.util.EnumSet;
-
 import me.kiip.sdk.Kiip;
 import me.kiip.sdk.KiipFragmentCompat;
 import me.kiip.sdk.Poptart;
@@ -34,10 +32,6 @@ import org.cocos2dx.lib.Cocos2dxActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.amazon.ags.api.AmazonGamesCallback;
-import com.amazon.ags.api.AmazonGamesClient;
-import com.amazon.ags.api.AmazonGamesFeature;
-import com.amazon.ags.api.AmazonGamesStatus;
 import com.flurry.android.FlurryAgent;
 
 public class Hockey extends Cocos2dxActivity{
@@ -48,24 +42,6 @@ public class Hockey extends Cocos2dxActivity{
     
 	private static final String TAG = "Hockey Activity";
 	
-	//reference to the agsClient
-	AmazonGamesClient agsClient;
-	 
-	AmazonGamesCallback callback = new AmazonGamesCallback() {
-	        @Override
-	        public void onServiceNotReady(AmazonGamesStatus status) {
-	            //unable to use service
-	        }
-	        @Override
-	        public void onServiceReady(AmazonGamesClient amazonGamesClient) {
-	            agsClient = amazonGamesClient;
-	            //ready to use GameCircle
-	        }
-	};
-
-	//list of features your game uses (in this example, achievements and leaderboards)
-	EnumSet<AmazonGamesFeature> myGameFeatures = EnumSet.of(
-	        AmazonGamesFeature.Leaderboards);   
 
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -85,15 +61,11 @@ public class Hockey extends Cocos2dxActivity{
 	@Override
 	public void onResume() {
 		super.onResume();
-		AmazonGamesClient.initialize(this, callback, myGameFeatures);
 	}
 	
 	@Override
 	public void onPause() {
 	    super.onPause();
-	    if (agsClient != null) {
-	        agsClient.release();
-	    }
 	}
 	
 	@Override
@@ -140,10 +112,6 @@ public class Hockey extends Cocos2dxActivity{
     private native void pauseGame();
 	
     static {
-    	
-        // Load AGS JNI SDK
-        System.loadLibrary("AmazonGamesJni");
-    	
          System.loadLibrary("game");
     }
     
