@@ -1,6 +1,10 @@
 #include "AppDelegate.h"
 #include "SimpleAudioEngine.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#include "RevMob.h"
+#endif
+
 #include <vector>
 #include <string>
 
@@ -21,6 +25,14 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    revmob::RevMob *revmob = revmob::RevMob::SharedInstance();
+    //revmob->StartSession("IOS id");
+    #include "/Users/user9227/Documents/hockeyIosRevmobKey.cpp"
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    //revmob->StartSession("YOUR IOS ANDROID");
+#endif
+
     // initialize director
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();

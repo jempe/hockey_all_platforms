@@ -11,9 +11,10 @@
 #endif
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #include "flurry_helper.h"
-    #include "kiip_helper.h"
     #include "game_center.h"
+    #include "RevMob.h"
 #endif
+
 
 using namespace cocos2d;
 using namespace CocosDenshion;
@@ -1179,6 +1180,11 @@ void HockeyScene::showScoreCongrats()
     yellow_circle->runAction(show_yellow_circle);
     orange_lines->runAction(show_orange_lines);
     red_lines->runAction(show_red_lines);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        revmob::RevMob *revmob = revmob::RevMob::SharedInstance();
+        revmob->ShowFullscreen();
+#endif
 }
 
 void HockeyScene::showWinnerLabel(short int player)
@@ -1187,7 +1193,7 @@ void HockeyScene::showWinnerLabel(short int player)
 
 	if(_playersNumber > 1)
 	{
-		flurry_event("Finished game with a friend");
+        flurry_event("Finished game with a friend");
 	}
 	else
 	{
@@ -1291,6 +1297,12 @@ void HockeyScene::showWinnerLabel(short int player)
     else
     {
         winner_label_done = CCCallFuncN::create( this, callfuncN_selector(HockeyScene::showWinnerMenu));
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        revmob::RevMob *revmob = revmob::RevMob::SharedInstance();
+        revmob->ShowFullscreen();
+        CCLog("show full screen ad");
+#endif
     }
 
 
@@ -1651,7 +1663,7 @@ void HockeyScene::save_moment(std::string moment_n)
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    kiip_helper::saveMoment(moment_name);
+
 #endif
 }
 

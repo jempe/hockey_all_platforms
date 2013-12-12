@@ -22,7 +22,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import <KiipSDK/KiipSDK.h>
 #import <GameKit/GameKit.h>
 
 // Preferred method for testing for Game Center 
@@ -30,7 +29,7 @@ static BOOL isGameCenterAPIAvailable();
 
 @class RootViewController;
 
-@interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate,UIApplicationDelegate, KiipDelegate> {
+@interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate,UIApplicationDelegate> {
     UIWindow *window;
     RootViewController    *viewController;
 }

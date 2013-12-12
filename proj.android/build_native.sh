@@ -4,7 +4,7 @@ APPNAME="Hockey"
 # options
 
 buildexternalsfromsource=
-api_key="google"
+api_key="amazon"
 
 usage(){
 cat << EOF

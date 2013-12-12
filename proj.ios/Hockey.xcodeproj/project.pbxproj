@@ -43,7 +43,6 @@
 		F03981211804DD9900D436D4 /* icon120.png in Resources */ = {isa = PBXBuildFile; fileRef = F03981141804DD9900D436D4 /* icon120.png */; };
 		F03981221804DD9900D436D4 /* icon144.png in Resources */ = {isa = PBXBuildFile; fileRef = F03981151804DD9900D436D4 /* icon144.png */; };
 		F03981231804DD9900D436D4 /* icon152.png in Resources */ = {isa = PBXBuildFile; fileRef = F03981161804DD9900D436D4 /* icon152.png */; };
-		F03E683817F3785A000E1B5E /* libFlurry_4.2.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F03E683717F3785A000E1B5E /* libFlurry_4.2.3.a */; };
 		F03E683C17F379E3000E1B5E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F03E683B17F379E3000E1B5E /* SystemConfiguration.framework */; };
 		F06CA82717E902A400E13315 /* button.wav in Resources */ = {isa = PBXBuildFile; fileRef = F06CA81B17E902A400E13315 /* button.wav */; };
 		F06CA82817E902A400E13315 /* goal.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F06CA81C17E902A400E13315 /* goal.mp3 */; };
@@ -54,14 +53,7 @@
 		F06CA83017E902A400E13315 /* nexus10 in Resources */ = {isa = PBXBuildFile; fileRef = F06CA82417E902A400E13315 /* nexus10 */; };
 		F06CA83117E902A400E13315 /* puck_wall.wav in Resources */ = {isa = PBXBuildFile; fileRef = F06CA82517E902A400E13315 /* puck_wall.wav */; };
 		F06CA83217E902A400E13315 /* puck.wav in Resources */ = {isa = PBXBuildFile; fileRef = F06CA82617E902A400E13315 /* puck.wav */; };
-		F07BB7141808C24D004408BF /* KiipSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F07BB7131808C24D004408BF /* KiipSDK.framework */; };
-		F07BB7161808C2C6004408BF /* KiipSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F07BB7151808C2C6004408BF /* KiipSDKResources.bundle */; };
-		F07BB7181808C2D2004408BF /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F07BB7171808C2D2004408BF /* CoreTelephony.framework */; };
 		F07BB71A1808C316004408BF /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F07BB7191808C316004408BF /* AdSupport.framework */; };
-		F07BB71C1808C331004408BF /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F07BB71B1808C331004408BF /* PassKit.framework */; };
-		F07BB71F1808C3A6004408BF /* kiip_helper.mm in Sources */ = {isa = PBXBuildFile; fileRef = F07BB71E1808C3A6004408BF /* kiip_helper.mm */; };
-		F07BB7211808C3C6004408BF /* kiip_key.txt in Resources */ = {isa = PBXBuildFile; fileRef = F07BB7201808C3C6004408BF /* kiip_key.txt */; };
-		F07BB7231808C417004408BF /* kiip_secret.txt in Resources */ = {isa = PBXBuildFile; fileRef = F07BB7221808C417004408BF /* kiip_secret.txt */; };
 		F07BB7251808CB57004408BF /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F07BB7241808CB57004408BF /* AppDelegate.cpp */; };
 		F07FCEFF1804D65C0087419F /* LondrinaSolid-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F07FCEFE1804D65C0087419F /* LondrinaSolid-Regular.ttf */; };
 		F0852482181418BA0052E114 /* SquareButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0852480181418BA0052E114 /* SquareButton.cpp */; };
@@ -78,6 +70,9 @@
 		F0A471EB17E69A8E00975F65 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 781C33B31547F06B00633F88 /* AudioToolbox.framework */; };
 		F0A471EC17E69AB800975F65 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 781C33B51547F06B00633F88 /* AVFoundation.framework */; };
 		F0A471ED17E69AD500975F65 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 781C33B11547F06B00633F88 /* OpenAL.framework */; };
+		F0CCBB49185955700066E819 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0CCBB48185955700066E819 /* StoreKit.framework */; };
+		F0CCBB4C1859561E0066E819 /* libRevMobCocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F0CCBB4A1859561E0066E819 /* libRevMobCocos2dx.a */; };
+		F0CCBB5218595AE80066E819 /* libFlurry_4.2.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F0CCBB5118595AE80066E819 /* libFlurry_4.2.3.a */; };
 		F0FA78921809FC9300183A4C /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0FA78911809FC9300183A4C /* GameKit.framework */; };
 		F0FA7897180A025D00183A4C /* PlayerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F0FA7894180A025D00183A4C /* PlayerModel.m */; };
 /* End PBXBuildFile section */
@@ -146,8 +141,6 @@
 		F03981141804DD9900D436D4 /* icon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon120.png; sourceTree = "<group>"; };
 		F03981151804DD9900D436D4 /* icon144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon144.png; sourceTree = "<group>"; };
 		F03981161804DD9900D436D4 /* icon152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon152.png; sourceTree = "<group>"; };
-		F03E683617F3785A000E1B5E /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
-		F03E683717F3785A000E1B5E /* libFlurry_4.2.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.2.3.a; sourceTree = "<group>"; };
 		F03E683B17F379E3000E1B5E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		F06CA81B17E902A400E13315 /* button.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = button.wav; path = ../Resources/button.wav; sourceTree = "<group>"; };
 		F06CA81C17E902A400E13315 /* goal.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = goal.mp3; path = ../Resources/goal.mp3; sourceTree = "<group>"; };
@@ -159,14 +152,9 @@
 		F06CA82517E902A400E13315 /* puck_wall.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = puck_wall.wav; path = ../Resources/puck_wall.wav; sourceTree = "<group>"; };
 		F06CA82617E902A400E13315 /* puck.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = puck.wav; path = ../Resources/puck.wav; sourceTree = "<group>"; };
 		F07BB7131808C24D004408BF /* KiipSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KiipSDK.framework; path = ../../../../../KiipSDK.framework; sourceTree = "<group>"; };
-		F07BB7151808C2C6004408BF /* KiipSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = KiipSDKResources.bundle; path = ../../../../../KiipSDK.framework/Resources/KiipSDKResources.bundle; sourceTree = "<group>"; };
 		F07BB7171808C2D2004408BF /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		F07BB7191808C316004408BF /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		F07BB71B1808C331004408BF /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
-		F07BB71D1808C3A6004408BF /* kiip_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kiip_helper.h; sourceTree = "<group>"; };
-		F07BB71E1808C3A6004408BF /* kiip_helper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = kiip_helper.mm; sourceTree = "<group>"; };
-		F07BB7201808C3C6004408BF /* kiip_key.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = kiip_key.txt; sourceTree = "<group>"; };
-		F07BB7221808C417004408BF /* kiip_secret.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = kiip_secret.txt; sourceTree = "<group>"; };
 		F07BB7241808CB57004408BF /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		F07FCEFE1804D65C0087419F /* LondrinaSolid-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "LondrinaSolid-Regular.ttf"; path = "../Resources/LondrinaSolid-Regular.ttf"; sourceTree = "<group>"; };
 		F0852480181418BA0052E114 /* SquareButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SquareButton.cpp; sourceTree = "<group>"; };
@@ -193,6 +181,11 @@
 		F0A471E317E6992600975F65 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
 		F0A471E417E6992600975F65 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		F0A471E517E6992600975F65 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
+		F0CCBB48185955700066E819 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		F0CCBB4A1859561E0066E819 /* libRevMobCocos2dx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRevMobCocos2dx.a; path = "../../../../../../Downloads/revmob-cocos2dx-sdk-1.1.0/iOS/libRevMobCocos2dx.a"; sourceTree = "<group>"; };
+		F0CCBB4B1859561E0066E819 /* RevMob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RevMob.h; path = "../../../../../../Downloads/revmob-cocos2dx-sdk-1.1.0/iOS/RevMob.h"; sourceTree = "<group>"; };
+		F0CCBB5018595AE80066E819 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		F0CCBB5118595AE80066E819 /* libFlurry_4.2.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.2.3.a; sourceTree = "<group>"; };
 		F0FA78911809FC9300183A4C /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		F0FA7893180A025D00183A4C /* PlayerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerModel.h; sourceTree = "<group>"; };
 		F0FA7894180A025D00183A4C /* PlayerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerModel.m; sourceTree = "<group>"; };
@@ -203,17 +196,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0CCBB49185955700066E819 /* StoreKit.framework in Frameworks */,
 				F0FA78921809FC9300183A4C /* GameKit.framework in Frameworks */,
-				F07BB71C1808C331004408BF /* PassKit.framework in Frameworks */,
 				F07BB71A1808C316004408BF /* AdSupport.framework in Frameworks */,
-				F07BB7181808C2D2004408BF /* CoreTelephony.framework in Frameworks */,
-				F07BB7141808C24D004408BF /* KiipSDK.framework in Frameworks */,
 				F0132E3717F3821900ECF5AA /* Security.framework in Frameworks */,
 				F03E683C17F379E3000E1B5E /* SystemConfiguration.framework in Frameworks */,
+				F0CCBB5218595AE80066E819 /* libFlurry_4.2.3.a in Frameworks */,
 				F0A471ED17E69AD500975F65 /* OpenAL.framework in Frameworks */,
 				F0A471EC17E69AB800975F65 /* AVFoundation.framework in Frameworks */,
 				F0A471EB17E69A8E00975F65 /* AudioToolbox.framework in Frameworks */,
 				15A3D7B91682F609002FB0C5 /* libcocos2dx.a in Frameworks */,
+				F0CCBB4C1859561E0066E819 /* libRevMobCocos2dx.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -221,7 +214,6 @@
 				BF1373F0128A899500D9F789 /* libxml2.dylib in Frameworks */,
 				BF1373F1128A899E00D9F789 /* libz.dylib in Frameworks */,
 				BF13742F128A8E6A00D9F789 /* QuartzCore.framework in Frameworks */,
-				F03E683817F3785A000E1B5E /* libFlurry_4.2.3.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,11 +239,10 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				F07BB7121808C140004408BF /* Kiip */,
+				F0CCBB4F18595AE80066E819 /* Flurry */,
+				F0CCBB4A1859561E0066E819 /* libRevMobCocos2dx.a */,
+				F0CCBB4B1859561E0066E819 /* RevMob.h */,
 				F0247A1017F798EF00D30678 /* flurry_api_key.txt */,
-				F07BB7201808C3C6004408BF /* kiip_key.txt */,
-				F07BB7221808C417004408BF /* kiip_secret.txt */,
-				F03E683517F3785A000E1B5E /* Flurry */,
 				F06CA81A17E901E500E13315 /* Resources */,
 				F0A471D717E698E800975F65 /* CocosDenshion */,
 				846431F317AB024300D38FC8 /* Default-Landscape~ipad.png */,
@@ -274,6 +265,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F0CCBB48185955700066E819 /* StoreKit.framework */,
 				F0FA78911809FC9300183A4C /* GameKit.framework */,
 				F07BB71B1808C331004408BF /* PassKit.framework */,
 				F07BB7191808C316004408BF /* AdSupport.framework */,
@@ -346,8 +338,6 @@
 				F00074FC181417C200BD3715 /* game_center.mm */,
 				F0FA7893180A025D00183A4C /* PlayerModel.h */,
 				F0FA7894180A025D00183A4C /* PlayerModel.m */,
-				F07BB71D1808C3A6004408BF /* kiip_helper.h */,
-				F07BB71E1808C3A6004408BF /* kiip_helper.mm */,
 				D4ABB4B213B4395300552E6E /* main.m */,
 				BF365AA612A103F70050DCF4 /* AppController.h */,
 				BF365AA712A103F70050DCF4 /* AppController.mm */,
@@ -357,15 +347,6 @@
 				F08A05D317F5FF20007B15D3 /* flurry_helper.mm */,
 			);
 			name = ios;
-			sourceTree = "<group>";
-		};
-		F03E683517F3785A000E1B5E /* Flurry */ = {
-			isa = PBXGroup;
-			children = (
-				F03E683617F3785A000E1B5E /* Flurry.h */,
-				F03E683717F3785A000E1B5E /* libFlurry_4.2.3.a */,
-			);
-			path = Flurry;
 			sourceTree = "<group>";
 		};
 		F06CA81A17E901E500E13315 /* Resources */ = {
@@ -383,14 +364,6 @@
 				F06CA82617E902A400E13315 /* puck.wav */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
-		};
-		F07BB7121808C140004408BF /* Kiip */ = {
-			isa = PBXGroup;
-			children = (
-				F07BB7151808C2C6004408BF /* KiipSDKResources.bundle */,
-			);
-			name = Kiip;
 			sourceTree = "<group>";
 		};
 		F0A471D717E698E800975F65 /* CocosDenshion */ = {
@@ -428,6 +401,16 @@
 			);
 			name = ios;
 			path = ../../../../CocosDenshion/ios;
+			sourceTree = "<group>";
+		};
+		F0CCBB4F18595AE80066E819 /* Flurry */ = {
+			isa = PBXGroup;
+			children = (
+				F0CCBB5018595AE80066E819 /* Flurry.h */,
+				F0CCBB5118595AE80066E819 /* libFlurry_4.2.3.a */,
+			);
+			name = Flurry;
+			path = ../../../../../../Desktop/Flurry;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -505,7 +488,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F039811E1804DD9900D436D4 /* icon80.png in Resources */,
-				F07BB7231808C417004408BF /* kiip_secret.txt in Resources */,
 				846431E817AB00DF00D38FC8 /* Default.png in Resources */,
 				F039811F1804DD9900D436D4 /* icon100.png in Resources */,
 				F03981211804DD9900D436D4 /* icon120.png in Resources */,
@@ -514,7 +496,6 @@
 				F07FCEFF1804D65C0087419F /* LondrinaSolid-Regular.ttf in Resources */,
 				846431EC17AB010200D38FC8 /* Default-568h@2x.png in Resources */,
 				F03981221804DD9900D436D4 /* icon144.png in Resources */,
-				F07BB7161808C2C6004408BF /* KiipSDKResources.bundle in Resources */,
 				846431EE17AB013E00D38FC8 /* Default-Portrait~ipad.png in Resources */,
 				846431F017AB015000D38FC8 /* Default-Portrait@2x~ipad.png in Resources */,
 				846431F217AB023500D38FC8 /* Default-Landscape@2x~ipad.png in Resources */,
@@ -525,7 +506,6 @@
 				F06CA82817E902A400E13315 /* goal.mp3 in Resources */,
 				F06CA82917E902A400E13315 /* iphone in Resources */,
 				F06CA82A17E902A400E13315 /* iphone5 in Resources */,
-				F07BB7211808C3C6004408BF /* kiip_key.txt in Resources */,
 				F039811B1804DD9900D436D4 /* icon58.png in Resources */,
 				F039811A1804DD9900D436D4 /* icon57.png in Resources */,
 				F06CA82B17E902A400E13315 /* language_en in Resources */,
@@ -562,7 +542,6 @@
 				F0A471E617E6992600975F65 /* CDAudioManager.m in Sources */,
 				F0A471E717E6992600975F65 /* CDOpenALSupport.m in Sources */,
 				F0FA7897180A025D00183A4C /* PlayerModel.m in Sources */,
-				F07BB71F1808C3A6004408BF /* kiip_helper.mm in Sources */,
 				F0A471E817E6992600975F65 /* CocosDenshion.m in Sources */,
 				F0A471E917E6992600975F65 /* SimpleAudioEngine.mm in Sources */,
 				F0A471EA17E6992600975F65 /* SimpleAudioEngine_objc.m in Sources */,
@@ -619,8 +598,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../Classes/TestFlightSDK2.0.0\"",
-					"\"$(SRCROOT)/Flurry\"",
+					"/Users/user9227/Downloads/revmob-cocos2dx-sdk-1.1.0/iOS",
+					/Users/user9227/Desktop/Flurry,
 				);
 				PRODUCT_NAME = Hockey;
 				PROVISIONING_PROFILE = "ED43E02B-8679-4095-A55D-8E0E2716CD39";
@@ -667,8 +646,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../Classes/TestFlightSDK2.0.0\"",
-					"\"$(SRCROOT)/Flurry\"",
+					"/Users/user9227/Downloads/revmob-cocos2dx-sdk-1.1.0/iOS",
+					/Users/user9227/Desktop/Flurry,
 				);
 				PRODUCT_NAME = Hockey;
 				PROVISIONING_PROFILE = "ED43E02B-8679-4095-A55D-8E0E2716CD39";
