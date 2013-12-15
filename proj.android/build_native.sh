@@ -1,4 +1,4 @@
-NDK_ROOT="/home/sucio/bin/android-ndk-r8e"
+NDK_ROOT="/home/sucio/bin/android-ndk-r9b"
 APPNAME="Hockey"
 
 # options

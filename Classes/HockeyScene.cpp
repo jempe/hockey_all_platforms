@@ -4,6 +4,7 @@
 #include "MenuScene.h"
 #include "SimpleAudioEngine.h"
 
+    #include "RevMob.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     #include "jni/JniHelper.h"
     #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
@@ -12,7 +13,6 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #include "flurry_helper.h"
     #include "game_center.h"
-    #include "RevMob.h"
 #endif
 
 
@@ -1298,11 +1298,9 @@ void HockeyScene::showWinnerLabel(short int player)
     {
         winner_label_done = CCCallFuncN::create( this, callfuncN_selector(HockeyScene::showWinnerMenu));
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         revmob::RevMob *revmob = revmob::RevMob::SharedInstance();
         revmob->ShowFullscreen();
         CCLog("show full screen ad");
-#endif
     }
 
 

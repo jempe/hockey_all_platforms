@@ -33,6 +33,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.flurry.android.FlurryAgent;
+import com.revmob.cocos2dx.RevMobWrapper;
 
 public class Hockey extends Cocos2dxActivity{
 	
@@ -45,6 +46,8 @@ public class Hockey extends Cocos2dxActivity{
 
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
+		
+		RevMobWrapper.setActivity(this);
 		
 		// Change libcocos2dx Activity class to FragmentActivity need to add android-support-v4.jar
 		// add KiipSDK.jar to the libs folder

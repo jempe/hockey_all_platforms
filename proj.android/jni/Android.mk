@@ -18,7 +18,9 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/MenuScene.cpp \
                    ../../Classes/LevelsScene.cpp \
                    ../../Classes/HockeyScene.cpp \
-                   ../../Classes/CCLocalizedString.cpp
+                   ../../Classes/CCLocalizedString.cpp \
+                   ../../Classes/RevMob.cpp \
+                   ../../Classes/RevMobAds_Android.cpp
                    
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes            
 
