@@ -30,7 +30,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     #include "/Users/user9227/Documents/hockeyIosRevmobKey.cpp"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     //revmob->StartSession("YOUR IOS ANDROID");
-	#include "/home/sucio/android_apps/apps_key/hockeyAndroidRevmobKey.cpp"
+	//#include "/home/sucio/android_apps/apps_key/hockeyAndroidRevmobKey.cpp"
+	#include "/home/sucio/android_apps/apps_key/hockeyAmazonRevmobKey.cpp"
 #endif
 
     // initialize director
