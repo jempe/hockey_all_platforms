@@ -23,15 +23,17 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     revmob::RevMob *revmob = revmob::RevMob::SharedInstance();
+#endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     //revmob->StartSession("IOS id");
     #include "/Users/user9227/Documents/hockeyIosRevmobKey.cpp"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     //revmob->StartSession("YOUR IOS ANDROID");
-	//#include "/home/sucio/android_apps/apps_key/hockeyAndroidRevmobKey.cpp"
-	#include "/home/sucio/android_apps/apps_key/hockeyAmazonRevmobKey.cpp"
+	#include "/home/sucio/android_apps/apps_key/Hockey/hockeyAndroidRevmobKey.cpp"
+	//#include "/home/sucio/android_apps/apps_key/Hockey/hockeyAmazonRevmobKey.cpp"
 #endif
 
     // initialize director

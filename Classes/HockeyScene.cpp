@@ -4,7 +4,9 @@
 #include "MenuScene.h"
 #include "SimpleAudioEngine.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     #include "RevMob.h"
+#endif
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     #include "jni/JniHelper.h"
     #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
@@ -991,17 +993,14 @@ void HockeyScene::showScoreCongrats()
 
 	if(_computer_player_level == 1)
 	{
-		save_moment("Won Level 1");
 		high_score_recipient = "high_score1";
 	}
 	else if(_computer_player_level == 2)
 	{
-		save_moment("Won Level 2");
 		high_score_recipient = "high_score2";
 	}
 	else
 	{
-		save_moment("Won Level 3");
 		high_score_recipient = "high_score3";
 	}
 
@@ -1290,6 +1289,12 @@ void HockeyScene::showWinnerLabel(short int player)
 
     CCFiniteTimeAction* winner_label_done;
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        revmob::RevMob *revmob = revmob::RevMob::SharedInstance();
+        revmob->ShowFullscreen();
+        CCLog("show full screen ad");
+#endif
+
     if(_playersNumber == 1 && player == 1)
     {
         winner_label_done = CCCallFuncN::create( this, callfuncN_selector(HockeyScene::showScoreCongrats));
@@ -1297,10 +1302,6 @@ void HockeyScene::showWinnerLabel(short int player)
     else
     {
         winner_label_done = CCCallFuncN::create( this, callfuncN_selector(HockeyScene::showWinnerMenu));
-
-        revmob::RevMob *revmob = revmob::RevMob::SharedInstance();
-        revmob->ShowFullscreen();
-        CCLog("show full screen ad");
     }
 
 
@@ -1638,32 +1639,6 @@ void HockeyScene::flurry_event(std::string event_n)
 #endif
 }
 
-void HockeyScene::save_moment(std::string moment_n)
-{
-    char const * moment_name = moment_n.c_str();
-
-    CCLog("save moment %s", moment_name);
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-	    JniMethodInfo methodInfo;
-	    if (! JniHelper::getStaticMethodInfo(methodInfo, "org/jempe/hockey/Hockey"
-	            ,"kiip_moment"
-	            ,"(Ljava/lang/String;)V"))
-	    {
-	        CCLog("%s %d: error to get methodInfo", __FILE__, __LINE__);
-	    }
-	    else
-	    {
-	        jstring j_moment_name = methodInfo.env->NewStringUTF(moment_name);
-
-	        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, j_moment_name);
-	    }
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-
-#endif
-}
 
 void HockeyScene::keyBackClicked()
 {

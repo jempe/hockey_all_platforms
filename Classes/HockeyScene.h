@@ -143,8 +143,6 @@ public:
 
     void flurry_event(std::string event_n);
 
-    void save_moment(std::string moment_n);
-
     float log_2(float n);
 };
 
