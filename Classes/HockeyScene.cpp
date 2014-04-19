@@ -1180,10 +1180,7 @@ void HockeyScene::showScoreCongrats()
     orange_lines->runAction(show_orange_lines);
     red_lines->runAction(show_red_lines);
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        revmob::RevMob *revmob = revmob::RevMob::SharedInstance();
-        revmob->ShowFullscreen();
-#endif
+    showAd();
 }
 
 void HockeyScene::showWinnerLabel(short int player)
@@ -1289,11 +1286,7 @@ void HockeyScene::showWinnerLabel(short int player)
 
     CCFiniteTimeAction* winner_label_done;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        revmob::RevMob *revmob = revmob::RevMob::SharedInstance();
-        revmob->ShowFullscreen();
-        CCLog("show full screen ad");
-#endif
+    showAd();
 
     if(_playersNumber == 1 && player == 1)
     {
@@ -1648,4 +1641,55 @@ void HockeyScene::keyBackClicked()
 float HockeyScene::log_2(float n)
 {
     return log(n) / log(2);
+}
+
+void HockeyScene::showAd()
+{
+	bool test_ads = true;
+
+	int select_ad_network = rand() % 9;
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+		if(test_ads == true)
+		{
+			revmob::RevMob::SharedInstance()->SetTestingMode(revmob::kTestingModeWithAds);
+		}
+
+        revmob::RevMob *revmob = revmob::RevMob::SharedInstance();
+        revmob->ShowFullscreen();
+        CCLog("show full screen ad");
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        if(select_ad_network < 8)
+        {
+        	char const * event_name = "";
+
+            JniMethodInfo methodInfo;
+            if (! JniHelper::getStaticMethodInfo(methodInfo, "org/jempe/hockey/Hockey"
+                    ,"LoadAmazonAd"
+                    ,"(Ljava/lang/String;)V"))
+            {
+                //CCLog("%s %d: error to get methodInfo", __FILE__, __LINE__);
+            }
+            else
+            {
+                jstring j_event_name = methodInfo.env->NewStringUTF(event_name);
+
+                methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, j_event_name);
+            }
+        	CCLog("show Amazon ad");
+        }
+        else
+        {
+        	if(test_ads == true)
+        	{
+        		revmob::RevMob::SharedInstance()->SetTestingMode(revmob::kTestingModeWithAds);
+        	}
+
+        	revmob::RevMob *revmob = revmob::RevMob::SharedInstance();
+        	revmob->ShowFullscreen();
+        	CCLog("show revmob ad");
+        }
+#endif
 }

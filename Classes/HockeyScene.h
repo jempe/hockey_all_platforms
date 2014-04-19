@@ -144,6 +144,8 @@ public:
     void flurry_event(std::string event_n);
 
     float log_2(float n);
+
+    void showAd();
 };
 
 #endif // __HELLOWORLD_SCENE_H__
