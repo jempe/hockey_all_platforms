@@ -1661,8 +1661,8 @@ void HockeyScene::showAd()
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        if(select_ad_network < 8)
-        {
+        /*if(select_ad_network < 8)
+        {*/
         	char const * event_name = "";
 
             JniMethodInfo methodInfo;
@@ -1679,7 +1679,7 @@ void HockeyScene::showAd()
                 methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, j_event_name);
             }
         	CCLog("show Amazon ad");
-        }
+        /*}
         else
         {
         	if(test_ads == true)
@@ -1690,6 +1690,6 @@ void HockeyScene::showAd()
         	revmob::RevMob *revmob = revmob::RevMob::SharedInstance();
         	revmob->ShowFullscreen();
         	CCLog("show revmob ad");
-        }
+        }*/
 #endif
 }
