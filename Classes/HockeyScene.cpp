@@ -4,9 +4,6 @@
 #include "MenuScene.h"
 #include "SimpleAudioEngine.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    #include "RevMob.h"
-#endif
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     #include "jni/JniHelper.h"
     #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
@@ -281,13 +278,31 @@ bool HockeyScene::init()
 
     if(_playersNumber > 1)
     {
-    	flurry_event("Start Game with a friend");
+    	analytics_event("Start Game with a friend");
     }
     else
     {
         this->schedule(schedule_selector(HockeyScene::timer), 1.0f);
-    	flurry_event("Start Game with computer");
+    	analytics_event("Start Game with computer");
     }
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	char const * event_name = "";
+
+    JniMethodInfo methodInfo;
+    if (! JniHelper::getStaticMethodInfo(methodInfo, "org/jempe/hockey/Hockey"
+            ,"showInterstitial"
+            ,"(Ljava/lang/String;)V"))
+    {
+        //CCLog("%s %d: error to get methodInfo", __FILE__, __LINE__);
+    }
+    else
+    {
+        jstring j_event_name = methodInfo.env->NewStringUTF(event_name);
+
+        methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, j_event_name);
+    }
+	CCLog("show Interstitial");
+#endif
 
     getHighScores(getLeaderBoardName());
 
@@ -1189,7 +1204,7 @@ void HockeyScene::showWinnerLabel(short int player)
 
 	if(_playersNumber > 1)
 	{
-        flurry_event("Finished game with a friend");
+        analytics_event("Finished game with a friend");
 	}
 	else
 	{
@@ -1197,15 +1212,15 @@ void HockeyScene::showWinnerLabel(short int player)
 		{
 			if(_computer_player_level == 1)
 			{
-				flurry_event("Computer won (Easy)");
+				analytics_event("Computer won (Easy)");
 			}
 			else if (_computer_player_level == 2)
 			{
-				flurry_event("Computer won (Medium)");
+				analytics_event("Computer won (Medium)");
 			}
 			else
 			{
-				flurry_event("Computer won (Hard)");
+				analytics_event("Computer won (Hard)");
 			}
 		}
 		else
@@ -1218,15 +1233,15 @@ void HockeyScene::showWinnerLabel(short int player)
 
 			if(_computer_player_level == 1)
 			{
-				flurry_event("Player won (Easy)");
+				analytics_event("Player won (Easy)");
 			}
 			else if (_computer_player_level == 2)
 			{
-				flurry_event("Player won (Medium)");
+				analytics_event("Player won (Medium)");
 			}
 			else
 			{
-				flurry_event("Player won (Hard)");
+				analytics_event("Player won (Hard)");
 			}
 		}
 	}
@@ -1605,16 +1620,16 @@ void HockeyScene::puckCollisionVector(CCPoint objectCenter, float objectRadius, 
 	}
 }
 
-void HockeyScene::flurry_event(std::string event_n)
+void HockeyScene::analytics_event(std::string event_n)
 {
     char const * event_name = event_n.c_str();
 
-    CCLog("flurry_event %s", event_name);
+    CCLog("analytics_event %s", event_name);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     JniMethodInfo methodInfo;
     if (! JniHelper::getStaticMethodInfo(methodInfo, "org/jempe/hockey/Hockey"
-            ,"flurry_event"
+            ,"analytics_event"
             ,"(Ljava/lang/String;)V"))
     {
         //CCLog("%s %d: error to get methodInfo", __FILE__, __LINE__);
@@ -1645,29 +1660,12 @@ float HockeyScene::log_2(float n)
 
 void HockeyScene::showAd()
 {
-	bool test_ads = true;
-
-	int select_ad_network = rand() % 9;
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-		if(test_ads == true)
-		{
-			revmob::RevMob::SharedInstance()->SetTestingMode(revmob::kTestingModeWithAds);
-		}
-
-        revmob::RevMob *revmob = revmob::RevMob::SharedInstance();
-        revmob->ShowFullscreen();
-        CCLog("show full screen ad");
-#endif
-
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        /*if(select_ad_network < 8)
-        {*/
         	char const * event_name = "";
 
             JniMethodInfo methodInfo;
             if (! JniHelper::getStaticMethodInfo(methodInfo, "org/jempe/hockey/Hockey"
-                    ,"LoadAmazonAd"
+                    ,"showInterstitial"
                     ,"(Ljava/lang/String;)V"))
             {
                 //CCLog("%s %d: error to get methodInfo", __FILE__, __LINE__);
@@ -1678,18 +1676,6 @@ void HockeyScene::showAd()
 
                 methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, j_event_name);
             }
-        	CCLog("show Amazon ad");
-        /*}
-        else
-        {
-        	if(test_ads == true)
-        	{
-        		revmob::RevMob::SharedInstance()->SetTestingMode(revmob::kTestingModeWithAds);
-        	}
-
-        	revmob::RevMob *revmob = revmob::RevMob::SharedInstance();
-        	revmob->ShowFullscreen();
-        	CCLog("show revmob ad");
-        }*/
+        	CCLog("show Interstitial");
 #endif
 }

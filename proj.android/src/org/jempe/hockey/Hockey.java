@@ -29,29 +29,32 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.amazon.device.ads.Ad;
 import com.amazon.device.ads.AdError;
-import com.amazon.device.ads.AdLayout;
 import com.amazon.device.ads.AdProperties;
 import com.amazon.device.ads.AdRegistration;
 import com.amazon.device.ads.DefaultAdListener;
 import com.amazon.device.ads.InterstitialAd;
-import com.flurry.android.FlurryAgent;
-import com.revmob.cocos2dx.RevMobWrapper;
+import com.amazon.insights.AmazonInsights;
+import com.amazon.insights.Event;
+import com.amazon.insights.EventClient;
+import com.amazon.insights.InsightsCredentials;
+import com.revmob.RevMob;
+import com.revmob.RevMobTestingMode;
 
 public class Hockey extends Cocos2dxActivity {
 
 	private static final String TAG = "Hockey Activity ";
 
-	private ViewGroup adViewContainer; // View group to which the ad view will
-
 	private InterstitialAd interstitialAd;
-	// be added
-	private static AdLayout nextAdView; // A placeholder for the next ad so we
-										// can keep the current ad visible while
-										// the next ad loads
+	private RevMob revmob;
+
+	// analytics
+	private AmazonInsights insights;
+
+	private static Boolean mTestAds = true;
 
 	private static Context mContext;
 
@@ -60,12 +63,26 @@ public class Hockey extends Cocos2dxActivity {
 
 		mContext = this;
 
-		RevMobWrapper.setActivity(this);
+		// Create a credentials object by using the values from the Amazon
+		// developer oortal Analytics site.
+		// The Identifier's Public Key acts as the application key.
+		InsightsCredentials credentials = AmazonInsights.newCredentials(
+				getString(R.string.amazoninsights_app_key),
+				getString(R.string.amazoninsights_private_key));
+
+		// Initialize a new instance of AmazonInsights specifically for your
+		// Android application.
+		// The AmazonInsights library requires the Android context in order to
+		// access
+		// Android services (i.e., SharedPrefs, etc.).
+		insights = AmazonInsights.newInstance(credentials,
+				getApplicationContext());
+
+		revmob = RevMob.start(this); // RevMob App ID configured in the
+										// AndroidManifest.xml file
 
 		// AmazonMobileAds Registration
 		AdRegistration.setAppKey(getString(R.string.amazon_app_key));
-		AdRegistration.enableTesting(true);
-		AdRegistration.enableLogging(true);
 
 		// Create the interstitial.
 		this.interstitialAd = new InterstitialAd(this);
@@ -75,6 +92,25 @@ public class Hockey extends Cocos2dxActivity {
 
 		// Load the interstitial.
 		this.interstitialAd.loadAd();
+
+		if (mTestAds) {
+			// Amazon set Test Mode
+			AdRegistration.enableTesting(true);
+			AdRegistration.enableLogging(true);
+
+			// Revmob set Test Mode
+			revmob.setTestingMode(RevMobTestingMode.WITH_ADS); // with this
+																// line, RevMob
+																// will always
+																// deliver a
+																// sample ad
+			// revmob.setTestingMode(RevMobTestingMode.WITHOUT_ADS); // with
+			// this line, RevMob will not delivery ads
+
+			Toast toast = Toast.makeText(this, "Ads in Testing Mode",
+					Toast.LENGTH_LONG);
+			toast.show();
+		}
 	}
 
 	// AdLister for amazon ads
@@ -89,8 +125,7 @@ public class Hockey extends Cocos2dxActivity {
 				// before it’s time to show it. You can thus instead set a flag
 				// here to indicate the ad is ready to show and then wait until
 				// the best time to display the ad before calling showAd().
-				//Hockey.this.interstitialAd.showAd();
-				//LoadAmazonAd("test");
+				// Hockey.this.interstitialAd.showAd();
 				Log.d(TAG, "Amazon Interstitial loaded");
 			}
 		}
@@ -111,31 +146,36 @@ public class Hockey extends Cocos2dxActivity {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		if (nextAdView != null)
-			this.nextAdView.destroy();
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
+		revmob = RevMob.start(this);
+		this.insights.getSessionClient().resumeSession();
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
+		// Notify the AmazonInsights SDK that a session pause happened in this
+		// Android activity.
+		// Be sure to include this in every activity's onPause.
+		this.insights.getSessionClient().pauseSession();
+
+		// Call this to submit events to the server.
+		// It is recommended to call this in every activity's onPause method.
+		this.insights.getEventClient().submitEvents();
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
-
-		FlurryAgent.onStartSession(this, getString(R.string.flurry_api_key));
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		FlurryAgent.onEndSession(this);
 	}
 
 	private native void pauseGame();
@@ -144,24 +184,42 @@ public class Hockey extends Cocos2dxActivity {
 		System.loadLibrary("game");
 	}
 
-	static void flurry_event(final String event_name) {
-		FlurryAgent.logEvent(event_name);
-	}
-	
-	private void showAmazonAd()
-	{
+	private void showAmazonAd() {
 		this.interstitialAd.showAd();
 	}
 
-	/**
-	 * Loads a new ad. Keeps the current ad visible while the next ad loads.
-	 */
-	private static void LoadAmazonAd(final String event_name) {
-		Log.d(TAG, "load Amazon Ad");
+	private void showRevmobAd() {
+		revmob.showFullscreen(this);
+	}
+
+	private static void showInterstitial(final String event_name) {
+		Log.d(TAG, "show Interstitial");
 		((Activity) mContext).runOnUiThread(new Runnable() {
 
 			public void run() {
-				((Hockey) mContext).showAmazonAd();
+				// ((Hockey) mContext).showAmazonAd();
+				// ((Hockey) mContext).showRevmobAd();
+			}
+		});
+	}
+
+	private void log_analytics_event(String event_name) {
+		// Get the event client from insights instance
+		EventClient eventClient = insights.getEventClient();
+
+		Event event = eventClient.createEvent(event_name);
+
+		// Record the level completion event.
+		eventClient.recordEvent(event);
+
+	}
+
+	private static void analytics_event(final String event_name) {
+		Log.d(TAG, "analytics event:" + event_name);
+		((Activity) mContext).runOnUiThread(new Runnable() {
+
+			public void run() {
+				((Hockey) mContext).log_analytics_event(event_name);
 			}
 		});
 	}

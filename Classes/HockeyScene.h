@@ -141,7 +141,7 @@ public:
 
     virtual void keyBackClicked();
 
-    void flurry_event(std::string event_n);
+    void analytics_event(std::string event_n);
 
     float log_2(float n);
 

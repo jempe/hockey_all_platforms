@@ -55,7 +55,7 @@ proj.android/.settings
 
 #flurry and kiip api key
 
-proj.android/res/values/flurry.xml
+proj.android/res/values/api_keys.xml
 proj.ios/flurry_api_key.txt
 proj.ios/kiip_key.txt
 proj.ios/kiip_secret.txt
