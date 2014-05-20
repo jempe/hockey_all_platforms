@@ -28,17 +28,20 @@
         <activity
             android:name="com.amazon.device.ads.AdActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
-        <meta-data android:name="com.revmob.app.id" android:value="@string/revmob_android"/>
+
+        <meta-data
+            android:name="com.revmob.app.id"
+            android:value="@string/revmob_android" />
+
         <activity
             android:name="com.revmob.ads.fullscreen.FullscreenActivity"
             android:configChanges="keyboardHidden|orientation"
             android:theme="@android:style/Theme.Translucent" >
         </activity>
-         <activity
-             android:name="com.flurry.android.FlurryFullscreenTakeoverActivity"
-             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" >
-         </activity>
-
+        <activity
+            android:name="com.chartboost.sdk.CBImpressionActivity"
+            android:excludeFromRecents="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".Hockey"
             android:configChanges="orientation"

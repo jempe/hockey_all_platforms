@@ -23,11 +23,15 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.jempe.hockey;
 
+import java.util.Random;
+
 import org.cocos2dx.lib.Cocos2dxActivity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -41,15 +45,19 @@ import com.amazon.insights.AmazonInsights;
 import com.amazon.insights.Event;
 import com.amazon.insights.EventClient;
 import com.amazon.insights.InsightsCredentials;
+import com.chartboost.sdk.CBPreferences;
+import com.chartboost.sdk.Chartboost;
 import com.revmob.RevMob;
 import com.revmob.RevMobTestingMode;
 
 public class Hockey extends Cocos2dxActivity {
 
 	private static final String TAG = "Hockey Activity ";
+	private static final String PREFS_NAME = "JempeHockeyPrefs";
 
 	private InterstitialAd interstitialAd;
 	private RevMob revmob;
+	private Chartboost cb;
 
 	// analytics
 	private AmazonInsights insights;
@@ -57,6 +65,17 @@ public class Hockey extends Cocos2dxActivity {
 	private static Boolean mTestAds = true;
 
 	private static Context mContext;
+
+	private static SharedPreferences mSettings;
+
+	private static String defaultAdsDistribution = "amazon,revmob,chartboost";
+	private static final String adsDistributionSettings = "ads_distribution";
+
+	private static final String adsDistributionBaseURL = "https://webservices.jempe.org/ads_distribution/";
+	private static final String adsDistributionParams = "org.jempe.hockey/amazon.json";
+
+	private static String AdsDistribution = "";
+	private static String[] AdsDistributionList = null;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -78,20 +97,25 @@ public class Hockey extends Cocos2dxActivity {
 		insights = AmazonInsights.newInstance(credentials,
 				getApplicationContext());
 
+		// Revmob registration
 		revmob = RevMob.start(this); // RevMob App ID configured in the
 										// AndroidManifest.xml file
 
 		// AmazonMobileAds Registration
 		AdRegistration.setAppKey(getString(R.string.amazon_app_key));
-
 		// Create the interstitial.
 		this.interstitialAd = new InterstitialAd(this);
-
 		// Set the listener to use the callbacks below.
 		this.interstitialAd.setListener(new MyCustomAdListener());
-
 		// Load the interstitial.
 		this.interstitialAd.loadAd();
+
+		// Configure Chartboost
+		this.cb = Chartboost.sharedChartboost();
+		String appId = getString(R.string.chartboost_android_app_id);
+		String appSignature = getString(R.string.chartboost_android_signature);
+		this.cb.onCreate(this, appId, appSignature, null);
+		CBPreferences.getInstance().setImpressionsUseActivities(true);
 
 		if (mTestAds) {
 			// Amazon set Test Mode
@@ -111,6 +135,11 @@ public class Hockey extends Cocos2dxActivity {
 					Toast.LENGTH_LONG);
 			toast.show();
 		}
+
+		mSettings = getSharedPreferences(PREFS_NAME, 0);
+		AdsDistribution = mSettings.getString(adsDistributionSettings,
+				defaultAdsDistribution);
+		AdsDistributionList = AdsDistribution.split(",");
 	}
 
 	// AdLister for amazon ads
@@ -146,6 +175,8 @@ public class Hockey extends Cocos2dxActivity {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+
+		this.cb.onDestroy(this);
 	}
 
 	@Override
@@ -171,11 +202,19 @@ public class Hockey extends Cocos2dxActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
+
+		this.cb.onStart(this);
+
+		// Notify the beginning of a user session. Must not be dependent on user
+		// actions or any prior network requests.
+		this.cb.startSession();
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
+
+		this.cb.onStop(this);
 	}
 
 	private native void pauseGame();
@@ -192,13 +231,38 @@ public class Hockey extends Cocos2dxActivity {
 		revmob.showFullscreen(this);
 	}
 
+	private void showChartboostAd() {
+		// Show an interstitial
+		this.cb.showInterstitial();
+	}
+
 	private static void showInterstitial(final String event_name) {
 		Log.d(TAG, "show Interstitial");
+
 		((Activity) mContext).runOnUiThread(new Runnable() {
 
 			public void run() {
-				// ((Hockey) mContext).showAmazonAd();
-				// ((Hockey) mContext).showRevmobAd();
+
+				Time t = new Time();
+		        t.setToNow();
+		        
+				Random r = new Random(t.toMillis(false));
+
+				int selectedNumber = r.nextInt(AdsDistributionList.length);
+
+				String selectedNetwork = AdsDistributionList[selectedNumber];
+
+				if (selectedNetwork.equals("amazon")) {
+					Log.d(TAG, "show Amazon Interstitial");
+					((Hockey) mContext).showAmazonAd();
+				} else if (selectedNetwork.equals("chartboost")) {
+					Log.d(TAG, "show Chartboost Interstitial");
+					((Hockey) mContext).showChartboostAd();
+				} else {
+					Log.d(TAG, "show Revmob Interstitial");
+					((Hockey) mContext).showRevmobAd();
+
+				}
 			}
 		});
 	}

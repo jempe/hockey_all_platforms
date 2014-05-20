@@ -285,7 +285,7 @@ bool HockeyScene::init()
         this->schedule(schedule_selector(HockeyScene::timer), 1.0f);
     	analytics_event("Start Game with computer");
     }
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+/*#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 	char const * event_name = "";
 
     JniMethodInfo methodInfo;
@@ -302,7 +302,7 @@ bool HockeyScene::init()
         methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, j_event_name);
     }
 	CCLog("show Interstitial");
-#endif
+#endif*/
 
     getHighScores(getLeaderBoardName());
 
