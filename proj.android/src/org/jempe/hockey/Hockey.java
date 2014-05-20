@@ -23,13 +23,29 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.jempe.hockey;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Random;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.AbstractHttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.cocos2dx.lib.Cocos2dxActivity;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.util.Log;
@@ -68,11 +84,17 @@ public class Hockey extends Cocos2dxActivity {
 
 	private static SharedPreferences mSettings;
 
-	private static String defaultAdsDistribution = "amazon,revmob,chartboost";
+	private static final String CHARTBOOST = "chartboost";
+	private static final String AMAZON = "amazon";
+	private static final String REVMOB = "revmob";
+
+	private static String defaultAdsDistribution = AMAZON + "," + REVMOB + ","
+			+ CHARTBOOST;
 	private static final String adsDistributionSettings = "ads_distribution";
 
-	private static final String adsDistributionBaseURL = "https://webservices.jempe.org/ads_distribution/";
-	private static final String adsDistributionParams = "org.jempe.hockey/amazon.json";
+	private static final String adsDistributionBaseURL = "http://webservices.jempe.org/ads_distribution/";
+	private static final String adsDistributionParams = "org.jempe.hockey/slideme.json";
+	private static final String HOST = "webservices.jempe.org";
 
 	private static String AdsDistribution = "";
 	private static String[] AdsDistributionList = null;
@@ -137,9 +159,20 @@ public class Hockey extends Cocos2dxActivity {
 		}
 
 		mSettings = getSharedPreferences(PREFS_NAME, 0);
+		processAdsDistribution();
+
+		if (isConnected()) {
+			new WebServiceTask(this).execute();
+		}
+	}
+	
+	private void processAdsDistribution()
+	{
 		AdsDistribution = mSettings.getString(adsDistributionSettings,
 				defaultAdsDistribution);
 		AdsDistributionList = AdsDistribution.split(",");
+		
+		Log.d(TAG, "ads distribution: " + AdsDistribution);
 	}
 
 	// AdLister for amazon ads
@@ -244,18 +277,18 @@ public class Hockey extends Cocos2dxActivity {
 			public void run() {
 
 				Time t = new Time();
-		        t.setToNow();
-		        
+				t.setToNow();
+
 				Random r = new Random(t.toMillis(false));
 
 				int selectedNumber = r.nextInt(AdsDistributionList.length);
 
 				String selectedNetwork = AdsDistributionList[selectedNumber];
 
-				if (selectedNetwork.equals("amazon")) {
+				if (selectedNetwork.equals(AMAZON)) {
 					Log.d(TAG, "show Amazon Interstitial");
 					((Hockey) mContext).showAmazonAd();
-				} else if (selectedNetwork.equals("chartboost")) {
+				} else if (selectedNetwork.equals(CHARTBOOST)) {
 					Log.d(TAG, "show Chartboost Interstitial");
 					((Hockey) mContext).showChartboostAd();
 				} else {
@@ -265,6 +298,128 @@ public class Hockey extends Cocos2dxActivity {
 				}
 			}
 		});
+	}
+
+	private Boolean isConnected() {
+
+		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeInfo = connMgr.getActiveNetworkInfo();
+		if (activeInfo != null && activeInfo.isConnected()) {
+			Boolean wifiConnected = activeInfo.getType() == ConnectivityManager.TYPE_WIFI;
+			Boolean mobileConnected = activeInfo.getType() == ConnectivityManager.TYPE_MOBILE;
+			if (wifiConnected) {
+				return true;
+			} else if (mobileConnected) {
+				return true;
+			}
+		} else {
+			return false;
+		}
+		return false;
+	}
+
+	private class WebServiceTask extends AsyncTask {
+		private Context mContext;
+
+		public WebServiceTask(Context context) {
+			mContext = context;
+		}
+
+		protected void onPostExecute() {
+
+		}
+
+		@Override
+		public Object doInBackground(Object... params) {
+			try {
+
+				StringBuilder builder = new StringBuilder();
+				HttpClient client = new DefaultHttpClient();
+
+				((AbstractHttpClient) client).getCredentialsProvider()
+						.setCredentials(
+								new AuthScope(HOST, AuthScope.ANY_PORT),
+								new UsernamePasswordCredentials(
+										getString(R.string.jempe_username),
+										getString(R.string.jempe_password)));
+
+				HttpGet httpGet = new HttpGet(adsDistributionBaseURL
+						+ adsDistributionParams);
+
+				HttpResponse response = client.execute(httpGet);
+				StatusLine statusLine = response.getStatusLine();
+				int statusCode = statusLine.getStatusCode();
+
+				if (statusCode == 200) {
+					HttpEntity entity = response.getEntity();
+					InputStream content = entity.getContent();
+					BufferedReader reader = new BufferedReader(
+							new InputStreamReader(content));
+					String line;
+					while ((line = reader.readLine()) != null) {
+						builder.append(line);
+					}
+				} else {
+					Log.e(TAG, "Failed to contact web service");
+				}
+
+				String webServiceResponse = builder.toString();
+
+				JSONObject jsonObject = new JSONObject(webServiceResponse);
+				
+				if (jsonObject.getInt("success") == 1) {
+					int amazonWeight = jsonObject.getInt(AMAZON);
+					int revmobWeight = jsonObject.getInt(REVMOB);
+					int chartboostWeight = jsonObject.getInt(CHARTBOOST);
+
+					if ((amazonWeight + revmobWeight + chartboostWeight) > 0) {
+						String newAdsDistribution = "";
+
+						for (int i = 0; i < amazonWeight; i++) {
+							if (newAdsDistribution != "") {
+								newAdsDistribution += ",";
+							}
+
+							newAdsDistribution += AMAZON;
+						}
+
+						for (int i = 0; i < chartboostWeight; i++) {
+							if (newAdsDistribution != "") {
+								newAdsDistribution += ",";
+							}
+
+							newAdsDistribution += CHARTBOOST;
+						}
+						
+						for (int i = 0; i < revmobWeight; i++) {
+							if (newAdsDistribution != "") {
+								newAdsDistribution += ",";
+							}
+
+							newAdsDistribution += REVMOB;
+						}
+						
+						SharedPreferences.Editor editor = mSettings.edit();
+						editor.putString(adsDistributionSettings, newAdsDistribution);
+						editor.commit();
+						
+						processAdsDistribution();
+					}
+					else
+					{
+						Log.e(TAG, "ads distribution must not be empty");
+					}
+				} else {
+					Log.e(TAG, "web service status issue");
+				}
+
+				Log.d(TAG, "webService response: " + webServiceResponse);
+
+			} catch (Exception ex) {
+				Log.e(TAG, "Web Service Error" + ex);
+			}
+			return null;
+		}
 	}
 
 	private void log_analytics_event(String event_name) {
