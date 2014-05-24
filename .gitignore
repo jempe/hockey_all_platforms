@@ -68,8 +68,10 @@ proj.linux/bin/
 
 # Amazon Gamecircle
 
+Resources/api_key.txt
 proj.android/assets/api_key.txt
 proj.android/jni/includes/*
 proj.android/jni/libs/*
 
 *~
+
