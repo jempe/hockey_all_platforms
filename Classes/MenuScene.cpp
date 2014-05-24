@@ -100,7 +100,7 @@ bool MenuScene::init()
                     NULL
                     )
                 );
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
+
     SquareButton * leaderboard_button = SquareButton::createWithIcon("leaderboard_icon.png", false);
     SquareButton * leaderboard_button_active = SquareButton::createWithIcon("leaderboard_icon.png", true);
 
@@ -110,7 +110,7 @@ bool MenuScene::init()
                 this,
                 menu_selector(MenuScene::ShowLeaderBoard)
                 );
-#endif
+
     /*SquareButton * achievements_button = SquareButton::createWithIcon("achievements_icon.png", false);
     SquareButton * achievements_button_active = SquareButton::createWithIcon("achievements_icon.png", true);
 
@@ -120,13 +120,12 @@ bool MenuScene::init()
                 this,
                 menu_selector(MenuScene::ShowLeaderBoard)
                 );*/
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
+
     CCMenu * bottom_menu = CCMenu::create(leaderboard_menu_button, NULL);
     bottom_menu->alignItemsHorizontallyWithPadding(leaderboard_button->getContentSize().width * 0.20);
     bottom_menu->setPosition(ccp(screenSize.width, (screenSize.height * 0.5) - (leaderboard_button->getContentSize().height * 0.6)) / 2);
 
     this->addChild(bottom_menu);
-#endif
 
     return true;
 }
@@ -156,7 +155,21 @@ void MenuScene::ShowLeaderBoard()
     game_center::showLeaderBoard("hard");
 #endif
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    char const * event_name = "";
 
+    JniMethodInfo methodInfo;
+    if (! JniHelper::getStaticMethodInfo(methodInfo, "org/jempe/hockey/Hockey"
+          ,"showLeaderBoard"
+          ,"(Ljava/lang/String;)V"))
+    {
+        //CCLog("%s %d: error to get methodInfo", __FILE__, __LINE__);
+    }
+    else
+    {
+         jstring j_event_name = methodInfo.env->NewStringUTF(event_name);
+         methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, j_event_name);
+     }
+    	CCLog("show LeaderBoard");
 #endif
 }
 

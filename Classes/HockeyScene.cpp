@@ -1030,7 +1030,20 @@ void HockeyScene::showScoreCongrats()
         game_center::saveScore(high_score_category, _playerScore);
 #endif
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        JniMethodInfo methodInfo;
+        if (! JniHelper::getStaticMethodInfo(methodInfo, "org/jempe/hockey/Hockey"
+                    ,"saveScore"
+                    ,"(JI)V"))
+            {
+                //CCLog("%s %d: error to get methodInfo", __FILE__, __LINE__);
+            }
+            else
+            {
+            	jint j_level = _computer_player_level;
+                jlong j_high_score = _playerScore;
 
+                methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, j_high_score, j_level);
+            }
 #endif
     }
 
@@ -1097,7 +1110,7 @@ void HockeyScene::showScoreCongrats()
                 this,
                 menu_selector(HockeyScene::goBack)
                 );
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
+
     CCSprite * leaderboard_button = CCSprite::createWithSpriteFrameName("leaderboard_button.png");
     CCSprite * leaderboard_button_active = CCSprite::createWithSpriteFrameName("leaderboard_button_active.png");
 
@@ -1107,7 +1120,6 @@ void HockeyScene::showScoreCongrats()
                 this,
                 menu_selector(HockeyScene::showLeaderboard)
                 );
-#endif
 
     CCSprite * replay_button = CCSprite::createWithSpriteFrameName("replay_button.png");
     CCSprite * replay_button_active = CCSprite::createWithSpriteFrameName("replay_button_active.png");
@@ -1119,11 +1131,8 @@ void HockeyScene::showScoreCongrats()
                 menu_selector(HockeyScene::playAgain)
                 );
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
     CCMenu * replay_menu = CCMenu::create(back_button_item, leaderboard_button_item, replay_button_item, NULL);
-#else
-    CCMenu * replay_menu = CCMenu::create(back_button_item, replay_button_item, NULL);
-#endif
+
     replay_menu->alignItemsHorizontallyWithPadding(back_button->getContentSize().width * 0.15);
     replay_menu->setPosition(ccp(_screenSize.width / 2, _screenSize.height / 2 - (yellow_circle->getContentSize().width * 0.75)));
     this->addChild(replay_menu);
@@ -1194,8 +1203,6 @@ void HockeyScene::showScoreCongrats()
     yellow_circle->runAction(show_yellow_circle);
     orange_lines->runAction(show_orange_lines);
     red_lines->runAction(show_red_lines);
-
-    showAd();
 }
 
 void HockeyScene::showWinnerLabel(short int player)
@@ -1398,7 +1405,21 @@ void HockeyScene::showLeaderboard()
     game_center::showLeaderBoard(high_score_category);
 #endif
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    char const * event_name = "";
 
+    JniMethodInfo methodInfo;
+    if (! JniHelper::getStaticMethodInfo(methodInfo, "org/jempe/hockey/Hockey"
+          ,"showLeaderBoard"
+          ,"(Ljava/lang/String;)V"))
+    {
+        //CCLog("%s %d: error to get methodInfo", __FILE__, __LINE__);
+    }
+    else
+    {
+         jstring j_event_name = methodInfo.env->NewStringUTF(event_name);
+         methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, j_event_name);
+     }
+    	CCLog("show LeaderBoard");
 #endif
 
 }

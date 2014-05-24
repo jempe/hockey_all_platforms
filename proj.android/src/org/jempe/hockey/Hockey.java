@@ -26,6 +26,7 @@ package org.jempe.hockey;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.EnumSet;
 import java.util.Random;
 
 import org.apache.http.HttpEntity;
@@ -51,6 +52,13 @@ import android.text.format.Time;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.amazon.ags.api.AGResponseHandle;
+import com.amazon.ags.api.AmazonGamesCallback;
+import com.amazon.ags.api.AmazonGamesClient;
+import com.amazon.ags.api.AmazonGamesFeature;
+import com.amazon.ags.api.AmazonGamesStatus;
+import com.amazon.ags.api.leaderboards.LeaderboardsClient;
+import com.amazon.ags.api.leaderboards.SubmitScoreResponse;
 import com.amazon.device.ads.Ad;
 import com.amazon.device.ads.AdError;
 import com.amazon.device.ads.AdProperties;
@@ -88,16 +96,36 @@ public class Hockey extends Cocos2dxActivity {
 	private static final String AMAZON = "amazon";
 	private static final String REVMOB = "revmob";
 
-	private static String defaultAdsDistribution = AMAZON + "," + REVMOB + ","
-			+ CHARTBOOST;
+	private static String defaultAdsDistribution = AMAZON;
 	private static final String adsDistributionSettings = "ads_distribution";
 
 	private static final String adsDistributionBaseURL = "http://webservices.jempe.org/ads_distribution/";
-	private static final String adsDistributionParams = "org.jempe.hockey/slideme.json";
+	private static final String adsDistributionParams = "org.jempe.hockey/amazon.json";
 	private static final String HOST = "webservices.jempe.org";
 
 	private static String AdsDistribution = "";
 	private static String[] AdsDistributionList = null;
+
+	// Amazon Game Circle
+	// reference to the agsClient
+	AmazonGamesClient agsClient;
+
+	AmazonGamesCallback callback = new AmazonGamesCallback() {
+		@Override
+		public void onServiceNotReady(AmazonGamesStatus status) {
+			// unable to use service
+		}
+
+		@Override
+		public void onServiceReady(AmazonGamesClient amazonGamesClient) {
+			agsClient = amazonGamesClient;
+			// ready to use GameCircle
+		}
+	};
+
+	// leaderboards only
+	EnumSet<AmazonGamesFeature> myGameFeatures = EnumSet
+			.of(AmazonGamesFeature.Leaderboards);
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -134,8 +162,8 @@ public class Hockey extends Cocos2dxActivity {
 
 		// Configure Chartboost
 		this.cb = Chartboost.sharedChartboost();
-		String appId = getString(R.string.chartboost_android_app_id);
-		String appSignature = getString(R.string.chartboost_android_signature);
+		String appId = getString(R.string.chartboost_amazon_app_id);
+		String appSignature = getString(R.string.chartboost_amazon_signature);
 		this.cb.onCreate(this, appId, appSignature, null);
 		CBPreferences.getInstance().setImpressionsUseActivities(true);
 
@@ -165,13 +193,12 @@ public class Hockey extends Cocos2dxActivity {
 			new WebServiceTask(this).execute();
 		}
 	}
-	
-	private void processAdsDistribution()
-	{
+
+	private void processAdsDistribution() {
 		AdsDistribution = mSettings.getString(adsDistributionSettings,
 				defaultAdsDistribution);
 		AdsDistributionList = AdsDistribution.split(",");
-		
+
 		Log.d(TAG, "ads distribution: " + AdsDistribution);
 	}
 
@@ -217,6 +244,9 @@ public class Hockey extends Cocos2dxActivity {
 		super.onResume();
 		revmob = RevMob.start(this);
 		this.insights.getSessionClient().resumeSession();
+
+		// Amazon GameCircle
+		AmazonGamesClient.initialize(this, callback, myGameFeatures);
 	}
 
 	@Override
@@ -230,6 +260,11 @@ public class Hockey extends Cocos2dxActivity {
 		// Call this to submit events to the server.
 		// It is recommended to call this in every activity's onPause method.
 		this.insights.getEventClient().submitEvents();
+
+		// Amazon GameCircle
+		if (agsClient != null) {
+			agsClient.release();
+		}
 	}
 
 	@Override
@@ -300,6 +335,55 @@ public class Hockey extends Cocos2dxActivity {
 		});
 	}
 
+	private void showAmazonLeaderBoard() {
+		log_analytics_event("show amazon LeaderBoard");
+		if (agsClient != null) {
+			LeaderboardsClient lbClient = agsClient.getLeaderboardsClient();
+			lbClient.showLeaderboardsOverlay();
+		}
+	}
+
+	private static void showLeaderBoard(final String event_name) {
+		Log.d(TAG, "show LeaderBoard");
+
+		((Activity) mContext).runOnUiThread(new Runnable() {
+
+			public void run() {
+				((Hockey) mContext).showAmazonLeaderBoard();
+			}
+		});
+	}
+
+	private void saveAmazonScore(final long high_score, final int level) {
+		log_analytics_event("save amazon score");
+		if (agsClient != null) {
+			LeaderboardsClient lbClient = agsClient.getLeaderboardsClient();
+
+			String level_id = "";
+
+			if (level == 3) {
+				level_id = "hard";
+			} else if (level == 2) {
+				level_id = "medium";
+			} else {
+				level_id = "easy";
+			}
+
+			AGResponseHandle<SubmitScoreResponse> handle = lbClient
+					.submitScore(level_id, high_score);
+		}
+	}
+
+	private static void saveScore(final long high_score, final int level) {
+		Log.d(TAG, "save score: " + high_score + "  level: " + level);
+		((Activity) mContext).runOnUiThread(new Runnable() {
+
+			public void run() {
+				((Hockey) mContext).saveAmazonScore(high_score, level);
+			}
+		});
+	}
+
 	private Boolean isConnected() {
 
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -366,7 +450,7 @@ public class Hockey extends Cocos2dxActivity {
 				String webServiceResponse = builder.toString();
 
 				JSONObject jsonObject = new JSONObject(webServiceResponse);
-				
+
 				if (jsonObject.getInt("success") == 1) {
 					int amazonWeight = jsonObject.getInt(AMAZON);
 					int revmobWeight = jsonObject.getInt(REVMOB);
@@ -390,7 +474,7 @@ public class Hockey extends Cocos2dxActivity {
 
 							newAdsDistribution += CHARTBOOST;
 						}
-						
+
 						for (int i = 0; i < revmobWeight; i++) {
 							if (newAdsDistribution != "") {
 								newAdsDistribution += ",";
@@ -398,15 +482,14 @@ public class Hockey extends Cocos2dxActivity {
 
 							newAdsDistribution += REVMOB;
 						}
-						
+
 						SharedPreferences.Editor editor = mSettings.edit();
-						editor.putString(adsDistributionSettings, newAdsDistribution);
+						editor.putString(adsDistributionSettings,
+								newAdsDistribution);
 						editor.commit();
-						
+
 						processAdsDistribution();
-					}
-					else
-					{
+					} else {
 						Log.e(TAG, "ads distribution must not be empty");
 					}
 				} else {
