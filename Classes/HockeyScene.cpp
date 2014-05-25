@@ -1194,8 +1194,6 @@ void HockeyScene::showScoreCongrats()
     yellow_circle->runAction(show_yellow_circle);
     orange_lines->runAction(show_orange_lines);
     red_lines->runAction(show_red_lines);
-
-    showAd();
 }
 
 void HockeyScene::showWinnerLabel(short int player)
