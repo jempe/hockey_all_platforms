@@ -39,17 +39,21 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.cocos2dx.lib.Cocos2dxActivity;
+import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.amazon.ags.api.AGResponseHandle;
@@ -74,6 +78,7 @@ import com.chartboost.sdk.Chartboost;
 import com.revmob.RevMob;
 import com.revmob.RevMobTestingMode;
 
+@SuppressLint("NewApi")
 public class Hockey extends Cocos2dxActivity {
 
 	private static final String TAG = "Hockey Activity ";
@@ -85,6 +90,7 @@ public class Hockey extends Cocos2dxActivity {
 
 	// analytics
 	private AmazonInsights insights;
+	private Cocos2dxGLSurfaceView mGLSurfaceView;
 
 	private static Boolean mTestAds = true;
 
@@ -129,6 +135,8 @@ public class Hockey extends Cocos2dxActivity {
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		hideSystemUI();
 
 		mContext = this;
 
@@ -194,6 +202,52 @@ public class Hockey extends Cocos2dxActivity {
 		}
 	}
 
+	private void hideSystemUI() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			Log.i(TAG, "Immersive mode.");
+
+			int uiOptions = this.getWindow().getDecorView()
+					.getSystemUiVisibility();
+
+			boolean isImmersiveModeEnabled = ((uiOptions | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY) == uiOptions);
+
+			if (!isImmersiveModeEnabled) {
+
+				Log.d(TAG, "Enabling Immersive mode");
+			} else {
+				Log.d(TAG, "Immersive mode already enabled");
+			}
+
+			this.getWindow()
+					.getDecorView()
+					.setSystemUiVisibility(
+							View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+									| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+									| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+									| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+									| View.SYSTEM_UI_FLAG_FULLSCREEN
+									| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+		}
+	}
+
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		super.onWindowFocusChanged(hasFocus);
+		if (hasFocus) {
+			Log.d(TAG, "get focus");
+			hideSystemUI();
+		}
+	}
+
+	private static void immersiveMode() {
+		((Activity) mContext).runOnUiThread(new Runnable() {
+
+			public void run() {
+				((Hockey) mContext).hideSystemUI();
+			}
+		});
+	}
+
 	private void processAdsDistribution() {
 		AdsDistribution = mSettings.getString(adsDistributionSettings,
 				defaultAdsDistribution);
@@ -242,6 +296,7 @@ public class Hockey extends Cocos2dxActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		hideSystemUI();
 		revmob = RevMob.start(this);
 		this.insights.getSessionClient().resumeSession();
 
