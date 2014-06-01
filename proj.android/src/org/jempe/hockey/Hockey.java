@@ -38,7 +38,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.cocos2dx.lib.Cocos2dxActivity;
-import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
@@ -82,7 +81,6 @@ public class Hockey extends Cocos2dxActivity {
 
 	// analytics
 	private AmazonInsights insights;
-	private Cocos2dxGLSurfaceView mGLSurfaceView;
 
 	private static Boolean mTestAds = true;
 
@@ -104,6 +102,8 @@ public class Hockey extends Cocos2dxActivity {
 
 	private static String AdsDistribution = "";
 	private static String[] AdsDistributionList = null;
+	
+	private static final String EVENTSUFFIX = "";
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -524,7 +524,7 @@ public class Hockey extends Cocos2dxActivity {
 		((Activity) mContext).runOnUiThread(new Runnable() {
 
 			public void run() {
-				((Hockey) mContext).log_analytics_event(event_name);
+				((Hockey) mContext).log_analytics_event(event_name + EVENTSUFFIX);
 			}
 		});
 	}
