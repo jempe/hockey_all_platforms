@@ -172,6 +172,39 @@ public class Hockey extends Cocos2dxActivity {
 		if (isConnected()) {
 			new WebServiceTask(this).execute();
 		}
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			// check window changes for immersive mode
+			View decorView = getWindow().getDecorView();
+			decorView
+					.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+						@Override
+						public void onSystemUiVisibilityChange(int visibility) {
+
+							Log.d(TAG, "window change");
+
+							// Note that system bars will only be "visible" if
+							// none of the
+							// LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags
+							// are set.
+							if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+								// TODO: The system bars are visible. Make any
+								// desired
+								// adjustments to your UI, such as showing the
+								// action bar or
+								// other navigational controls.
+								hideSystemUI();
+							} else {
+								// TODO: The system bars are NOT visible. Make
+								// any desired
+								// adjustments to your UI, such as hiding the
+								// action bar or
+								// other navigational controls.
+								Log.d(TAG, "window items hidden");
+							}
+						}
+					});
+		}
 	}
 
 	private void hideSystemUI() {
