@@ -103,7 +103,7 @@ public class Hockey extends Cocos2dxActivity {
 	private static String AdsDistribution = "";
 	private static String[] AdsDistributionList = null;
 	
-	private static final String EVENTSUFFIX = "";
+	private static final String EVENTSUFFIX = " Slide Me";
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
