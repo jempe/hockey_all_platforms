@@ -97,13 +97,13 @@ public class Hockey extends Cocos2dxActivity {
 	private static final String adsDistributionSettings = "ads_distribution";
 
 	private static final String adsDistributionBaseURL = "http://webservices.jempe.org/ads_distribution/";
-	private static final String adsDistributionParams = "org.jempe.hockey/slideme.json";
+	private static final String adsDistributionParams = "org.jempe.hockey/google.json";
 	private static final String HOST = "webservices.jempe.org";
 
 	private static String AdsDistribution = "";
 	private static String[] AdsDistributionList = null;
 	
-	private static final String EVENTSUFFIX = "";
+	private static final String EVENTSUFFIX = " GOOGLE";
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
