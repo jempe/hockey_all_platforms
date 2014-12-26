@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.jempe.hockey"
     android:installLocation="preferExternal"
-    android:versionCode="7"
-    android:versionName="1.4" >
+    android:versionCode="8"
+    android:versionName="1.5" >
 
     <uses-sdk
         android:minSdkVersion="9"
@@ -54,6 +54,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data android:name="com.google.android.gms.version"
+             android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>
