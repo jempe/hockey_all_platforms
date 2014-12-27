@@ -64,8 +64,7 @@ import com.amazon.insights.AmazonInsights;
 import com.amazon.insights.Event;
 import com.amazon.insights.EventClient;
 import com.amazon.insights.InsightsCredentials;
-import com.chartboost.sdk.CBPreferences;
-import com.chartboost.sdk.Chartboost;
+import com.chartboost.sdk.*;
 import com.revmob.RevMob;
 import com.revmob.RevMobTestingMode;
 
@@ -141,11 +140,9 @@ public class Hockey extends Cocos2dxActivity {
 		this.interstitialAd.loadAd();
 
 		// Configure Chartboost
-		this.cb = Chartboost.sharedChartboost();
 		String appId = getString(R.string.chartboost_android_app_id);
 		String appSignature = getString(R.string.chartboost_android_signature);
-		this.cb.onCreate(this, appId, appSignature, null);
-		CBPreferences.getInstance().setImpressionsUseActivities(true);
+		Chartboost.startWithAppId(this, appId, appSignature);
 
 		if (mTestAds) {
 			// Amazon set Test Mode
@@ -295,12 +292,16 @@ public class Hockey extends Cocos2dxActivity {
 	public void onDestroy() {
 		super.onDestroy();
 
-		this.cb.onDestroy(this);
+		Chartboost.onDestroy(this);
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
+		Chartboost.onResume(this);
+		Chartboost.cacheInterstitial(CBLocation.LOCATION_DEFAULT);
+		Log.d(TAG, "Cache chartboost interstitial");
+		
 		hideSystemUI();
 		revmob = RevMob.start(this);
 		this.insights.getSessionClient().resumeSession();
@@ -309,6 +310,8 @@ public class Hockey extends Cocos2dxActivity {
 	@Override
 	public void onPause() {
 		super.onPause();
+		Chartboost.onPause(this);
+		
 		// Notify the AmazonInsights SDK that a session pause happened in this
 		// Android activity.
 		// Be sure to include this in every activity's onPause.
@@ -323,18 +326,14 @@ public class Hockey extends Cocos2dxActivity {
 	protected void onStart() {
 		super.onStart();
 
-		this.cb.onStart(this);
-
-		// Notify the beginning of a user session. Must not be dependent on user
-		// actions or any prior network requests.
-		this.cb.startSession();
+		Chartboost.onStart(this);
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
 
-		this.cb.onStop(this);
+		Chartboost.onStop(this);
 	}
 
 	private native void pauseGame();
@@ -353,7 +352,10 @@ public class Hockey extends Cocos2dxActivity {
 
 	private void showChartboostAd() {
 		// Show an interstitial
-		this.cb.showInterstitial();
+		if(Chartboost.hasInterstitial(CBLocation.LOCATION_DEFAULT))
+		{
+			Chartboost.showInterstitial(CBLocation.LOCATION_DEFAULT);
+		}
 	}
 
 	private static void showInterstitial(final String event_name) {
