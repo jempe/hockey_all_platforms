@@ -1,0 +1,12 @@
+GOALBACKGROUND = "goal_background.png";
+GOALNAME = "Goal";
+ONEPLAYER = "1 Player";
+TWOPLAYERS = "2 Players";
+WINNERBACKGROUND = "winner_background.png";
+WINNERNAME = "Winner";
+PLAYAGAIN = "Play Again",
+GOBACK = "Go to Menu";
+RESUME = "Resume";
+EASY = "Easy";
+MEDIUM = "Medium";
+HARD = "Hard";

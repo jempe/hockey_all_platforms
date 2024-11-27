@@ -75,3 +75,6 @@ proj.android/jni/libs/*
 
 *~
 
+*.fnt
+*.ttf
+*.otf

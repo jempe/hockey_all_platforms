@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="736"
+   height="1131.3545"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="nuevo_record.svg"
+   inkscape:export-filename="/home/sucio/GamesArt/new_high_score.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="683.34679"
+     inkscape:cy="546.97961"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1440"
+     inkscape:window-height="876"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-2.606159,69.652151)">
+    <path
+       sodipodi:type="arc"
+       style="fill:none;stroke:none"
+       id="path3085"
+       sodipodi:cx="186.87822"
+       sodipodi:cy="643.25043"
+       sodipodi:rx="574.77679"
+       sodipodi:ry="574.77679"
+       d="m 761.65501,643.25043 a 574.77679,574.77679 0 1 1 -1149.55358,0 574.77679,574.77679 0 1 1 1149.55358,0 z"
+       transform="matrix(-0.3117111,-1.0870658,1.0870658,-0.3117111,-270.39734,1087.3596)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:none;stroke:none"
+       id="path2985"
+       sodipodi:cx="370"
+       sodipodi:cy="433.79074"
+       sodipodi:rx="218.57143"
+       sodipodi:ry="218.57143"
+       d="m 588.57143,433.79074 a 218.57143,218.57143 0 1 1 -437.14286,0 218.57143,218.57143 0 1 1 437.14286,0 z"
+       transform="matrix(-0.93044329,-2.0898099,2.0898099,-0.93044329,-185.6091,1872.6714)" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot2987"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><flowRegion
+         id="flowRegion2989"><rect
+           id="rect2991"
+           width="665.71429"
+           height="614.28571"
+           x="-820"
+           y="-73.352104" /></flowRegion><flowPara
+         id="flowPara2993"></flowPara></flowRoot>    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       id="text2995"
+       sodipodi:linespacing="125%"
+       x="270.2594"
+       y="0"
+       inkscape:export-filename="/home/sucio/GamesArt/Hockey/nuevo_record.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><textPath
+         xlink:href="#path2985"
+         id="textPath2999"
+         style="font-size:144px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Londrina Shadow;-inkscape-font-specification:Londrina Shadow">Record</textPath></text>
+    <image
+       y="305.70239"
+       x="2.606159"
+       id="image3080"
+       xlink:href="file:///home/sucio/GamesArt/Hockey/Resources/nexus10/score_yellow.png"
+       height="756"
+       width="736"
+       style="fill:#000000"
+       inkscape:export-filename="/home/sucio/GamesArt/Hockey/nuevo_record.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       id="text3087"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sucio/GamesArt/Hockey/nuevo_record.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><textPath
+         xlink:href="#path3085"
+         id="textPath3091"><tspan
+           style="font-size:144px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;font-family:Londrina Shadow;-inkscape-font-specification:Londrina Shadow"
+           id="tspan3089">Nuevo</tspan></textPath></text>
+  </g>
+</svg>
